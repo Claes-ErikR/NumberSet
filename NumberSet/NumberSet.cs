@@ -30,6 +30,11 @@ namespace NumberSet
             throw new NotImplementedException();
         }
 
+        bool IEquatable<INumberSetElement<T>>.Equals(INumberSetElement<T>? other)
+        {
+            throw new NotImplementedException();
+        }
+
         INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Intersection(INumberSet<T> other)
         {
             throw new NotImplementedException();

@@ -97,5 +97,23 @@ namespace NumberSet
         {
             throw new NotImplementedException();
         }
+
+        public bool Equals(INumberSetElement<T>? other)
+        {
+            return LowerBound == other.LowerBound && UpperBound== other.UpperBound && IncludeLowerBound == other.IncludeLowerBound && IncludeUpperBound == other.IncludeUpperBound;
+        }
+
+        public override string ToString()
+        {
+            if (IsEmpty) return "Empty";
+            var builder = new StringBuilder();
+            builder.Append(IncludeLowerBound ? "[" : "(");
+            builder.Append(LowerBound.ToString());
+            builder.Append(", ");
+            builder.Append(UpperBound.ToString());
+            builder.Append(IncludeUpperBound ? "]" : ")");
+            
+            return builder.ToString();
+        }
     }
 }
