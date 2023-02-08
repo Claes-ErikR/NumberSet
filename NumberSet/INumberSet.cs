@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utte.NumberSet;
 
 namespace NumberSet
 {
-    public class Class1
+    interface INumberSet<T> : IBoundedSet<T>
     {
+
     }
 }
