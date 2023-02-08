@@ -2,7 +2,7 @@
 
 namespace Utte.NumberSet
 {
-    public interface IBoundedSet<T> : IEquatable<INumberSetElement<T>>
+    public interface IBoundedSet<T>
     {
         T LowerBound { get; }
         T UpperBound { get; }

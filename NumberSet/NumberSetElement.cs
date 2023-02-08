@@ -8,7 +8,7 @@ using Utte.NumberSet;
 
 namespace NumberSet
 {
-    public class NumberSetElement<T> : INumberSetElement<T> where T : ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>
+    public class NumberSetElement<T> : INumberSetElement<T>, IEquatable<INumberSetElement<T>> where T : ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>
     {
         private NumberSetElement(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound) : 
             this(lowerbound, upperbound, includelowerbound, includeupperbound, false)
