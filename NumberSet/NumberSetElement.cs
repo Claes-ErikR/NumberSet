@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace NumberSet
 {
-    public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>> where T : ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
+    public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool> where T : ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
         private NumberSetElement(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound) : 
             this(lowerbound, upperbound, includelowerbound, includeupperbound, false)
@@ -101,7 +101,7 @@ namespace NumberSet
 
         public bool Equals(INumberSetElement<T>? other)
         {
-            return LowerBound == other.LowerBound && UpperBound== other.UpperBound && IncludeLowerBound == other.IncludeLowerBound && IncludeUpperBound == other.IncludeUpperBound;
+            return other == null ? false : LowerBound == other.LowerBound && UpperBound== other.UpperBound && IncludeLowerBound == other.IncludeLowerBound && IncludeUpperBound == other.IncludeUpperBound;
         }
 
         public override string ToString()
@@ -162,6 +162,24 @@ namespace NumberSet
                 result = null;
                 return false; 
             }
+        }
+
+        public static bool operator ==(NumberSetElement<T>? left, NumberSetElement<T>? right)
+        {
+            // Ugly solution but checking for null with left doesn't seem to work with tests
+            try
+            {
+                return left.Equals(right);
+            }
+            catch
+            { 
+                return false; 
+            }
+        }
+
+        public static bool operator !=(NumberSetElement<T>? left, NumberSetElement<T>? right)
+        {
+            return !(left == right);
         }
     }
 }
