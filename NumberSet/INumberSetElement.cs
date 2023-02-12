@@ -8,7 +8,7 @@ using Utte.NumberSet;
 
 namespace NumberSet
 {
-    public interface INumberSetElement<T> : IBoundedSet<T>
+    public interface INumberSetElement<T> : IBoundedSet<T>, IEquatable<INumberSetElement<T>>
     {
         bool IncludeLowerBound { get; }
         bool IncludeUpperBound { get; }

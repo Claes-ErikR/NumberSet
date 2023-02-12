@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Utte.NumberSet;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NumberSet
 {
-    public class NumberSetElement<T> : INumberSetElement<T>, IEquatable<INumberSetElement<T>> where T : ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>
+    public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>> where T : ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
         private NumberSetElement(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound) : 
             this(lowerbound, upperbound, includelowerbound, includeupperbound, false)
@@ -114,6 +115,53 @@ namespace NumberSet
             builder.Append(IncludeUpperBound ? "]" : ")");
             
             return builder.ToString();
+        }
+
+        public static NumberSetElement<T> Parse(string s, IFormatProvider? provider)
+        {
+            if(s == "Empty") return NumberSetElement<T>.CreateEmpty();
+
+            var trimmedString = s.Trim();
+            var includeLowerBound = false;
+            if (trimmedString[0] == '[' || trimmedString[0] == '(')
+                includeLowerBound = trimmedString[0] == '[';
+            else
+                throw new ArgumentException("Set must start with [ or (");
+
+            var includeUpperBound = false;
+            var lastCharacter = trimmedString[trimmedString.Length- 1];
+            if (lastCharacter == ']' || lastCharacter == ')')
+                includeUpperBound = lastCharacter == ']';
+            else
+                throw new ArgumentException("Set must end with ] or )");
+
+            var numbersPart = trimmedString.Substring(1, trimmedString.Length - 2);
+            var indexOfSeparator = numbersPart.IndexOf(',');
+            var lowerBoundString = numbersPart.Substring(0, indexOfSeparator).Trim();
+            T lowerBound;
+            if (!T.TryParse(lowerBoundString, null, out lowerBound))
+                throw new ArgumentException("Unable to read lower bound of set");
+
+            var upperBoundString = numbersPart.Substring(indexOfSeparator + 1, numbersPart.Length - (indexOfSeparator + 1)).Trim();
+            T upperBound;
+            if (!T.TryParse(upperBoundString, null, out upperBound))
+                throw new ArgumentException("Unable to read lower bound of set");
+
+            return NumberSetElement<T>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
+        }
+
+        public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out NumberSetElement<T> result)
+        {
+            try
+            {
+                result = NumberSetElement<T>.Parse(s, provider);
+                return true;
+            }
+            catch 
+            {
+                result = null;
+                return false; 
+            }
         }
     }
 }
