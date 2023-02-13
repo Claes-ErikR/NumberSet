@@ -197,7 +197,7 @@ namespace NumberSet
         public bool Intersects(INumberSetElement<T> other) // Empty set always intersects sets
         {
             if (IsEmpty || other.IsEmpty) return true;
-            return CreateIntersection(other).IsEmpty == false;
+            return CreateIntersection(this, other).IsEmpty == false;
         }
 
         public static bool operator ==(NumberSetElement<T>? left, NumberSetElement<T>? right)
@@ -218,28 +218,45 @@ namespace NumberSet
             return !(left == right);
         }
 
-        private NumberSetElement<T> CreateIntersection(INumberSetElement<T> other)
+        private static NumberSetElement<T> CreateIntersection(INumberSetElement<T> left, INumberSetElement<T> right)
         {
 
-            if (LowerBound > other.UpperBound || UpperBound < other.LowerBound) return CreateEmpty();
-            if (LowerBound == other.UpperBound)
+            if (left.LowerBound > right.UpperBound || left.UpperBound < right.LowerBound) return CreateEmpty();
+            if (left.LowerBound == right.UpperBound)
             {
-                if (IncludeLowerBound && other.IncludeUpperBound)
-                    return Create(LowerBound, LowerBound, true, true);
+                if (left.IncludeLowerBound && right.IncludeUpperBound)
+                    return Create(left.LowerBound, left.LowerBound, true, true);
                 else
                     return CreateEmpty();
             }
-            if (UpperBound == other.LowerBound)
+            if (left.UpperBound == right.LowerBound)
             {
-                if (IncludeUpperBound && other.IncludeLowerBound)
-                    return Create(UpperBound, UpperBound, true, true);
+                if (left.IncludeUpperBound && right.IncludeLowerBound)
+                    return Create(left.UpperBound, left.UpperBound, true, true);
                 else
                     return CreateEmpty();
             }
-            var lowerBound = LowerBound > other.LowerBound ? LowerBound : other.LowerBound;
-            var includeLowerBound = LowerBound > other.LowerBound ? IncludeLowerBound : other.IncludeLowerBound;
-            var upperBound = UpperBound < other.UpperBound ? UpperBound : other.UpperBound;
-            var includeUpperBound = UpperBound < other.UpperBound ? IncludeUpperBound : other.IncludeUpperBound;
+            var lowerBound = left.LowerBound > right.LowerBound ? left.LowerBound : right.LowerBound;
+            var includeLowerBound = left.LowerBound ==  right.LowerBound ? (left.IncludeLowerBound && right.IncludeLowerBound) : (left.LowerBound > right.LowerBound ? left.IncludeLowerBound : right.IncludeLowerBound);
+            var upperBound = left.UpperBound < right.UpperBound ? left.UpperBound : right.UpperBound;
+            var includeUpperBound = left.UpperBound == right.UpperBound ? (left.IncludeUpperBound && right.IncludeUpperBound) : (left.UpperBound < right.UpperBound ? left.IncludeUpperBound : right.IncludeUpperBound);
+
+            return Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
+        }
+
+        internal static NumberSetElement<T> CreateConnectedUnion(INumberSetElement<T> left, INumberSetElement<T> right)
+        {
+
+            if (left.LowerBound > right.UpperBound || left.UpperBound < right.LowerBound) return CreateEmpty();
+
+            if (left.LowerBound == right.UpperBound && !left.IncludeLowerBound && !right.IncludeUpperBound) return CreateEmpty();
+
+            if (left.UpperBound == right.LowerBound && !left.IncludeUpperBound && !right.IncludeLowerBound) return CreateEmpty();
+
+            var lowerBound = left.LowerBound < right.LowerBound ? left.LowerBound : right.LowerBound;
+            var includeLowerBound = left.LowerBound == right.LowerBound ? (left.IncludeLowerBound || right.IncludeLowerBound) : (left.LowerBound < right.LowerBound ? left.IncludeLowerBound : right.IncludeLowerBound);
+            var upperBound = left.UpperBound > right.UpperBound ? left.UpperBound : right.UpperBound;
+            var includeUpperBound = left.UpperBound == right.UpperBound ? (left.IncludeUpperBound || right.IncludeUpperBound) : (left.UpperBound > right.UpperBound ? left.IncludeUpperBound : right.IncludeUpperBound);
 
             return Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
         }

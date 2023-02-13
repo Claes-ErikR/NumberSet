@@ -7,7 +7,7 @@ using Utte.NumberSet;
 
 namespace NumberSet
 {
-    public interface INumberSet<T> : IBoundedSet<T>
+    public interface INumberSet<T> : IBoundedSet<T>, IReadOnlyList<INumberSetElement<T>>
     {
 
     }

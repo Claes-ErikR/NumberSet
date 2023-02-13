@@ -1,25 +1,127 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Utte.NumberSet;
 
 namespace NumberSet
 {
-    public class NumberSet<T> : INumberSet<T>
+    public class NumberSet<T> : INumberSet<T> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
-        public T LowerBound => throw new NotImplementedException();
+        private List<INumberSetElement<T>> _elements;
 
-        public T UpperBound => throw new NotImplementedException();
+        private NumberSet(List<INumberSetElement<T>> elements, bool isClosed, bool isOpen, T measure)
+        {
+            _elements = elements;
+            LowerBound = _elements[0].LowerBound;
+            UpperBound = _elements[_elements.Count - 1].UpperBound;
+            IsClosed = isClosed;
+            IsOpen = isOpen;
+            IsEmpty = false;
+            Measure = measure;
+            Count = _elements.Count;
+        }
 
-        public bool IsClosed => throw new NotImplementedException();
+        private NumberSet()
+        {
+            _elements = new List<INumberSetElement<T>>() { NumberSetElement<T>.CreateEmpty() };
+            LowerBound = _elements[0].LowerBound;
+            UpperBound = _elements[_elements.Count - 1].UpperBound;
+            IsClosed = _elements[0].IncludeUpperBound;
+            IsOpen = _elements[0].IsOpen;
+            IsEmpty = true;
+            Measure = _elements[0].Measure;
+            Count = 1;
+        }
 
-        public bool IsOpen => throw new NotImplementedException();
+        public static NumberSet<T> Create(IEnumerable<INumberSetElement<T>> elements)
+        {
+            List<INumberSetElement<T>> workListElements = new List<INumberSetElement<T>>();
+            foreach (var element in elements)
+                Add(workListElements, element);
 
-        public bool IsEmpty => throw new NotImplementedException();
+            if (workListElements.Count == 0) return CreateEmpty();
 
-        public T Measure => throw new NotImplementedException();
+            var isClosed = true;
+            var isOpen = true;
+            T measure = default;
+            foreach (var element in workListElements)
+            {
+                isClosed = isClosed && element.IsClosed;
+                isOpen = isOpen && element.IsOpen;
+                measure = measure + element.Measure;
+            }
+
+            return new NumberSet<T>(workListElements, isClosed, isOpen, measure);
+        }
+
+        public static NumberSet<T> CreateEmpty()
+        {
+            return new NumberSet<T>();
+        }
+
+
+        private static void Add(List<INumberSetElement<T>> workListElements, INumberSetElement<T> element)
+        {
+            if (!element.IsEmpty)
+            {
+                var newElement = element;
+                var intersectList = new List<INumberSetElement<T>>();
+                int index = 0;
+                while(index < workListElements.Count)
+                {
+                    var connectedUnion = NumberSetElement<T>.CreateConnectedUnion(newElement, workListElements[index]);
+                    if(!connectedUnion.IsEmpty)
+                    {
+                        newElement = connectedUnion;
+                        intersectList.Add(workListElements[index]);
+                        workListElements.RemoveAt(index);
+                    }
+                    else if (newElement.Contains(workListElements[index]))
+                        workListElements.RemoveAt(index);
+                    else
+                        index++;
+                }
+                var insertIndex = int.MinValue;
+                for (int i = 0; i < workListElements.Count; i++)
+                {
+                    if (newElement.LowerBound < workListElements[i].LowerBound)
+                    {
+                        insertIndex = i;
+                        break;
+                    }
+                }
+                if(insertIndex == int.MinValue)
+                    workListElements.Add(newElement);
+                else
+                    workListElements.Insert(insertIndex, newElement);
+            }
+        }
+
+        public INumberSetElement<T> this[int index]
+        {
+            get
+            {
+                return _elements[index];
+            }
+        }
+
+        public T LowerBound { get; }
+
+        public T UpperBound { get; }
+
+        public bool IsClosed { get; }
+
+        public bool IsOpen { get; }
+
+        public bool IsEmpty { get; }
+
+        public T Measure { get; }
+
+        public int Count { get; }
 
         bool IBoundedSet<T>.Contains(T other)
         {
@@ -42,6 +144,16 @@ namespace NumberSet
         }
 
         INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Difference(INumberSetElement<T> other)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator<INumberSetElement<T>> IEnumerable<INumberSetElement<T>>.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
         }
@@ -84,6 +196,19 @@ namespace NumberSet
         INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Union(INumberSetElement<T> other)
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString() 
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(_elements[0].ToString());
+            for (int i = 1; i < _elements.Count; i++)
+            {
+                sb.Append("; ");
+                sb.Append(_elements[i].ToString());
+            }
+
+            return sb.ToString();
         }
     }
 }
