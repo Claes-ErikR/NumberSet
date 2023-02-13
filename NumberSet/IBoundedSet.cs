@@ -21,5 +21,7 @@ namespace Utte.NumberSet
         bool Contains(T other);
         bool Contains(INumberSet<T> other);
         bool Contains(INumberSetElement<T> other);
+        bool Intersects(INumberSet<T> other);
+        bool Intersects(INumberSetElement<T> other);
     }
 }

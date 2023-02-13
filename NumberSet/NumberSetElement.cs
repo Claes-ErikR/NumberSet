@@ -76,6 +76,7 @@ namespace NumberSet
 
         INumberSet<T> IBoundedSet<T>.Intersection(INumberSetElement<T> other)
         {
+            // Use private method CreateIntersection(INumberSetElement<T> other)
             throw new NotImplementedException();
         }
 
@@ -188,6 +189,17 @@ namespace NumberSet
             return true;
         }
 
+        public bool Intersects(INumberSet<T> other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Intersects(INumberSetElement<T> other) // Empty set always intersects sets
+        {
+            if (IsEmpty || other.IsEmpty) return true;
+            return CreateIntersection(other).IsEmpty == false;
+        }
+
         public static bool operator ==(NumberSetElement<T>? left, NumberSetElement<T>? right)
         {
             // Ugly solution but checking for null with left doesn't seem to work with tests
@@ -204,6 +216,32 @@ namespace NumberSet
         public static bool operator !=(NumberSetElement<T>? left, NumberSetElement<T>? right)
         {
             return !(left == right);
+        }
+
+        private NumberSetElement<T> CreateIntersection(INumberSetElement<T> other)
+        {
+
+            if (LowerBound > other.UpperBound || UpperBound < other.LowerBound) return CreateEmpty();
+            if (LowerBound == other.UpperBound)
+            {
+                if (IncludeLowerBound && other.IncludeUpperBound)
+                    return Create(LowerBound, LowerBound, true, true);
+                else
+                    return CreateEmpty();
+            }
+            if (UpperBound == other.LowerBound)
+            {
+                if (IncludeUpperBound && other.IncludeLowerBound)
+                    return Create(UpperBound, UpperBound, true, true);
+                else
+                    return CreateEmpty();
+            }
+            var lowerBound = LowerBound > other.LowerBound ? LowerBound : other.LowerBound;
+            var includeLowerBound = LowerBound > other.LowerBound ? IncludeLowerBound : other.IncludeLowerBound;
+            var upperBound = UpperBound < other.UpperBound ? UpperBound : other.UpperBound;
+            var includeUpperBound = UpperBound < other.UpperBound ? IncludeUpperBound : other.IncludeUpperBound;
+
+            return Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
         }
     }
 }

@@ -56,6 +56,16 @@ namespace NumberSet
             throw new NotImplementedException();
         }
 
+        bool IBoundedSet<T>.Intersects(INumberSet<T> other)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IBoundedSet<T>.Intersects(INumberSetElement<T> other)
+        {
+            throw new NotImplementedException();
+        }
+
         INumberSet<T> Utte.NumberSet.IBoundedSet<T>.SymmetricDifference(INumberSet<T> other)
         {
             throw new NotImplementedException();
