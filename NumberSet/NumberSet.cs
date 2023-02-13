@@ -9,7 +9,7 @@ using Utte.NumberSet;
 
 namespace NumberSet
 {
-    public class NumberSet<T> : INumberSet<T> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
+    public class NumberSet<T> : INumberSet<T>, IParsable<NumberSet<T>> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
         private List<INumberSetElement<T>> _elements;
 
@@ -220,6 +220,44 @@ namespace NumberSet
                     return false;
 
             return true;
+        }
+
+        public static NumberSet<T> Parse(string s, IFormatProvider? provider)
+        {
+            if (s == "Empty") return NumberSet<T>.CreateEmpty();
+
+            var trimmedString = s.Trim();
+            string[] parts = trimmedString.Split(';');
+
+            var elements = new List<INumberSetElement<T>>();
+            foreach (var part in parts)
+            {
+                if(NumberSetElement<T>.TryParse(part, null, out NumberSetElement<T> element))
+                {
+                    if(!element.IsEmpty)
+                        elements.Add(element);
+                }
+                else
+                {
+                    throw new ArgumentException("Could not parse element " + part);
+                }
+            }
+
+            return NumberSet<T>.Create(elements);
+        }
+
+        public static bool TryParse(string? s, IFormatProvider? provider, out NumberSet<T> result)
+        {
+            try
+            {
+                result = NumberSet<T>.Parse(s, provider);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
         }
     }
 }
