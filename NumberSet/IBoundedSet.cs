@@ -18,5 +18,8 @@ namespace Utte.NumberSet
         INumberSet<T> Difference(INumberSetElement<T> other);
         INumberSet<T> SymmetricDifference(INumberSet<T> other);
         INumberSet<T> SymmetricDifference(INumberSetElement<T> other);
+        bool Contains(T other);
+        bool Contains(INumberSet<T> other);
+        bool Contains(INumberSetElement<T> other);
     }
 }

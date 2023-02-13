@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utte.NumberSet;
 
 namespace NumberSet
 {
@@ -19,6 +20,21 @@ namespace NumberSet
         public bool IsEmpty => throw new NotImplementedException();
 
         public T Measure => throw new NotImplementedException();
+
+        bool IBoundedSet<T>.Contains(T other)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IBoundedSet<T>.Contains(INumberSet<T> other)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IBoundedSet<T>.Contains(INumberSetElement<T> other)
+        {
+            throw new NotImplementedException();
+        }
 
         INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Difference(INumberSet<T> other)
         {

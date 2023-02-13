@@ -164,6 +164,30 @@ namespace NumberSet
             }
         }
 
+        public bool Contains(T other)
+        {
+            if (IsEmpty) return false;
+            if (other == LowerBound && IncludeLowerBound) return true;
+            if (other == UpperBound && IncludeUpperBound) return true;
+            return other > LowerBound && other < UpperBound;
+        }
+
+        public bool Contains(INumberSet<T> other) // Empty set is contained, meaning is subset
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(INumberSetElement<T> other)
+        {
+            if (IsEmpty) return other.IsEmpty;
+            if (other.IsEmpty) return true;
+            if (other.LowerBound < LowerBound) return false;
+            if (other.UpperBound > UpperBound) return false;
+            if (other.LowerBound == LowerBound && other.IncludeLowerBound && !IncludeLowerBound) return false;
+            if (other.UpperBound == UpperBound && other.IncludeUpperBound && !IncludeUpperBound) return false;
+            return true;
+        }
+
         public static bool operator ==(NumberSetElement<T>? left, NumberSetElement<T>? right)
         {
             // Ugly solution but checking for null with left doesn't seem to work with tests
