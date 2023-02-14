@@ -236,7 +236,7 @@ namespace NumberSet
             return !(left == right);
         }
 
-        private static NumberSetElement<T> CreateIntersection(INumberSetElement<T> left, INumberSetElement<T> right)
+        internal static NumberSetElement<T> CreateIntersection(INumberSetElement<T> left, INumberSetElement<T> right)
         {
 
             if (left.LowerBound > right.UpperBound || left.UpperBound < right.LowerBound) return CreateEmpty();

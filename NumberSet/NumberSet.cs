@@ -200,24 +200,50 @@ namespace NumberSet
             throw new NotImplementedException();
         }
 
-        INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Intersection(INumberSet<T> other)
+        public INumberSet<T> Intersection(INumberSet<T> other)
         {
-            throw new NotImplementedException();
+            var elements = new List<NumberSetElement<T>>();
+            for (var i = 0; i < Count; i++)
+            {
+                for (var j = 0; j < other.Count; j++)
+                {
+                    var intersection = NumberSetElement<T>.CreateIntersection(this[i], other[j]);
+                    elements.Add(intersection);
+                }
+            }
+            return NumberSet<T>.Create(elements);
         }
 
-        INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Intersection(INumberSetElement<T> other)
+        public INumberSet<T> Intersection(INumberSetElement<T> other)
         {
-            throw new NotImplementedException();
+            var elements = new List<NumberSetElement<T>>();
+            for (var i = 0; i < Count; i++)
+            {
+                var intersection = NumberSetElement<T>.CreateIntersection(this[i], other);
+                elements.Add(intersection);
+            }
+            return NumberSet<T>.Create(elements);
         }
 
-        bool IBoundedSet<T>.Intersects(INumberSet<T> other)
+        public bool Intersects(INumberSet<T> other)
         {
-            throw new NotImplementedException();
+            if (IsEmpty || other.IsEmpty) return true;
+            for (int i = 0; i < Count; i++)
+                if (this[i].Intersects(other))
+                    return true;
+
+            return false;
+
         }
 
-        bool IBoundedSet<T>.Intersects(INumberSetElement<T> other)
+        public bool Intersects(INumberSetElement<T> other)
         {
-            throw new NotImplementedException();
+            if (IsEmpty || other.IsEmpty) return true;
+            for (int i = 0; i < Count; i++)
+                if (!NumberSetElement<T>.CreateIntersection(this[i], other).IsEmpty)
+                    return true;
+
+            return false;
         }
 
         INumberSet<T> Utte.NumberSet.IBoundedSet<T>.SymmetricDifference(INumberSet<T> other)
