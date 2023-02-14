@@ -37,7 +37,17 @@ namespace NumberSet
             Count = 1;
         }
 
+        public static NumberSet<T> Create(params INumberSetElement<T>[] elements)
+        {
+            return CreateNumberSet(elements);
+        }
+
         public static NumberSet<T> Create(IEnumerable<INumberSetElement<T>> elements)
+        {
+            return CreateNumberSet(elements);
+        }
+
+        private static NumberSet<T> CreateNumberSet(IEnumerable<INumberSetElement<T>> elements) 
         {
             List<INumberSetElement<T>> workListElements = new List<INumberSetElement<T>>();
             foreach (var element in elements)
@@ -62,7 +72,6 @@ namespace NumberSet
         {
             return new NumberSet<T>();
         }
-
 
         private static void Add(List<INumberSetElement<T>> workListElements, INumberSetElement<T> element)
         {
@@ -123,19 +132,30 @@ namespace NumberSet
 
         public int Count { get; }
 
-        bool IBoundedSet<T>.Contains(T other)
+        public bool Contains(T other)
+        {
+            if (IsEmpty) return false;
+            for (int i = 0; i < Count; i++)
+                if (_elements[i].Contains(other))
+                    return true;
+
+            return false;
+        }
+
+        public bool Contains(INumberSet<T> other)
         {
             throw new NotImplementedException();
         }
 
-        bool IBoundedSet<T>.Contains(INumberSet<T> other)
+        public bool Contains(INumberSetElement<T> other)
         {
-            throw new NotImplementedException();
-        }
+            if (IsEmpty) return other.IsEmpty;
+            if (other.IsEmpty) return true;
+            for (int i = 0; i < Count; i++)
+                if (_elements[i].Contains(other))
+                    return true;
 
-        bool IBoundedSet<T>.Contains(INumberSetElement<T> other)
-        {
-            throw new NotImplementedException();
+            return false;
         }
 
         INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Difference(INumberSet<T> other)
@@ -149,6 +169,7 @@ namespace NumberSet
         }
 
         IEnumerator<INumberSetElement<T>> IEnumerable<INumberSetElement<T>>.GetEnumerator()
+
         {
             throw new NotImplementedException();
         }
