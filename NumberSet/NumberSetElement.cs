@@ -175,7 +175,15 @@ namespace NumberSet
 
         public bool Contains(INumberSet<T> other) // Empty set is contained, meaning is subset
         {
-            throw new NotImplementedException();
+            if (IsEmpty) return other.IsEmpty;
+            if (other.IsEmpty) return true;
+            if (other.LowerBound < LowerBound) return false;
+            if (other.UpperBound > UpperBound) return false;
+            var otherIncludeLowerBound = other[0].IncludeLowerBound;
+            if (other.LowerBound == LowerBound && otherIncludeLowerBound && !IncludeLowerBound) return false;
+            var otherIncludeUpperBound = other[other.Count - 1].IncludeUpperBound;
+            if (other.UpperBound == UpperBound && otherIncludeUpperBound && !IncludeUpperBound) return false;
+            return true;
         }
 
         public bool Contains(INumberSetElement<T> other)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Utte.NumberSet;
@@ -144,7 +145,27 @@ namespace NumberSet
 
         public bool Contains(INumberSet<T> other)
         {
-            throw new NotImplementedException();
+            if (IsEmpty) return other.IsEmpty;
+            if (other.IsEmpty) return true;
+
+            var workList = new List<INumberSetElement<T>>();
+            for (int i = 0; i < other.Count; i++)
+                workList.Add(other[i]);
+
+            for (int i = 0; i < Count; i++)
+            {
+                var item = this[i];
+                int k = 0;
+                while(k< workList.Count)
+                {
+                    if (item.Contains(workList[k]))
+                        workList.RemoveAt(k);
+                    else
+                        k++;
+                }
+            }
+
+            return workList.Count == 0;
         }
 
         public bool Contains(INumberSetElement<T> other)
