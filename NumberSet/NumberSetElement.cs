@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace NumberSet
 {
-    public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool> where T : ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
+    public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
         private NumberSetElement(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound) : 
             this(lowerbound, upperbound, includelowerbound, includeupperbound, false)
@@ -69,15 +69,20 @@ namespace NumberSet
             throw new NotImplementedException();
         }
 
-        INumberSet<T> IBoundedSet<T>.Intersection(INumberSet<T> other)
+        public INumberSet<T> Intersection(INumberSet<T> other)
         {
-            throw new NotImplementedException();
+            var elements = new List<NumberSetElement<T>>();
+            for(var i = 0; i < other.Count; i++)
+            {
+                var intersection = CreateIntersection(this, other[i]);
+                elements.Add(intersection);
+            }
+            return NumberSet<T>.Create(elements);
         }
 
-        INumberSet<T> IBoundedSet<T>.Intersection(INumberSetElement<T> other)
+        public INumberSet<T> Intersection(INumberSetElement<T> other)
         {
-            // Use private method CreateIntersection(INumberSetElement<T> other)
-            throw new NotImplementedException();
+            return NumberSet<T>.Create(CreateIntersection(this, other));
         }
 
         INumberSet<T> IBoundedSet<T>.SymmetricDifference(INumberSet<T> other)
@@ -199,7 +204,12 @@ namespace NumberSet
 
         public bool Intersects(INumberSet<T> other)
         {
-            throw new NotImplementedException();
+            if (IsEmpty || other.IsEmpty) return true;
+            for (int i = 0; i < other.Count; i++)
+                if (Intersects(other[i]))
+                    return true;
+            
+            return false;
         }
 
         public bool Intersects(INumberSetElement<T> other) // Empty set always intersects sets
