@@ -1,6 +1,5 @@
 ﻿using NumberSet;
 
-
 namespace NumberSetUnitTest.NumberSetUnitTest.Double
 {
     [TestClass]

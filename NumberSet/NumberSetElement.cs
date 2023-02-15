@@ -120,23 +120,48 @@ namespace NumberSet
 
         // Difference                                                                              <- Not finished
 
-        INumberSet<T> IBoundedSet<T>.Difference(INumberSet<T> other)
+        public INumberSet<T> Difference(INumberSet<T> other)
         {
             throw new NotImplementedException();
         }
 
-        INumberSet<T> IBoundedSet<T>.Difference(INumberSetElement<T> other)
+        public INumberSet<T> Difference(INumberSetElement<T> other)
+        {
+            if (IsEmpty || other.IsEmpty) return NumberSet<T>.Create(this);
+            var intersection = CreateIntersection(this, other);
+            if(intersection.IsEmpty)
+                return NumberSet<T>.Create(this);
+            else if (intersection.Equals(this))
+                return NumberSet<T>.CreateEmpty();
+            else
+            {
+                if(LowerBound == intersection.LowerBound && IncludeLowerBound == intersection.IncludeLowerBound)
+                {
+                    var lowerBound = intersection.UpperBound;
+                    var includeLowerBound = !intersection.IncludeUpperBound;
+                    return NumberSet<T>.Create(NumberSetElement<T>.Create(lowerBound, UpperBound, includeLowerBound, IncludeUpperBound));
+                }
+                else if(UpperBound == intersection.UpperBound && IncludeUpperBound == intersection.IncludeUpperBound)
+                {
+                    var upperBound = intersection.LowerBound;
+                    var includeUpperBound = !intersection.IncludeLowerBound;
+                    return NumberSet<T>.Create(NumberSetElement<T>.Create(LowerBound, upperBound, IncludeLowerBound, includeUpperBound));
+                }
+                else
+                {
+                    var element1 = NumberSetElement<T>.Create(LowerBound, intersection.LowerBound, IncludeLowerBound, !intersection.IncludeLowerBound);
+                    var element2 = NumberSetElement<T>.Create(intersection.UpperBound, UpperBound, !intersection.IncludeUpperBound, IncludeUpperBound);
+                    return NumberSet<T>.Create(element1, element2);
+                }
+            }
+        }
+
+        public INumberSet<T> SymmetricDifference(INumberSet<T> other)
         {
             throw new NotImplementedException();
         }
 
-
-        INumberSet<T> IBoundedSet<T>.SymmetricDifference(INumberSet<T> other)
-        {
-            throw new NotImplementedException();
-        }
-
-        INumberSet<T> IBoundedSet<T>.SymmetricDifference(INumberSetElement<T> other)
+        public INumberSet<T> SymmetricDifference(INumberSetElement<T> other)
         {
             throw new NotImplementedException();
         }
