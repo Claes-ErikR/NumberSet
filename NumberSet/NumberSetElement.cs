@@ -68,11 +68,15 @@ namespace NumberSet
 
         // *********** Methods ***********
 
-        // Union                                                                                       <- Not finished
+        // Union
 
         public INumberSet<T> Union(INumberSet<T> other)
         {
-            throw new NotImplementedException();
+            var list = new List<INumberSetElement<T>>();
+            list.Add(this);
+            for (int i = 0; i < other.Count; i++)
+                list.Add(other[i]);
+            return NumberSet<T>.Create(list);
         }
 
         public INumberSet<T> Union(INumberSetElement<T> other)
