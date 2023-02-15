@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Utte.NumberSet;
 using System.Diagnostics.CodeAnalysis;
+using System.Xml.Linq;
 
 namespace NumberSet
 {
@@ -122,7 +123,17 @@ namespace NumberSet
 
         public INumberSet<T> Difference(INumberSet<T> other)
         {
-            throw new NotImplementedException();
+            if (IsEmpty || other.IsEmpty) return NumberSet<T>.Create(this);
+            var intersection = Intersection(other);
+            if (intersection.IsEmpty)
+                return NumberSet<T>.Create(this);
+            else if (intersection.Equals(this))
+                return NumberSet<T>.CreateEmpty();
+            else
+            {
+                var difference = RemoveIntersections(this, intersection);
+                return NumberSet<T>.Create(difference);
+            }
         }
 
         public INumberSet<T> Difference(INumberSetElement<T> other)
@@ -330,6 +341,21 @@ namespace NumberSet
             var includeUpperBound = left.UpperBound == right.UpperBound ? (left.IncludeUpperBound || right.IncludeUpperBound) : (left.UpperBound > right.UpperBound ? left.IncludeUpperBound : right.IncludeUpperBound);
 
             return Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
+        }
+
+        // Intersection should mean subsets of element
+        // Check this after making Difference for NumberSet, maybe re-write to include producing the intersection
+        private static List<INumberSetElement<T>> RemoveIntersections(NumberSetElement<T> element, INumberSet<T> intersection)
+        {
+            var result = new List<INumberSetElement<T>>();
+            if (!(element.LowerBound == intersection[0].LowerBound && element.IncludeLowerBound == intersection[0].IncludeLowerBound))
+                result.Add(NumberSetElement<T>.Create(element.LowerBound, intersection[0].LowerBound, element.IncludeLowerBound, !intersection[0].IncludeLowerBound));
+            for (int i = 0; i < intersection.Count - 1; i++)
+                result.Add(NumberSetElement<T>.Create(intersection[i].UpperBound, intersection[i + 1].LowerBound, !intersection[i].IncludeUpperBound, !intersection[i + 1].IncludeLowerBound));
+            if (!(element.UpperBound == intersection[intersection.Count - 1].UpperBound && element.IncludeUpperBound == intersection[intersection.Count - 1].IncludeUpperBound))
+                result.Add(NumberSetElement<T>.Create(intersection[intersection.Count - 1].UpperBound, element.UpperBound, !intersection[intersection.Count - 1].IncludeUpperBound, element.IncludeUpperBound));
+
+            return result;
         }
     }
 }
