@@ -77,7 +77,7 @@ namespace NumberSet
 
         public INumberSet<T> Union(INumberSetElement<T> other)
         {
-            throw new NotImplementedException();
+            return NumberSet<T>.Create(this, other);
         }
 
         // Intersect
