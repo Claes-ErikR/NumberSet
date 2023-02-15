@@ -11,6 +11,9 @@ namespace NumberSet
 {
     public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
+
+        // Constructors
+
         private NumberSetElement(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound) : 
             this(lowerbound, upperbound, includelowerbound, includeupperbound, false)
         {
@@ -28,6 +31,8 @@ namespace NumberSet
             IsEmpty = isempty;
         }
 
+        // Create methods
+
         public static NumberSetElement<T> Create(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound)
         {
             if (lowerbound == upperbound && (!includelowerbound || !includeupperbound))
@@ -42,6 +47,8 @@ namespace NumberSet
         {
             return new NumberSetElement<T>(default(T), default(T), false, false, true);
         }
+
+        // *********** Properties ***********
 
         public bool IncludeLowerBound { get; }
 
@@ -59,20 +66,26 @@ namespace NumberSet
 
         public T Measure { get; }
 
-        INumberSet<T> IBoundedSet<T>.Difference(INumberSet<T> other)
+        // *********** Methods ***********
+
+        // Union                                                                                       <- Not finished
+
+        public INumberSet<T> Union(INumberSet<T> other)
         {
             throw new NotImplementedException();
         }
 
-        INumberSet<T> IBoundedSet<T>.Difference(INumberSetElement<T> other)
+        public INumberSet<T> Union(INumberSetElement<T> other)
         {
             throw new NotImplementedException();
         }
+
+        // Intersect
 
         public INumberSet<T> Intersection(INumberSet<T> other)
         {
             var elements = new List<NumberSetElement<T>>();
-            for(var i = 0; i < other.Count; i++)
+            for (var i = 0; i < other.Count; i++)
             {
                 var intersection = CreateIntersection(this, other[i]);
                 elements.Add(intersection);
@@ -85,6 +98,35 @@ namespace NumberSet
             return NumberSet<T>.Create(CreateIntersection(this, other));
         }
 
+        public bool Intersects(INumberSet<T> other)
+        {
+            if (IsEmpty || other.IsEmpty) return true;
+            for (int i = 0; i < other.Count; i++)
+                if (Intersects(other[i]))
+                    return true;
+
+            return false;
+        }
+
+        public bool Intersects(INumberSetElement<T> other) // Empty set always intersects sets
+        {
+            if (IsEmpty || other.IsEmpty) return true;
+            return CreateIntersection(this, other).IsEmpty == false;
+        }
+
+        // Difference                                                                              <- Not finished
+
+        INumberSet<T> IBoundedSet<T>.Difference(INumberSet<T> other)
+        {
+            throw new NotImplementedException();
+        }
+
+        INumberSet<T> IBoundedSet<T>.Difference(INumberSetElement<T> other)
+        {
+            throw new NotImplementedException();
+        }
+
+
         INumberSet<T> IBoundedSet<T>.SymmetricDifference(INumberSet<T> other)
         {
             throw new NotImplementedException();
@@ -95,20 +137,66 @@ namespace NumberSet
             throw new NotImplementedException();
         }
 
-        INumberSet<T> IBoundedSet<T>.Union(INumberSet<T> other)
+        // Contains
+
+        public bool Contains(T other)
         {
-            throw new NotImplementedException();
+            if (IsEmpty) return false;
+            if (other == LowerBound && IncludeLowerBound) return true;
+            if (other == UpperBound && IncludeUpperBound) return true;
+            return other > LowerBound && other < UpperBound;
         }
 
-        INumberSet<T> IBoundedSet<T>.Union(INumberSetElement<T> other)
+        public bool Contains(INumberSet<T> other) // Empty set is contained, meaning is subset
         {
-            throw new NotImplementedException();
+            if (IsEmpty) return other.IsEmpty;
+            if (other.IsEmpty) return true;
+            if (other.LowerBound < LowerBound) return false;
+            if (other.UpperBound > UpperBound) return false;
+            var otherIncludeLowerBound = other[0].IncludeLowerBound;
+            if (other.LowerBound == LowerBound && otherIncludeLowerBound && !IncludeLowerBound) return false;
+            var otherIncludeUpperBound = other[other.Count - 1].IncludeUpperBound;
+            if (other.UpperBound == UpperBound && otherIncludeUpperBound && !IncludeUpperBound) return false;
+            return true;
         }
+
+        public bool Contains(INumberSetElement<T> other)
+        {
+            if (IsEmpty) return other.IsEmpty;
+            if (other.IsEmpty) return true;
+            if (other.LowerBound < LowerBound) return false;
+            if (other.UpperBound > UpperBound) return false;
+            if (other.LowerBound == LowerBound && other.IncludeLowerBound && !IncludeLowerBound) return false;
+            if (other.UpperBound == UpperBound && other.IncludeUpperBound && !IncludeUpperBound) return false;
+            return true;
+        }
+
+        // Equality
 
         public bool Equals(INumberSetElement<T>? other)
         {
             return other == null ? false : LowerBound == other.LowerBound && UpperBound== other.UpperBound && IncludeLowerBound == other.IncludeLowerBound && IncludeUpperBound == other.IncludeUpperBound;
         }
+
+        public static bool operator ==(NumberSetElement<T>? left, NumberSetElement<T>? right)
+        {
+            // Ugly solution but checking for null with left doesn't seem to work with tests
+            try
+            {
+                return left.Equals(right);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool operator !=(NumberSetElement<T>? left, NumberSetElement<T>? right)
+        {
+            return !(left == right);
+        }
+
+        // Text
 
         public override string ToString()
         {
@@ -170,71 +258,7 @@ namespace NumberSet
             }
         }
 
-        public bool Contains(T other)
-        {
-            if (IsEmpty) return false;
-            if (other == LowerBound && IncludeLowerBound) return true;
-            if (other == UpperBound && IncludeUpperBound) return true;
-            return other > LowerBound && other < UpperBound;
-        }
-
-        public bool Contains(INumberSet<T> other) // Empty set is contained, meaning is subset
-        {
-            if (IsEmpty) return other.IsEmpty;
-            if (other.IsEmpty) return true;
-            if (other.LowerBound < LowerBound) return false;
-            if (other.UpperBound > UpperBound) return false;
-            var otherIncludeLowerBound = other[0].IncludeLowerBound;
-            if (other.LowerBound == LowerBound && otherIncludeLowerBound && !IncludeLowerBound) return false;
-            var otherIncludeUpperBound = other[other.Count - 1].IncludeUpperBound;
-            if (other.UpperBound == UpperBound && otherIncludeUpperBound && !IncludeUpperBound) return false;
-            return true;
-        }
-
-        public bool Contains(INumberSetElement<T> other)
-        {
-            if (IsEmpty) return other.IsEmpty;
-            if (other.IsEmpty) return true;
-            if (other.LowerBound < LowerBound) return false;
-            if (other.UpperBound > UpperBound) return false;
-            if (other.LowerBound == LowerBound && other.IncludeLowerBound && !IncludeLowerBound) return false;
-            if (other.UpperBound == UpperBound && other.IncludeUpperBound && !IncludeUpperBound) return false;
-            return true;
-        }
-
-        public bool Intersects(INumberSet<T> other)
-        {
-            if (IsEmpty || other.IsEmpty) return true;
-            for (int i = 0; i < other.Count; i++)
-                if (Intersects(other[i]))
-                    return true;
-            
-            return false;
-        }
-
-        public bool Intersects(INumberSetElement<T> other) // Empty set always intersects sets
-        {
-            if (IsEmpty || other.IsEmpty) return true;
-            return CreateIntersection(this, other).IsEmpty == false;
-        }
-
-        public static bool operator ==(NumberSetElement<T>? left, NumberSetElement<T>? right)
-        {
-            // Ugly solution but checking for null with left doesn't seem to work with tests
-            try
-            {
-                return left.Equals(right);
-            }
-            catch
-            { 
-                return false; 
-            }
-        }
-
-        public static bool operator !=(NumberSetElement<T>? left, NumberSetElement<T>? right)
-        {
-            return !(left == right);
-        }
+        // Support methods
 
         internal static NumberSetElement<T> CreateIntersection(INumberSetElement<T> left, INumberSetElement<T> right)
         {
