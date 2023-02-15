@@ -14,6 +14,8 @@ namespace NumberSet
     {
         private List<INumberSetElement<T>> _elements;
 
+        // Constructors
+
         private NumberSet(List<INumberSetElement<T>> elements, bool isClosed, bool isOpen, T measure)
         {
             _elements = elements;
@@ -37,6 +39,8 @@ namespace NumberSet
             Measure = _elements[0].Measure;
             Count = 1;
         }
+
+        // Create methods
 
         public static NumberSet<T> Create(params INumberSetElement<T>[] elements)
         {
@@ -73,6 +77,8 @@ namespace NumberSet
         {
             return new NumberSet<T>();
         }
+
+        // Create support methods
 
         private static void Add(List<INumberSetElement<T>> workListElements, INumberSetElement<T> element)
         {
@@ -111,6 +117,8 @@ namespace NumberSet
             }
         }
 
+        // *********** Properties ***********
+
         public INumberSetElement<T> this[int index]
         {
             get
@@ -133,72 +141,21 @@ namespace NumberSet
 
         public int Count { get; }
 
-        public bool Contains(T other)
-        {
-            if (IsEmpty) return false;
-            for (int i = 0; i < Count; i++)
-                if (_elements[i].Contains(other))
-                    return true;
+        // *********** Methods ***********
 
-            return false;
-        }
+        // Union                                                                                       <- Not finished
 
-        public bool Contains(INumberSet<T> other)
-        {
-            if (IsEmpty) return other.IsEmpty;
-            if (other.IsEmpty) return true;
-
-            var workList = new List<INumberSetElement<T>>();
-            for (int i = 0; i < other.Count; i++)
-                workList.Add(other[i]);
-
-            for (int i = 0; i < Count; i++)
-            {
-                var item = this[i];
-                int k = 0;
-                while(k< workList.Count)
-                {
-                    if (item.Contains(workList[k]))
-                        workList.RemoveAt(k);
-                    else
-                        k++;
-                }
-            }
-
-            return workList.Count == 0;
-        }
-
-        public bool Contains(INumberSetElement<T> other)
-        {
-            if (IsEmpty) return other.IsEmpty;
-            if (other.IsEmpty) return true;
-            for (int i = 0; i < Count; i++)
-                if (_elements[i].Contains(other))
-                    return true;
-
-            return false;
-        }
-
-        INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Difference(INumberSet<T> other)
+        public INumberSet<T> Union(INumberSet<T> other)
         {
             throw new NotImplementedException();
         }
 
-        INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Difference(INumberSetElement<T> other)
+        public INumberSet<T> Union(INumberSetElement<T> other)
         {
             throw new NotImplementedException();
         }
 
-        IEnumerator<INumberSetElement<T>> IEnumerable<INumberSetElement<T>>.GetEnumerator()
-
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        // Intersect
 
         public INumberSet<T> Intersection(INumberSet<T> other)
         {
@@ -246,27 +203,92 @@ namespace NumberSet
             return false;
         }
 
-        INumberSet<T> Utte.NumberSet.IBoundedSet<T>.SymmetricDifference(INumberSet<T> other)
+        // Difference                                                                              <- Not finished
+
+        public INumberSet<T> Difference(INumberSet<T> other)
         {
             throw new NotImplementedException();
         }
 
-        INumberSet<T> Utte.NumberSet.IBoundedSet<T>.SymmetricDifference(INumberSetElement<T> other)
+        public INumberSet<T> Difference(INumberSetElement<T> other)
         {
             throw new NotImplementedException();
         }
 
-        INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Union(INumberSet<T> other)
+        public INumberSet<T> SymmetricDifference(INumberSet<T> other)
         {
             throw new NotImplementedException();
         }
 
-        INumberSet<T> Utte.NumberSet.IBoundedSet<T>.Union(INumberSetElement<T> other)
+        public INumberSet<T> SymmetricDifference(INumberSetElement<T> other)
         {
             throw new NotImplementedException();
         }
 
-        public override string ToString() 
+        // Contains
+
+        public bool Contains(T other)
+        {
+            if (IsEmpty) return false;
+            for (int i = 0; i < Count; i++)
+                if (_elements[i].Contains(other))
+                    return true;
+
+            return false;
+        }
+
+        public bool Contains(INumberSet<T> other)
+        {
+            if (IsEmpty) return other.IsEmpty;
+            if (other.IsEmpty) return true;
+
+            var workList = new List<INumberSetElement<T>>();
+            for (int i = 0; i < other.Count; i++)
+                workList.Add(other[i]);
+
+            for (int i = 0; i < Count; i++)
+            {
+                var item = this[i];
+                int k = 0;
+                while(k< workList.Count)
+                {
+                    if (item.Contains(workList[k]))
+                        workList.RemoveAt(k);
+                    else
+                        k++;
+                }
+            }
+
+            return workList.Count == 0;
+        }
+
+        public bool Contains(INumberSetElement<T> other)
+        {
+            if (IsEmpty) return other.IsEmpty;
+            if (other.IsEmpty) return true;
+            for (int i = 0; i < Count; i++)
+                if (_elements[i].Contains(other))
+                    return true;
+
+            return false;
+        }
+
+        // Equality
+
+        public bool Equals(INumberSet<T>? other)
+        {
+            if (other == null) return false;
+            if (Count != other.Count) return false;
+            for (int i = 0; i < Count; i++)
+                if (!this[i].Equals(other[i]))
+                    return false;
+
+            return true;
+        }
+
+        // Text
+
+        public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(_elements[0].ToString());
@@ -279,17 +301,6 @@ namespace NumberSet
             return sb.ToString();
         }
 
-        public bool Equals(INumberSet<T>? other)
-        {
-            if(other == null) return false;
-            if(Count != other.Count) return false;
-            for (int i = 0; i < Count; i++)
-                if (!this[i].Equals(other[i]))
-                    return false;
-
-            return true;
-        }
-
         public static NumberSet<T> Parse(string s, IFormatProvider? provider)
         {
             if (s == "Empty") return NumberSet<T>.CreateEmpty();
@@ -300,9 +311,9 @@ namespace NumberSet
             var elements = new List<INumberSetElement<T>>();
             foreach (var part in parts)
             {
-                if(NumberSetElement<T>.TryParse(part, null, out NumberSetElement<T> element))
+                if (NumberSetElement<T>.TryParse(part, null, out NumberSetElement<T> element))
                 {
-                    if(!element.IsEmpty)
+                    if (!element.IsEmpty)
                         elements.Add(element);
                 }
                 else
@@ -326,6 +337,19 @@ namespace NumberSet
                 result = null;
                 return false;
             }
+        }
+
+        // Enumerator                                                                              <- Not finished
+
+        IEnumerator<INumberSetElement<T>> IEnumerable<INumberSetElement<T>>.GetEnumerator()
+
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }
