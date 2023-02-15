@@ -143,16 +143,22 @@ namespace NumberSet
 
         // *********** Methods ***********
 
-        // Union                                                                                       <- Not finished
+        // Union
 
         public INumberSet<T> Union(INumberSet<T> other)
         {
-            throw new NotImplementedException();
+            var elements = new List<INumberSetElement<T>>();
+            for (var i = 0; i < Count; i++)
+                elements.Add(this[i]);
+            for (var i = 0; i < other.Count; i++)
+                elements.Add(other[i]);
+
+            return NumberSet<T>.Create(elements);
         }
 
         public INumberSet<T> Union(INumberSetElement<T> other)
         {
-            throw new NotImplementedException();
+            return other.Union(this);
         }
 
         // Intersect
