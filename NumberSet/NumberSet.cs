@@ -239,16 +239,6 @@ namespace NumberSet
             return NumberSet<T>.Create(elements);
         }
 
-        public INumberSet<T> SymmetricDifference(INumberSet<T> other)
-        {
-            throw new NotImplementedException();
-        }
-
-        public INumberSet<T> SymmetricDifference(INumberSetElement<T> other)
-        {
-            throw new NotImplementedException();
-        }
-
         // Contains
 
         public bool Contains(T other)
