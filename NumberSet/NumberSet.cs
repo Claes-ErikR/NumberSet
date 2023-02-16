@@ -10,7 +10,7 @@ using Utte.NumberSet;
 
 namespace NumberSet
 {
-    public class NumberSet<T> : INumberSet<T>, IParsable<NumberSet<T>> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
+    public class NumberSet<T> : INumberSet<T>, IParsable<NumberSet<T>>, IEqualityOperators<NumberSet<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSet<T>, NumberSet<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
         private List<INumberSetElement<T>> _elements;
 
@@ -289,6 +289,22 @@ namespace NumberSet
 
         //Equality
 
+        /// <summary>
+        /// Compares the instance to an object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (obj is INumberSetElement<T>)
+                return Equals((INumberSetElement<T>)obj);
+            if (obj is INumberSet<T>)
+                return Equals((INumberSet<T>)obj);
+            return false;
+        }
+
         public bool Equals(INumberSetElement<T>? other)
         {
             if (other == null) return false;
@@ -305,6 +321,35 @@ namespace NumberSet
                     return false;
 
             return true;
+        }
+
+        public static bool operator ==(NumberSet<T>? left, NumberSetElement<T>? right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(NumberSet<T>? left, NumberSetElement<T>? right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator ==(NumberSet<T>? left, NumberSet<T>? right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(NumberSet<T>? left, NumberSet<T>? right)
+        {
+            return !(left == right);
+        }
+
+        /// <summary>
+        /// Get hashcode calculated from string representation of the instance
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
         }
 
         // Text
