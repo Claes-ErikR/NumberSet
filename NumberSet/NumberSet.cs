@@ -209,16 +209,34 @@ namespace NumberSet
             return false;
         }
 
-        // Difference                                                                              <- Not finished
+        // Difference
 
         public INumberSet<T> Difference(INumberSet<T> other)
         {
-            throw new NotImplementedException();
+            if (IsEmpty || other.IsEmpty) return this;
+            var elements = new List<INumberSetElement<T>>();
+            for (int i = 0; i < Count; i++)
+            {
+                var difference = NumberSetElement<T>.RemoveIntersections(this[i], other);
+                for (int k = 0; k < difference.Count; k++)
+                    elements.Add(difference[k]);
+            }
+
+            return NumberSet<T>.Create(elements);
         }
 
         public INumberSet<T> Difference(INumberSetElement<T> other)
         {
-            throw new NotImplementedException();
+            if (IsEmpty || other.IsEmpty) return this;
+            var elements = new List<INumberSetElement<T>>();
+            for (int i = 0; i < Count; i++)
+            {
+                var difference = this[i].Difference(other);
+                for (int k = 0; k < difference.Count; k++)
+                    elements.Add(difference[k]);
+            }
+
+            return NumberSet<T>.Create(elements);
         }
 
         public INumberSet<T> SymmetricDifference(INumberSet<T> other)
