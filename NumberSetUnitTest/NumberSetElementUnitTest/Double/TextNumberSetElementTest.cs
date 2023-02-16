@@ -6,20 +6,21 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
     public class TextNumberSetElementTest
     {
         [TestMethod]
-        public void TestToString()
+        [DataRow(true, true, "[2, 3]")]
+        [DataRow(true, false, "[2, 3)")]
+        [DataRow(false, true, "(2, 3]")]
+        [DataRow(false, false, "(2, 3)")]
+        public void TestToString(bool includeLowerBound, bool includeUpperBound, string expectedResult)
         {
-            var elementList = new List<Tuple<NumberSetElement<double>, string>>()
-            {
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, true, true), "[2, 3]"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, true, false), "[2, 3)"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, false, true), "(2, 3]"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, false, false), "(2, 3)"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "Empty"),
-            };
-            for (int i = 0; i < elementList.Count; i++)
-            {
-                Assert.AreEqual(elementList[i].Item1.ToString(), elementList[i].Item2);
-            }
+            var item = NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound);
+            Assert.AreEqual(item.ToString(), expectedResult);
+        }
+
+        [TestMethod]
+        public void TestEmptyToString()
+        {
+            var item = NumberSetElement<double>.CreateEmpty();
+            Assert.AreEqual(item.ToString(), "Empty");
         }
 
         [TestMethod]

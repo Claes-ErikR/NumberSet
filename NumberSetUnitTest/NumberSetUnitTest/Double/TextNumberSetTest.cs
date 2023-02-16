@@ -6,6 +6,38 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
     public class TextNumberSetTest
     {
         [TestMethod]
+        [DataRow(true, true, "[2, 3]")]
+        [DataRow(true, false, "[2, 3)")]
+        [DataRow(false, true, "(2, 3]")]
+        [DataRow(false, false, "(2, 3)")]
+        public void TestToString(bool includeLowerBound, bool includeUpperBound, string expectedResult)
+        {
+            var item = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound));
+            Assert.AreEqual(item.ToString(), expectedResult);
+        }
+
+        [TestMethod]
+        public void TestEmptyToString()
+        {
+            var item = NumberSet<double>.CreateEmpty();
+            Assert.AreEqual(item.ToString(), "Empty");
+        }
+
+        [TestMethod]
+        public void Test2ElementToString()
+        {
+            var item = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, false, true), NumberSetElement<double>.Create(4, 5, true, false));
+            Assert.AreEqual(item.ToString(), "(2, 3]; [4, 5)");
+        }
+
+        [TestMethod]
+        public void Test3ElementToString()
+        {
+            var item = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, false, true), NumberSetElement<double>.Create(4, 5, true, false), NumberSetElement<double>.Create(5, 6, false, false));
+            Assert.AreEqual(item.ToString(), "(2, 3]; [4, 5); (5, 6)");
+        }
+
+        [TestMethod]
         public void TestTryParse()
         {
             var elementList = new List<Tuple<NumberSetElement<double>, string>>()
