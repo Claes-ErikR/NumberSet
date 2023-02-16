@@ -22,7 +22,7 @@ namespace NumberSet
             IncludeUpperBound = includeupperbound;
             IsClosed = includelowerbound && includeupperbound;
             IsOpen = !includeupperbound && !includelowerbound;
-            Measure = upperbound - lowerbound;
+            Measure = isempty ? default(T) : upperbound - lowerbound;
             IsEmpty = isempty;
         }
 
@@ -207,7 +207,10 @@ namespace NumberSet
 
         public bool Equals(INumberSetElement<T>? other)
         {
-            return other == null ? false : LowerBound == other.LowerBound && UpperBound== other.UpperBound && IncludeLowerBound == other.IncludeLowerBound && IncludeUpperBound == other.IncludeUpperBound;
+            if (other == null) return false;
+            if (IsEmpty) return other.IsEmpty;
+            if (other.IsEmpty) return false;
+            return LowerBound == other.LowerBound && UpperBound== other.UpperBound && IncludeLowerBound == other.IncludeLowerBound && IncludeUpperBound == other.IncludeUpperBound;
         }
 
         public bool Equals(INumberSet<T>? other)
