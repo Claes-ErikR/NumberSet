@@ -353,17 +353,17 @@ namespace NumberSet
             }
         }
 
-        // Enumerator                                                                              <- Not finished
+        // Enumerator
 
-        IEnumerator<INumberSetElement<T>> IEnumerable<INumberSetElement<T>>.GetEnumerator()
+        public IEnumerator<INumberSetElement<T>> GetEnumerator()
 
         {
-            throw new NotImplementedException();
+            return _elements.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
     }
 }
