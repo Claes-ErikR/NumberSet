@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using System.Numerics;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
-using System.Threading.Tasks;
-using Utte.NumberSet;
 
 namespace NumberSet
 {
@@ -67,7 +61,7 @@ namespace NumberSet
             {
                 isClosed = isClosed && element.IsClosed;
                 isOpen = isOpen && element.IsOpen;
-                measure = measure + element.Measure;
+                measure = measure == null ? element.Measure : measure + element.Measure;
             }
 
             return new NumberSet<T>(workListElements, isClosed, isOpen, measure);

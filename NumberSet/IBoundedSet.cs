@@ -1,8 +1,9 @@
 ﻿using NumberSet;
+using System.Numerics;
 
 namespace Utte.NumberSet
 {
-    public interface IBoundedSet<T>
+    public interface IBoundedSet<T>: IEquatable<INumberSetElement<T>>, IEquatable<INumberSet<T>> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>
     {
         T LowerBound { get; }
         T UpperBound { get; }
