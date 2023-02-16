@@ -1,16 +1,10 @@
-﻿using System;
-using System.Numerics;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Numerics;
 using System.Text;
-using System.Threading.Tasks;
-using Utte.NumberSet;
 using System.Diagnostics.CodeAnalysis;
-using System.Xml.Linq;
 
 namespace NumberSet
 {
-    public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
+    public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSetElement<T>, NumberSet<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
 
         // Constructors
@@ -195,6 +189,22 @@ namespace NumberSet
 
         // Equality
 
+        /// <summary>
+        /// Compares the instance to an object
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            if (obj is INumberSetElement<T>)
+                return Equals((INumberSetElement<T>)obj);
+            if (obj is INumberSet<T>)
+                return Equals((INumberSet<T>)obj);
+            return false;
+        }
+
         public bool Equals(INumberSetElement<T>? other)
         {
             return other == null ? false : LowerBound == other.LowerBound && UpperBound== other.UpperBound && IncludeLowerBound == other.IncludeLowerBound && IncludeUpperBound == other.IncludeUpperBound;
@@ -209,20 +219,31 @@ namespace NumberSet
 
         public static bool operator ==(NumberSetElement<T>? left, NumberSetElement<T>? right)
         {
-            // Ugly solution but checking for null with left doesn't seem to work with tests
-            try
-            {
-                return left.Equals(right);
-            }
-            catch
-            {
-                return false;
-            }
+            return Equals(left, right);
         }
 
         public static bool operator !=(NumberSetElement<T>? left, NumberSetElement<T>? right)
         {
             return !(left == right);
+        }
+
+        public static bool operator ==(NumberSetElement<T>? left, NumberSet<T>? right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(NumberSetElement<T>? left, NumberSet<T>? right)
+        {
+            return !(left == right);
+        }
+
+        /// <summary>
+        /// Get hashcode calculated from string representation of the instance
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
         }
 
         // Text
