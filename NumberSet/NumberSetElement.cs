@@ -200,6 +200,13 @@ namespace NumberSet
             return other == null ? false : LowerBound == other.LowerBound && UpperBound== other.UpperBound && IncludeLowerBound == other.IncludeLowerBound && IncludeUpperBound == other.IncludeUpperBound;
         }
 
+        public bool Equals(INumberSet<T>? other)
+        {
+            if(other == null) return false;
+            if (other.Count != 1) return false;
+            return Equals(other[0]);
+        }
+
         public static bool operator ==(NumberSetElement<T>? left, NumberSetElement<T>? right)
         {
             // Ugly solution but checking for null with left doesn't seem to work with tests

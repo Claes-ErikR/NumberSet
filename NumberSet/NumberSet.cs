@@ -287,7 +287,14 @@ namespace NumberSet
             return false;
         }
 
-        // Equality
+        //Equality
+
+        public bool Equals(INumberSetElement<T>? other)
+        {
+            if (other == null) return false;
+            if (Count != 1) return false;
+            return this[0].Equals(other);
+        }
 
         public bool Equals(INumberSet<T>? other)
         {
