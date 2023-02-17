@@ -10,6 +10,7 @@ namespace NumberSet
     /// T has to implement IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     /// The Empty set is considered part of any set but only equal to itself
     /// A NumberSetElement can only be created through static Create/CreateEmpty methods
+    /// Infinities are treated as the smallest/largest possible number and can be excluded or included in the set
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSetElement<T>, NumberSet<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
@@ -56,6 +57,7 @@ namespace NumberSet
         /// - lowerbound > upperbound
         /// - lowerbound equal to upperbound and at least one of includelowerbound and includeupperbound is false
         /// - lowerbound or upperbound is null
+        /// Infinities are treated as the smallest/largest possible number and can be excluded or included in the set
         /// </summary>
         /// <param name="lowerbound"></param>
         /// <param name="upperbound"></param>
