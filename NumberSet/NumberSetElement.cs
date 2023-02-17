@@ -11,6 +11,7 @@ namespace NumberSet
     /// The Empty set is considered part of any set but only equal to itself
     /// A NumberSetElement can only be created through static Create/CreateEmpty methods
     /// Infinities are treated as the smallest/largest possible number and can be excluded or included in the set
+    /// NaN is not allowed as bounds and results in an empty set being created, a NaN point is regarded as not belonging to any set
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSetElement<T>, NumberSet<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
@@ -58,6 +59,7 @@ namespace NumberSet
         /// - lowerbound equal to upperbound and at least one of includelowerbound and includeupperbound is false
         /// - lowerbound or upperbound is null
         /// Infinities are treated as the smallest/largest possible number and can be excluded or included in the set
+        /// If T is float or double and lowerbound or upperbound is NaN an empty set is returned
         /// </summary>
         /// <param name="lowerbound"></param>
         /// <param name="upperbound"></param>
@@ -67,6 +69,8 @@ namespace NumberSet
         public static NumberSetElement<T> Create(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound)
         {
             if(lowerbound == null || upperbound == null)
+                return CreateEmpty();
+            else if (CheckIfNaN(lowerbound) || CheckIfNaN(upperbound))
                 return CreateEmpty();
             else if (lowerbound == upperbound && (!includelowerbound || !includeupperbound))
                  return CreateEmpty();
@@ -493,6 +497,22 @@ namespace NumberSet
         }
 
         // Support methods
+
+        /// <summary>
+        /// Checks if point is double.NaN or float.NaN
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        private static bool CheckIfNaN(T point)
+        {
+            var doublePoint = point as double?;
+            if (doublePoint.HasValue && double.IsNaN(doublePoint.Value)) return true;
+
+            var floatPoint = point as float?;
+            if (floatPoint.HasValue && float.IsNaN(floatPoint.Value)) return true;
+
+            return false;
+        }
 
         /// <summary>
         /// Support method for NumberSetElement and NumberSet.
