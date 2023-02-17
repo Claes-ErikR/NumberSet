@@ -94,6 +94,7 @@ namespace NumberSet
         /// <returns></returns>
         private static NumberSet<T> CreateNumberSet(IEnumerable<INumberSetElement<T>> elements) 
         {
+            if(elements == null) return CreateEmpty();
             List<INumberSetElement<T>> workListElements = new List<INumberSetElement<T>>();
             foreach (var element in elements)
                 Add(workListElements, element);
@@ -134,7 +135,7 @@ namespace NumberSet
         /// <param name="element"></param>
         private static void Add(List<INumberSetElement<T>> workListElements, INumberSetElement<T> element)
         {
-            if (!element.IsEmpty)
+            if (element != null && !element.IsEmpty)
             {
                 var newElement = element;
                 var intersectList = new List<INumberSetElement<T>>();

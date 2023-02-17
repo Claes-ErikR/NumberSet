@@ -75,6 +75,71 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         }
 
         [TestMethod]
+        public void TestCreateFromNullList()
+        {
+            var numberSet = NumberSet<double>.Create(null);
+            Assert.AreEqual(numberSet.LowerBound, default(double));
+            Assert.AreEqual(numberSet.UpperBound, default(double));
+            Assert.IsTrue(numberSet.IsEmpty);
+            Assert.IsFalse(numberSet.IsClosed);
+            Assert.IsTrue(numberSet.IsOpen);
+            Assert.AreEqual(numberSet.Measure, 0);
+            Assert.AreEqual(numberSet.Count, 1);
+        }
+
+        [TestMethod]
+        public void TestCreateFromListContainingNull()
+        {
+            var numberSet = NumberSet<double>.Create(new List<NumberSetElement<double>>() { null });
+            Assert.AreEqual(numberSet.LowerBound, default(double));
+            Assert.AreEqual(numberSet.UpperBound, default(double));
+            Assert.IsTrue(numberSet.IsEmpty);
+            Assert.IsFalse(numberSet.IsClosed);
+            Assert.IsTrue(numberSet.IsOpen);
+            Assert.AreEqual(numberSet.Measure, 0);
+            Assert.AreEqual(numberSet.Count, 1);
+        }
+
+        [TestMethod]
+        public void TestCreateFromListContainingNullFirst()
+        {
+            var numberSet = NumberSet<double>.Create(new List<NumberSetElement<double>>() { null, NumberSetElement<double>.Create(2, 3, true, false) });
+            Assert.AreEqual(numberSet.LowerBound, 2);
+            Assert.AreEqual(numberSet.UpperBound, 3);
+            Assert.IsFalse(numberSet.IsEmpty);
+            Assert.IsFalse(numberSet.IsClosed);
+            Assert.IsFalse(numberSet.IsOpen);
+            Assert.AreEqual(numberSet.Measure, 1);
+            Assert.AreEqual(numberSet.Count, 1);
+        }
+
+        [TestMethod]
+        public void TestCreateFromListContainingNullLast()
+        {
+            var numberSet = NumberSet<double>.Create(new List<NumberSetElement<double>>() { NumberSetElement<double>.Create(2, 3, true, false), null });
+            Assert.AreEqual(numberSet.LowerBound, 2);
+            Assert.AreEqual(numberSet.UpperBound, 3);
+            Assert.IsFalse(numberSet.IsEmpty);
+            Assert.IsFalse(numberSet.IsClosed);
+            Assert.IsFalse(numberSet.IsOpen);
+            Assert.AreEqual(numberSet.Measure, 1);
+            Assert.AreEqual(numberSet.Count, 1);
+        }
+
+        [TestMethod]
+        public void TestCreateFromEmptyList()
+        {
+            var numberSet = NumberSet<double>.Create(new List<NumberSetElement<double>>());
+            Assert.AreEqual(numberSet.LowerBound, default(double));
+            Assert.AreEqual(numberSet.UpperBound, default(double));
+            Assert.IsTrue(numberSet.IsEmpty);
+            Assert.IsFalse(numberSet.IsClosed);
+            Assert.IsTrue(numberSet.IsOpen);
+            Assert.AreEqual(numberSet.Measure, 0);
+            Assert.AreEqual(numberSet.Count, 1);
+        }
+
+        [TestMethod]
         public void TestCreateFromPointBoundsFalseFalse()
         {
             var element = NumberSetElement<double>.Create(2, 2, false, false);
