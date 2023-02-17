@@ -6,7 +6,7 @@ namespace NumberSet
 {
 
     /// <summary>
-    /// Implementation of elements of a set where is a set in itself. NumberSetElement is used as part of NumberSet
+    /// Implementation of elements of a set which is a set in itself. NumberSetElement is used as part of NumberSet
     /// T has to implement IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     /// The Empty set is considered part of any set but only equal to itself
     /// A NumberSetElement can only be created through static Create/CreateEmpty methods

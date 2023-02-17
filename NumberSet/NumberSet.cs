@@ -4,12 +4,28 @@ using System.Text;
 
 namespace NumberSet
 {
+
+    /// <summary>
+    /// Implementation of a set using NumberSetElement as parts.
+    /// Every INumberSetElement in the collection is disjunct and sorted in order.
+    /// T has to implement IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
+    /// The Empty set is considered part of any set but only equal to itself
+    /// A NumberSet can only be created through static Create/CreateEmpty methods
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class NumberSet<T> : INumberSet<T>, IParsable<NumberSet<T>>, IEqualityOperators<NumberSet<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSet<T>, NumberSet<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
         private List<INumberSetElement<T>> _elements;
 
         // Constructors
 
+        /// <summary>
+        /// Constructs a NumberSet from a list with isClosed, isOpen and measure calculated
+        /// </summary>
+        /// <param name="elements"></param>
+        /// <param name="isClosed"></param>
+        /// <param name="isOpen"></param>
+        /// <param name="measure"></param>
         private NumberSet(List<INumberSetElement<T>> elements, bool isClosed, bool isOpen, T measure)
         {
             _elements = elements;
@@ -22,6 +38,9 @@ namespace NumberSet
             Count = _elements.Count;
         }
 
+        /// <summary>
+        /// Constructs an empty numberset
+        /// </summary>
         private NumberSet()
         {
             _elements = new List<INumberSetElement<T>>() { NumberSetElement<T>.CreateEmpty() };
@@ -36,16 +55,43 @@ namespace NumberSet
 
         // Create methods
 
+        /// <summary>
+        /// Creates a NumberSet from an arbitrary number of INumberSetElement arguments.
+        /// Overlapping/touching elements are joined.
+        /// Empty elements are ignored.
+        /// If only empty arguments are supplied, an empty set is created.
+        /// The added elements are sorted.
+        /// </summary>
+        /// <param name="elements"></param>
+        /// <returns></returns>
         public static NumberSet<T> Create(params INumberSetElement<T>[] elements)
         {
             return CreateNumberSet(elements);
         }
 
+        /// <summary>
+        /// Creates a NumberSet from a list of INumberSetElement.
+        /// Overlapping/touching elements are joined.
+        /// Empty elements are ignored.
+        /// If only empty arguments/an empty list/null are supplied, an empty set is created.
+        /// The added elements are sorted.
+        /// </summary>
+        /// <param name="elements"></param>
+        /// <returns></returns>
         public static NumberSet<T> Create(IEnumerable<INumberSetElement<T>> elements)
         {
             return CreateNumberSet(elements);
         }
 
+        /// <summary>
+        /// Creates a NumberSet from a list of INumberSetElement.
+        /// Overlapping/touching elements are joined.
+        /// Empty elements are ignored.
+        /// If only empty arguments/an empty list/null are supplied, an empty set is created.
+        /// The added elements are sorted.
+        /// </summary>
+        /// <param name="elements"></param>
+        /// <returns></returns>
         private static NumberSet<T> CreateNumberSet(IEnumerable<INumberSetElement<T>> elements) 
         {
             List<INumberSetElement<T>> workListElements = new List<INumberSetElement<T>>();
@@ -67,6 +113,10 @@ namespace NumberSet
             return new NumberSet<T>(workListElements, isClosed, isOpen, measure);
         }
 
+        /// <summary>
+        /// Creates an empty NumberSet
+        /// </summary>
+        /// <returns></returns>
         public static NumberSet<T> CreateEmpty()
         {
             return new NumberSet<T>();
@@ -74,6 +124,14 @@ namespace NumberSet
 
         // Create support methods
 
+        /// <summary>
+        /// Adds element to workListElements.
+        /// If element is overlapping/touching any elements they are joined.
+        /// If element is empty it is ignored.
+        /// The added element is added in sorted order.
+        /// </summary>
+        /// <param name="workListElements"></param>
+        /// <param name="element"></param>
         private static void Add(List<INumberSetElement<T>> workListElements, INumberSetElement<T> element)
         {
             if (!element.IsEmpty)
@@ -113,6 +171,11 @@ namespace NumberSet
 
         // *********** Properties ***********
 
+        /// <summary>
+        /// Returns element at index
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public INumberSetElement<T> this[int index]
         {
             get
@@ -121,24 +184,50 @@ namespace NumberSet
             }
         }
 
+        /// <summary>
+        /// Returns the lower bound of the first element in the set. I.e. the lower bound of the whole set
+        /// </summary>
         public T LowerBound { get; }
 
+        /// <summary>
+        /// Returns the upper bound of the last element in the set. I.e. the upper bound of the whole set
+        /// </summary>
         public T UpperBound { get; }
 
+        /// <summary>
+        /// Indicates if the set is closed, a NumberSet is closed if all its elements are closed
+        /// </summary>
         public bool IsClosed { get; }
 
+        /// <summary>
+        /// Indicates if the set is open, a NumberSet is open if all its elements are open
+        /// </summary>
         public bool IsOpen { get; }
 
+        /// <summary>
+        /// Indicates if the instance is the empty set
+        /// </summary>
         public bool IsEmpty { get; }
 
+        /// <summary>
+        /// Returns the measure of the instance, the measure of a NumberSet is the sum of the measure of all its elements
+        /// </summary>
         public T Measure { get; }
 
+        /// <summary>
+        /// Returns the number of elements in the instance
+        /// </summary>
         public int Count { get; }
 
         // *********** Methods ***********
 
         // Union
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in at least one of the instance and INumberSet sets
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Union(INumberSet<T> other)
         {
             var elements = new List<INumberSetElement<T>>();
@@ -150,6 +239,11 @@ namespace NumberSet
             return NumberSet<T>.Create(elements);
         }
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in at least one of the instance and INumberSetElement sets
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Union(INumberSetElement<T> other)
         {
             return other.Union(this);
@@ -157,6 +251,11 @@ namespace NumberSet
 
         // Intersect
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in both of the instance and INumberSet sets
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Intersection(INumberSet<T> other)
         {
             var elements = new List<NumberSetElement<T>>();
@@ -171,6 +270,11 @@ namespace NumberSet
             return NumberSet<T>.Create(elements);
         }
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in both of the instance and INumberSetElement sets
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Intersection(INumberSetElement<T> other)
         {
             var elements = new List<NumberSetElement<T>>();
@@ -182,6 +286,11 @@ namespace NumberSet
             return NumberSet<T>.Create(elements);
         }
 
+        /// <summary>
+        /// Checks if the instance shares any part with an INumberSet
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Intersects(INumberSet<T> other)
         {
             if (IsEmpty || other.IsEmpty) return true;
@@ -193,6 +302,11 @@ namespace NumberSet
 
         }
 
+        /// <summary>
+        /// Checks if the instance shares any part with an INumberSetElement
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Intersects(INumberSetElement<T> other)
         {
             if (IsEmpty || other.IsEmpty) return true;
@@ -205,6 +319,11 @@ namespace NumberSet
 
         // Difference
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in the instance that is not in the INumberSet set
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Difference(INumberSet<T> other)
         {
             if (IsEmpty || other.IsEmpty) return this;
@@ -219,6 +338,11 @@ namespace NumberSet
             return NumberSet<T>.Create(elements);
         }
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in the instance that is not in the INumberSetElement set
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Difference(INumberSetElement<T> other)
         {
             if (IsEmpty || other.IsEmpty) return this;
@@ -235,6 +359,11 @@ namespace NumberSet
 
         // Contains
 
+        /// <summary>
+        /// Checks if the point other is within the instance
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Contains(T other)
         {
             if (IsEmpty) return false;
@@ -245,6 +374,11 @@ namespace NumberSet
             return false;
         }
 
+        /// <summary>
+        /// Checks if the whole INumberSet is within the instance
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Contains(INumberSet<T> other)
         {
             if (IsEmpty) return other.IsEmpty;
@@ -270,6 +404,11 @@ namespace NumberSet
             return workList.Count == 0;
         }
 
+        /// <summary>
+        /// Checks if the whole INumberSetElement is within the instance
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Contains(INumberSetElement<T> other)
         {
             if (IsEmpty) return other.IsEmpty;
@@ -284,7 +423,7 @@ namespace NumberSet
         //Equality
 
         /// <summary>
-        /// Compares the instance to an object
+        /// Compares the instance to an object for equality
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -299,6 +438,11 @@ namespace NumberSet
             return false;
         }
 
+        /// <summary>
+        /// Compares the instance to an INumberSetElement for equality
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Equals(INumberSetElement<T>? other)
         {
             if (other == null) return false;
@@ -306,6 +450,11 @@ namespace NumberSet
             return this[0].Equals(other);
         }
 
+        /// <summary>
+        /// Compares the instance to an INumberSet for equality
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Equals(INumberSet<T>? other)
         {
             if (other == null) return false;
@@ -317,21 +466,45 @@ namespace NumberSet
             return true;
         }
 
+        /// <summary>
+        /// Compares a NumberSet to a NumberSetElement for equality
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(NumberSet<T>? left, NumberSetElement<T>? right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Compares a NumberSet to a NumberSetElement for inequality
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(NumberSet<T>? left, NumberSetElement<T>? right)
         {
             return !(left == right);
         }
 
+        /// <summary>
+        /// Compares two NumberSets for equality
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(NumberSet<T>? left, NumberSet<T>? right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Compares two NumberSets for inequality
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(NumberSet<T>? left, NumberSet<T>? right)
         {
             return !(left == right);
@@ -348,6 +521,12 @@ namespace NumberSet
 
         // Text
 
+        /// <summary>
+        /// Creates a string representation of the instance on the form (x, y); [z, w] ... x/z is lower bound and y/w is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while
+        /// [ or ] means lower/upper bound is included. Each element in the instance is represented by one pair of numbers
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -361,6 +540,15 @@ namespace NumberSet
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Extracts a NumberSet from a string. The string is expected to be on the form (x, y); [z, w] ... where x/z is lower bound and y/w is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while [ or ] means lower/upper bound is included.
+        /// Each element in the instance produces one pair of numbers
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static NumberSet<T> Parse(string s, IFormatProvider? provider)
         {
             if (s == "Empty") return NumberSet<T>.CreateEmpty();
@@ -385,6 +573,15 @@ namespace NumberSet
             return NumberSet<T>.Create(elements);
         }
 
+        /// <summary>
+        /// Tries to extract a NumberSet from a string. The string is expected to be on the form (x, y); [z, w] ... where x/z is lower bound and y/w is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while [ or ] means lower/upper bound is included.
+        /// Each element in the instance produces one pair of numbers
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="provider"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
         public static bool TryParse(string? s, IFormatProvider? provider, out NumberSet<T> result)
         {
             try
@@ -401,12 +598,20 @@ namespace NumberSet
 
         // Enumerator
 
+        /// <summary>
+        /// Returns enumerator for the instance
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<INumberSetElement<T>> GetEnumerator()
 
         {
             return _elements.GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns enumerator for the instance
+        /// </summary>
+        /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
