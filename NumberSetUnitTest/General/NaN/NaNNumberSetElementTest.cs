@@ -67,5 +67,33 @@ namespace NumberSetUnitTest.General.NaN
             var element = NumberSetElement<float>.CreateEmpty();
             Assert.IsFalse(element.Contains(float.NaN));
         }
+
+        [TestMethod]
+        public void TestContainsdoubleNaNNumberSet()
+        {
+            var element = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true));
+            Assert.IsFalse(element.Contains(double.NaN));
+        }
+
+        [TestMethod]
+        public void TestEmptyContainsdoubleNaNNumberSet()
+        {
+            var element = NumberSet<double>.CreateEmpty();
+            Assert.IsFalse(element.Contains(double.NaN));
+        }
+
+        [TestMethod]
+        public void TestContainsfloatNaNNumberSet()
+        {
+            var element = NumberSet<float>.Create(NumberSetElement<float>.Create(2, 3, true, true));
+            Assert.IsFalse(element.Contains(float.NaN));
+        }
+
+        [TestMethod]
+        public void TestEmptyContainsfloatNaNNumberSet()
+        {
+            var element = NumberSet<float>.CreateEmpty();
+            Assert.IsFalse(element.Contains(float.NaN));
+        }
     }
 }
