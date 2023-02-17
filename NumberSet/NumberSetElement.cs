@@ -55,6 +55,7 @@ namespace NumberSet
         /// Creates a non-empty set of the parameters are valid. Invalid parameters that constructs an empty set are:
         /// - lowerbound > upperbound
         /// - lowerbound equal to upperbound and at least one of includelowerbound and includeupperbound is false
+        /// - lowerbound or upperbound is null
         /// </summary>
         /// <param name="lowerbound"></param>
         /// <param name="upperbound"></param>
@@ -63,7 +64,9 @@ namespace NumberSet
         /// <returns></returns>
         public static NumberSetElement<T> Create(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound)
         {
-            if (lowerbound == upperbound && (!includelowerbound || !includeupperbound))
+            if(lowerbound == null || upperbound == null)
+                return CreateEmpty();
+            else if (lowerbound == upperbound && (!includelowerbound || !includeupperbound))
                  return CreateEmpty();
             else if (lowerbound > upperbound)
                 return CreateEmpty();

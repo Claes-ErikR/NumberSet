@@ -67,6 +67,27 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Object
             Assert.IsTrue(numberSetElement1 != numberSetElement2);
             Assert.IsFalse(numberSetElement1 == numberSetElement2);
         }
+
+        [TestMethod]
+        public void TestClassCreateWithNullTest()
+        {
+            var numberSetElement = NumberSetElement<TestClass>.Create(null, null, true, true);
+            Assert.IsTrue(numberSetElement.IsEmpty);
+        }
+
+        [TestMethod]
+        public void TestClassCreateWithNullLowerBoundTest()
+        {
+            var numberSetElement = NumberSetElement<TestClass>.Create(null, new TestClass(3), true, true);
+            Assert.IsTrue(numberSetElement.IsEmpty);
+        }
+
+        [TestMethod]
+        public void TestClassCreateWithNullUpperBoundTest()
+        {
+            var numberSetElement = NumberSetElement<TestClass>.Create(new TestClass(2), null, true, true);
+            Assert.IsTrue(numberSetElement.IsEmpty);
+        }
     }
 
     public class TestClass : IAdditionOperators<TestClass, TestClass, TestClass>, ISubtractionOperators<TestClass, TestClass, TestClass>, IComparisonOperators<TestClass, TestClass, bool>, IParsable<TestClass>

@@ -72,7 +72,7 @@ namespace NumberSet
         /// <summary>
         /// Creates a NumberSet from a list of INumberSetElement.
         /// Overlapping/touching elements are joined.
-        /// Empty elements are ignored.
+        /// Empty and null elements are ignored.
         /// If only empty arguments/an empty list/null are supplied, an empty set is created.
         /// The added elements are sorted.
         /// </summary>
@@ -86,7 +86,7 @@ namespace NumberSet
         /// <summary>
         /// Creates a NumberSet from a list of INumberSetElement.
         /// Overlapping/touching elements are joined.
-        /// Empty elements are ignored.
+        /// Empty and null elements are ignored.
         /// If only empty arguments/an empty list/null are supplied, an empty set is created.
         /// The added elements are sorted.
         /// </summary>
