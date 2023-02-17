@@ -4,16 +4,39 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace NumberSet
 {
+
+    /// <summary>
+    /// Implementation of elements of a set where is a set in itself. NumberSetElement is used as part of NumberSet
+    /// T has to implement IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
+    /// The Empty set is considered part of any set but only equal to itself
+    /// A NumberSetElement can only be created through static Create/CreateEmpty methods
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSetElement<T>, NumberSet<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
 
         // Constructors
 
+        /// <summary>
+        /// Constructs a non-empty NumberSetElement
+        /// </summary>
+        /// <param name="lowerbound"></param>
+        /// <param name="upperbound"></param>
+        /// <param name="includelowerbound"></param>
+        /// <param name="includeupperbound"></param>
         private NumberSetElement(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound) : 
             this(lowerbound, upperbound, includelowerbound, includeupperbound, false)
         {
         }
 
+        /// <summary>
+        /// Constructs a possibly empty NumberSetElement
+        /// </summary>
+        /// <param name="lowerbound"></param>
+        /// <param name="upperbound"></param>
+        /// <param name="includelowerbound"></param>
+        /// <param name="includeupperbound"></param>
+        /// <param name="isempty"></param>
         private NumberSetElement(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound, bool isempty)
         {
             LowerBound = lowerbound;
@@ -28,6 +51,16 @@ namespace NumberSet
 
         // Create methods
 
+        /// <summary>
+        /// Creates a non-empty set of the parameters are valid. Invalid parameters that constructs an empty set are:
+        /// - lowerbound > upperbound
+        /// - lowerbound equal to upperbound and at least one of includelowerbound and includeupperbound is false
+        /// </summary>
+        /// <param name="lowerbound"></param>
+        /// <param name="upperbound"></param>
+        /// <param name="includelowerbound"></param>
+        /// <param name="includeupperbound"></param>
+        /// <returns></returns>
         public static NumberSetElement<T> Create(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound)
         {
             if (lowerbound == upperbound && (!includelowerbound || !includeupperbound))
@@ -38,6 +71,13 @@ namespace NumberSet
                 return new NumberSetElement<T>(lowerbound, upperbound, includelowerbound, includeupperbound);
         }
 
+        /// <summary>
+        /// Creates an empty set.
+        /// LowerBound and UpperBound are set to default for T
+        /// IncludeLowerBound and IncludeUpperBound are set to false
+        /// Measure will be the default for T
+        /// </summary>
+        /// <returns></returns>
         public static NumberSetElement<T> CreateEmpty()
         {
             return new NumberSetElement<T>(default(T), default(T), false, false, true);
@@ -45,26 +85,55 @@ namespace NumberSet
 
         // *********** Properties ***********
 
+        /// <summary>
+        /// Indicates if the LowerBound is part of the instance
+        /// </summary>
         public bool IncludeLowerBound { get; }
 
+        /// <summary>
+        /// Indicates if the UpperBound is part of the instance
+        /// </summary>
         public bool IncludeUpperBound { get; }
 
+        /// <summary>
+        /// Returns the lower bound of the instance
+        /// </summary>
         public T LowerBound { get; }
 
+        /// <summary>
+        /// Returns the upper bound of the instance
+        /// </summary>
         public T UpperBound { get; }
 
+        /// <summary>
+        /// Indicates if both lower and upper bounds are part of the instance
+        /// </summary>
         public bool IsClosed { get; }
 
+        /// <summary>
+        /// Indicates if none of the lower and upper bounds are part of the instance
+        /// </summary>
         public bool IsOpen { get; }
 
+        /// <summary>
+        /// Indicates if the instance is the empty set
+        /// </summary>
         public bool IsEmpty { get; }
 
+        /// <summary>
+        /// Returns the measure (UpperBound - LowerBound) of the instance
+        /// </summary>
         public T Measure { get; }
 
         // *********** Methods ***********
 
         // Union
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in at least one of the instance and INumberSet sets
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Union(INumberSet<T> other)
         {
             var list = new List<INumberSetElement<T>>();
@@ -74,13 +143,24 @@ namespace NumberSet
             return NumberSet<T>.Create(list);
         }
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in at least one of the instance and INumberSetElement sets
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Union(INumberSetElement<T> other)
+
         {
             return NumberSet<T>.Create(this, other);
         }
 
         // Intersect
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in both of the instance and INumberSet sets
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Intersection(INumberSet<T> other)
         {
             var elements = new List<NumberSetElement<T>>();
@@ -92,11 +172,21 @@ namespace NumberSet
             return NumberSet<T>.Create(elements);
         }
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in both of the instance and INumberSetElement sets
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Intersection(INumberSetElement<T> other)
         {
             return NumberSet<T>.Create(CreateIntersection(this, other));
         }
 
+        /// <summary>
+        /// Checks if the instance shares any part with an INumberSet
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Intersects(INumberSet<T> other)
         {
             if (IsEmpty || other.IsEmpty) return true;
@@ -107,7 +197,12 @@ namespace NumberSet
             return false;
         }
 
-        public bool Intersects(INumberSetElement<T> other) // Empty set always intersects sets
+        /// <summary>
+        /// Checks if the instance shares any part with an INumberSetElement
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Intersects(INumberSetElement<T> other)
         {
             if (IsEmpty || other.IsEmpty) return true;
             return CreateIntersection(this, other).IsEmpty == false;
@@ -115,6 +210,11 @@ namespace NumberSet
 
         // Difference
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in the instance that is not in the INumberSet set
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Difference(INumberSet<T> other)
         {
             if (IsEmpty || other.IsEmpty) return NumberSet<T>.Create(this);
@@ -122,6 +222,11 @@ namespace NumberSet
             return NumberSet<T>.Create(difference);
         }
 
+        /// <summary>
+        /// Returns an INumberSet containing all points in the instance that is not in the INumberSetElement set
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public INumberSet<T> Difference(INumberSetElement<T> other)
         {
             if (IsEmpty || other.IsEmpty) return NumberSet<T>.Create(this);
@@ -155,6 +260,11 @@ namespace NumberSet
 
         // Contains
 
+        /// <summary>
+        /// Checks if the point other is within the instance
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Contains(T other)
         {
             if (IsEmpty) return false;
@@ -163,7 +273,12 @@ namespace NumberSet
             return other > LowerBound && other < UpperBound;
         }
 
-        public bool Contains(INumberSet<T> other) // Empty set is contained, meaning is subset
+        /// <summary>
+        /// Checks if the whole INumberSet is within the instance
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Contains(INumberSet<T> other)
         {
             if (IsEmpty) return other.IsEmpty;
             if (other.IsEmpty) return true;
@@ -176,6 +291,11 @@ namespace NumberSet
             return true;
         }
 
+        /// <summary>
+        /// Checks if the whole INumberSetElement is within the instance
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Contains(INumberSetElement<T> other)
         {
             if (IsEmpty) return other.IsEmpty;
@@ -190,7 +310,7 @@ namespace NumberSet
         // Equality
 
         /// <summary>
-        /// Compares the instance to an object
+        /// Compares the instance to an object for equality
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -205,6 +325,11 @@ namespace NumberSet
             return false;
         }
 
+        /// <summary>
+        /// Compares the instance to an INumberSetElement for equality
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Equals(INumberSetElement<T>? other)
         {
             if (other == null) return false;
@@ -213,6 +338,11 @@ namespace NumberSet
             return LowerBound == other.LowerBound && UpperBound== other.UpperBound && IncludeLowerBound == other.IncludeLowerBound && IncludeUpperBound == other.IncludeUpperBound;
         }
 
+        /// <summary>
+        /// Compares the instance to an INumberSet for equality
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Equals(INumberSet<T>? other)
         {
             if(other == null) return false;
@@ -220,21 +350,45 @@ namespace NumberSet
             return Equals(other[0]);
         }
 
+        /// <summary>
+        /// Compares two NumberSetElements for equality
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(NumberSetElement<T>? left, NumberSetElement<T>? right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Compares two NumberSetElements for inequality
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(NumberSetElement<T>? left, NumberSetElement<T>? right)
         {
             return !(left == right);
         }
 
+        /// <summary>
+        /// Compares a NumberSetElement to a NumberSet for equality
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(NumberSetElement<T>? left, NumberSet<T>? right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Compares a NumberSetElement to a NumberSet for inequality
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(NumberSetElement<T>? left, NumberSet<T>? right)
         {
             return !(left == right);
@@ -251,6 +405,12 @@ namespace NumberSet
 
         // Text
 
+        /// <summary>
+        /// Creates a string representation of the instance on the form (x, y). x is lower bound and y is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while
+        /// [ or ] means lower/upper bound is included
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             if (IsEmpty) return "Empty";
@@ -264,6 +424,14 @@ namespace NumberSet
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Extracts a NumberSetElement from a string. The string is expected to be on the form (x, y) where x is lower bound and y is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while [ or ] means lower/upper bound is included
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static NumberSetElement<T> Parse(string s, IFormatProvider? provider)
         {
             if(s == "Empty") return NumberSetElement<T>.CreateEmpty();
@@ -297,6 +465,14 @@ namespace NumberSet
             return NumberSetElement<T>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
         }
 
+        /// <summary>
+        /// Tries to extract a NumberSetElement from a string. The string is expected to be on the form (x, y) where x is lower bound and y is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while [ or ] means lower/upper bound is included
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="provider"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
         public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out NumberSetElement<T> result)
         {
             try
@@ -313,6 +489,14 @@ namespace NumberSet
 
         // Support methods
 
+        /// <summary>
+        /// Support method for NumberSetElement and NumberSet.
+        /// It creates a NumberSetElement that is the set of points that belong to both INumberSetElement arguments.
+        /// If there are no points in both arguments the empty set is returned
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         internal static NumberSetElement<T> CreateIntersection(INumberSetElement<T> left, INumberSetElement<T> right)
         {
 
@@ -339,6 +523,14 @@ namespace NumberSet
             return Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
         }
 
+        /// <summary>
+        /// Support method for NumberSet.
+        /// It creates a NumberSetElement that is the set of points that belong to at least one of the INumberSetElement arguments.
+        /// If the two arguments are disjunkt the empty set is returned
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         internal static NumberSetElement<T> CreateConnectedUnion(INumberSetElement<T> left, INumberSetElement<T> right)
         {
 
@@ -356,6 +548,14 @@ namespace NumberSet
             return Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
         }
 
+        /// <summary>
+        /// Support method for NumberSetElement and NumberSet.
+        /// It creates a list of INumberSetElement that is the set of points that belong to the INumberSetElement argument but not the INumberSet argument.
+        /// If there are no such points the empty set is returned as the only element in the list
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="numberSet"></param>
+        /// <returns></returns>
         internal static List<INumberSetElement<T>> RemoveIntersections(INumberSetElement<T> element, INumberSet<T> numberSet)
         {
             var result = new List<INumberSetElement<T>>();
