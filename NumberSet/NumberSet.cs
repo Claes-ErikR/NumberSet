@@ -11,11 +11,12 @@ namespace NumberSet
     /// T has to implement IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     /// The Empty set is considered part of any set but only equal to itself
     /// A NumberSet can only be created through static Create/CreateEmpty methods
+    /// An explicit cast to NumberSetElement exists using the first element in NumberSet as the new NumberSetElement
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class NumberSet<T> : INumberSet<T>, IParsable<NumberSet<T>>, IEqualityOperators<NumberSet<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSet<T>, NumberSet<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
     {
-        private List<INumberSetElement<T>> _elements;
+        private readonly List<INumberSetElement<T>> _elements;
 
         // Constructors
 
@@ -616,6 +617,18 @@ namespace NumberSet
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        // Cast
+
+        /// <summary>
+        /// Provides an explicit cast from NumberSet to NumberSet Element
+        /// </summary>
+        /// <param name="numberSet"></param>
+        public static explicit operator NumberSetElement<T>(NumberSet<T> numberSet)
+        {
+            if (numberSet == null) return null;
+            return (NumberSetElement<T>)numberSet[0];
         }
     }
 }
