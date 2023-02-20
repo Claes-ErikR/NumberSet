@@ -28,20 +28,7 @@ namespace NumberSet
         /// <param name="upperbound"></param>
         /// <param name="includelowerbound"></param>
         /// <param name="includeupperbound"></param>
-        private NumberSetElement(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound) :
-            this(lowerbound, upperbound, includelowerbound, includeupperbound, false)
-        {
-        }
-
-        /// <summary>
-        /// Constructs a possibly empty NumberSetElement
-        /// </summary>
-        /// <param name="lowerbound"></param>
-        /// <param name="upperbound"></param>
-        /// <param name="includelowerbound"></param>
-        /// <param name="includeupperbound"></param>
-        /// <param name="isempty"></param>
-        private NumberSetElement(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound, bool isempty)
+        private NumberSetElement(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound)
         {
             LowerBound = lowerbound;
             UpperBound = upperbound;
@@ -49,8 +36,26 @@ namespace NumberSet
             IncludeUpperBound = includeupperbound;
             IsClosed = includelowerbound && includeupperbound;
             IsOpen = !includeupperbound && !includelowerbound;
-            Measure = isempty ? default(T) : upperbound - lowerbound;
-            IsEmpty = isempty;
+            Measure = upperbound - lowerbound;
+            IsEmpty = false;
+        }
+
+        /// <summary>
+        /// Creates an empty set
+        /// LowerBound and UpperBound are set to default for T
+        /// IncludeLowerBound and IncludeUpperBound are set to false
+        /// Measure will be the default for T
+        /// </summary>
+        private NumberSetElement()
+        {
+            LowerBound = default(T);
+            UpperBound = default(T);
+            IncludeLowerBound = false;
+            IncludeUpperBound = false;
+            IsClosed = false;
+            IsOpen = true;
+            Measure = default(T);
+            IsEmpty = true;
         }
 
         // Create methods
@@ -89,13 +94,10 @@ namespace NumberSet
 
         /// <summary>
         /// Creates an empty set for the Empty static property
-        /// LowerBound and UpperBound are set to default for T
-        /// IncludeLowerBound and IncludeUpperBound are set to false
-        /// Measure will be the default for T
         /// </summary>
         static NumberSetElement()
         {
-            Empty = new NumberSetElement<T>(default(T), default(T), false, false, true);
+            Empty = new NumberSetElement<T>();
         }
 
         // *********** Properties ***********
