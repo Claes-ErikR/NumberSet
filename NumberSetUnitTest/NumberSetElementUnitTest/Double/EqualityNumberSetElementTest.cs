@@ -25,22 +25,22 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         public void TestEqualsZeroEmpty()
         {
             var element1 = NumberSetElement<double>.Create(0, 0, false, false);
-            var element2 = NumberSetElement<double>.CreateEmpty();
+            var element2 = NumberSetElement<double>.Empty;
             Assert.IsTrue(element1.Equals(element2));
         }
 
         [TestMethod]
         public void TestEqualsEmpty()
         {
-            var element1 = NumberSetElement<double>.CreateEmpty();
-            var element2 = NumberSetElement<double>.CreateEmpty();
+            var element1 = NumberSetElement<double>.Empty;
+            var element2 = NumberSetElement<double>.Empty;
             Assert.IsTrue(element1.Equals(element2));
         }
 
         [TestMethod]
         public void TestEqualsNull()
         {
-            var element1 = NumberSetElement<double>.CreateEmpty();
+            var element1 = NumberSetElement<double>.Empty;
             NumberSetElement<double> element2 = null;
             Assert.IsFalse(element1.Equals(element2));
         }
@@ -58,7 +58,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 NumberSetElement<double>.Create(1.9, 3, true, true),
                 NumberSetElement<double>.Create(2, 3.1, true, true),
                 NumberSetElement<double>.Create(2, 2.9, true, true),
-                NumberSetElement<double>.CreateEmpty()
+                NumberSetElement<double>.Empty
             };
             for (int i = 0; i < elementList.Count - 1; i++)
             {
@@ -96,7 +96,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestEqualsEmptyNumberSet()
         {
-            var element1 = NumberSetElement<double>.CreateEmpty();
+            var element1 = NumberSetElement<double>.Empty;
             var element2 = NumberSet<double>.CreateEmpty();
             Assert.IsTrue(element1.Equals(element2));
         }
@@ -104,7 +104,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestEqualsNullNumberSet()
         {
-            var element1 = NumberSetElement<double>.CreateEmpty();
+            var element1 = NumberSetElement<double>.Empty;
             NumberSet<double> element2 = null;
             Assert.IsFalse(element1.Equals(element2));
         }
@@ -122,7 +122,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 NumberSetElement<double>.Create(1.9, 3, true, true),
                 NumberSetElement<double>.Create(2, 3.1, true, true),
                 NumberSetElement<double>.Create(2, 2.9, true, true),
-                NumberSetElement<double>.CreateEmpty()
+                NumberSetElement<double>.Empty
             };
             var elementList2 = new List<NumberSet<double>>()
             {
@@ -173,8 +173,8 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestEqualityEmptyOperator()
         {
-            var element1 = NumberSetElement<double>.CreateEmpty();
-            var element2 = NumberSetElement<double>.CreateEmpty();
+            var element1 = NumberSetElement<double>.Empty;
+            var element2 = NumberSetElement<double>.Empty;
             Assert.IsTrue(element1 == element2);
             Assert.IsFalse(element1 != element2);
         }
@@ -192,7 +192,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 NumberSetElement<double>.Create(1.9, 3, true, true),
                 NumberSetElement<double>.Create(2, 3.1, true, true),
                 NumberSetElement<double>.Create(2, 2.9, true, true),
-                NumberSetElement<double>.CreateEmpty()
+                NumberSetElement<double>.Empty
             };
             for (int i = 0; i < elementList.Count - 1; i++)
             {
@@ -224,7 +224,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestEqualityEmptyNumberSetOperator()
         {
-            var element1 = NumberSetElement<double>.CreateEmpty();
+            var element1 = NumberSetElement<double>.Empty;
             var element2 = NumberSet<double>.CreateEmpty();
             Assert.IsTrue(element1 == element2);
             Assert.IsFalse(element1 != element2);
@@ -243,7 +243,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 NumberSetElement<double>.Create(1.9, 3, true, true),
                 NumberSetElement<double>.Create(2, 3.1, true, true),
                 NumberSetElement<double>.Create(2, 2.9, true, true),
-                NumberSetElement<double>.CreateEmpty()
+                NumberSetElement<double>.Empty
             };
             var elementList2 = new List<NumberSet<double>>()
             {
@@ -255,7 +255,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 NumberSet<double>.Create(NumberSetElement<double>.Create(1.9, 3, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3.1, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2.9, true, true)),
-                NumberSet<double>.Create(NumberSetElement<double>.CreateEmpty())
+                NumberSet<double>.Create(NumberSetElement<double>.Empty)
             };
             for (int i = 0; i < elementList1.Count - 1; i++)
             {

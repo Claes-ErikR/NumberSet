@@ -351,7 +351,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestCreateSetWithEmptySet1()
         {
-            var element1 = NumberSetElement<double>.CreateEmpty();
+            var element1 = NumberSetElement<double>.Empty;
             var element2 = NumberSetElement<double>.Create(2, 3, true, false);
             var numberSet = NumberSet<double>.Create(new List<NumberSetElement<double>>() { element1, element2 });
             Assert.AreEqual(numberSet.LowerBound, 2);
@@ -369,7 +369,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
             var element1 = NumberSetElement<double>.Create(2, 3, true, true);
             var element2 = NumberSetElement<double>.Create(4, 6, true, true);
             var element3 = NumberSetElement<double>.Create(7, 8.5, false, true);
-            var element4 = NumberSetElement<double>.CreateEmpty();
+            var element4 = NumberSetElement<double>.Empty;
             var numberSet = NumberSet<double>.Create(new List<NumberSetElement<double>>() { element1, element2, element3, element4 });
             Assert.AreEqual(numberSet.LowerBound, 2);
             Assert.AreEqual(numberSet.UpperBound, 8.5);

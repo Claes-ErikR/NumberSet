@@ -81,13 +81,13 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         public void TestWithEmptyUnion(double lowerBound, double upperBound, bool includeLowerBound, bool includeUpperBound)
         {
             var element = NumberSetElement<double>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
-            var result1 = element.Union(NumberSetElement<double>.CreateEmpty());
+            var result1 = element.Union(NumberSetElement<double>.Empty);
             Assert.AreEqual(result1.Count, 1);
             Assert.AreEqual(result1[0].LowerBound, lowerBound);
             Assert.AreEqual(result1[0].UpperBound, upperBound);
             Assert.AreEqual(result1[0].IncludeLowerBound, includeLowerBound);
             Assert.AreEqual(result1[0].IncludeUpperBound, includeUpperBound);
-            var result2 = NumberSetElement<double>.CreateEmpty().Union(element);
+            var result2 = NumberSetElement<double>.Empty.Union(element);
             Assert.AreEqual(result2.Count, 1);
             Assert.AreEqual(result2[0].LowerBound, lowerBound);
             Assert.AreEqual(result2[0].UpperBound, upperBound);
@@ -98,7 +98,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestEmptyWithEmptyUnion()
         {
-            var result = NumberSetElement<double>.CreateEmpty().Union(NumberSetElement<double>.CreateEmpty());
+            var result = NumberSetElement<double>.Empty.Union(NumberSetElement<double>.Empty);
             Assert.AreEqual(result.Count, 1);
             Assert.IsTrue(result.IsEmpty);
         }
@@ -185,7 +185,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
             Assert.AreEqual(result1[0].UpperBound, upperBound);
             Assert.AreEqual(result1[0].IncludeLowerBound, includeLowerBound);
             Assert.AreEqual(result1[0].IncludeUpperBound, includeUpperBound);
-            var result2 = NumberSetElement<double>.CreateEmpty().Union(NumberSet<double>.Create(element));
+            var result2 = NumberSetElement<double>.Empty.Union(NumberSet<double>.Create(element));
             Assert.AreEqual(result2.Count, 1);
             Assert.AreEqual(result2[0].LowerBound, lowerBound);
             Assert.AreEqual(result2[0].UpperBound, upperBound);
@@ -196,7 +196,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestEmptyWithEmptyUnionNumberSet()
         {
-            var result = NumberSetElement<double>.CreateEmpty().Union(NumberSet<double>.Create(NumberSetElement<double>.CreateEmpty()));
+            var result = NumberSetElement<double>.Empty.Union(NumberSet<double>.Create(NumberSetElement<double>.Empty));
             Assert.AreEqual(result.Count, 1);
             Assert.IsTrue(result.IsEmpty);
         }

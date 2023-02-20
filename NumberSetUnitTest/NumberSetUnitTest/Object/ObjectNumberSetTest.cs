@@ -27,7 +27,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
         public void TestClassEmptyEqualityTest()
         {
             var numberSetElement1 = NumberSet<TestClass>.CreateEmpty();
-            var numberSetElement2 = NumberSetElement<TestClass>.CreateEmpty();
+            var numberSetElement2 = NumberSetElement<TestClass>.Empty;
             Assert.IsTrue(numberSetElement1 == numberSetElement2);
             Assert.IsFalse(numberSetElement1 != numberSetElement2);
         }

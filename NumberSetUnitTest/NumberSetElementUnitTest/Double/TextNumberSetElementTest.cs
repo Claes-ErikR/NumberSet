@@ -19,7 +19,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestEmptyToString()
         {
-            var item = NumberSetElement<double>.CreateEmpty();
+            var item = NumberSetElement<double>.Empty;
             Assert.AreEqual(item.ToString(), "Empty");
         }
 
@@ -36,8 +36,8 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, true, false), "[2,3)"),
                 new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, false, true), "(2,3]"),
                 new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, false, false), "(2,3)"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "Empty"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "(2, 2)"),
+                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Empty, "Empty"),
+                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Empty, "(2, 2)"),
                 new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, true, true), " [2, 3]"),
                 new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, true, true), "[2, 3] "),
                 new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, true, true), "[2 , 3]"),
@@ -45,14 +45,14 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 3, true, true), "[2, 3 ]"),
                 new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2, 2, true, true), "[2, 2]"),
                 new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Create(2.13, 3.14, true, true), "[2.13, 3.14]"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "(2, 2]"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "[2, 2)"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "(2, 2)"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "[2, 1]"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "(2, 2]"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "(2, 2]"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "(2, 2]"),
-                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.CreateEmpty(), "(2, 2]"),
+                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Empty, "(2, 2]"),
+                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Empty, "[2, 2)"),
+                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Empty, "(2, 2)"),
+                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Empty, "[2, 1]"),
+                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Empty, "(2, 2]"),
+                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Empty, "(2, 2]"),
+                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Empty, "(2, 2]"),
+                new Tuple<NumberSetElement<double>, string>(NumberSetElement<double>.Empty, "(2, 2]"),
 
             };
             for (int i = 0; i < elementList.Count; i++)

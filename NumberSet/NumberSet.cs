@@ -44,7 +44,7 @@ namespace NumberSet
         /// </summary>
         private NumberSet()
         {
-            _elements = new List<INumberSetElement<T>>() { NumberSetElement<T>.CreateEmpty() };
+            _elements = new List<INumberSetElement<T>>() { NumberSetElement<T>.Empty };
             LowerBound = _elements[0].LowerBound;
             UpperBound = _elements[_elements.Count - 1].UpperBound;
             IsClosed = _elements[0].IncludeUpperBound;

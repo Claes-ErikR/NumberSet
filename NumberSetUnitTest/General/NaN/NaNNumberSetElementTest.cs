@@ -49,7 +49,7 @@ namespace NumberSetUnitTest.General.NaN
         [TestMethod]
         public void TestEmptyContainsdoubleNaN()
         {
-            var element = NumberSetElement<double>.CreateEmpty();
+            var element = NumberSetElement<double>.Empty;
             Assert.IsFalse(element.Contains(double.NaN));
         }
 
@@ -64,7 +64,7 @@ namespace NumberSetUnitTest.General.NaN
         [TestMethod]
         public void TestEmptyContainsfloatNaN()
         {
-            var element = NumberSetElement<float>.CreateEmpty();
+            var element = NumberSetElement<float>.Empty;
             Assert.IsFalse(element.Contains(float.NaN));
         }
 

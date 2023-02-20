@@ -88,7 +88,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestDeconstructEmptySet()
         {
-            var element = NumberSetElement<double>.CreateEmpty();
+            var element = NumberSetElement<double>.Empty;
             var (lowerbound, upperbound, includelowerbound, includeupperbound) = element;
             Assert.AreEqual(lowerbound, default(double));
             Assert.AreEqual(upperbound, default(double));
@@ -99,7 +99,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestSmallDeconstructEmptySet()
         {
-            var element = NumberSetElement<double>.CreateEmpty();
+            var element = NumberSetElement<double>.Empty;
             var (lowerbound, upperbound) = element;
             Assert.AreEqual(lowerbound, default(double));
             Assert.AreEqual(upperbound, default(double));

@@ -33,10 +33,10 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(2.2, 2.8, true, true), true),
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(2.2, 3, true, true), true),
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(2, 2.8, true, true), true),
-                new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.CreateEmpty(), true),
+                new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Empty, true),
 
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Create(2, 2, true, true), true),
-                new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.CreateEmpty(), true),
+                new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Empty, true),
 
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(2.2, 4, true, true), true),
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(1, 2.5, true, true), true),
@@ -48,9 +48,9 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Create(1, 2, true, true), true),
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Create(1, 3, true, true), true),
 
-                new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.CreateEmpty(), NumberSetElement<double>.Create(2, 2, true, true), true),
-                new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.CreateEmpty(), NumberSetElement<double>.Create(1, 2, true, true), true),
-                new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.CreateEmpty(), NumberSetElement<double>.CreateEmpty(), true),
+                new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Empty, NumberSetElement<double>.Create(2, 2, true, true), true),
+                new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Empty, NumberSetElement<double>.Create(1, 2, true, true), true),
+                new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Empty, NumberSetElement<double>.Empty, true),
 
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(3, 4, true, true), true),
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, bool>(NumberSetElement<double>.Create(2, 3, true, false), NumberSetElement<double>.Create(3, 4, true, true), false),
@@ -110,10 +110,10 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(2.2, 2.8, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2.2, 2.8, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(2.2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2.2, 3, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(2, 2.8, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2.8, true, true))),
-                new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.CreateEmpty(), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Empty, NumberSet<double>.CreateEmpty()),
 
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Create(2, 2, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true))),
-                new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.CreateEmpty(), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Empty, NumberSet<double>.CreateEmpty()),
 
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(2.2, 4, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2.2, 3, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(1, 2.5, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2.5, true, true))),
@@ -125,9 +125,9 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Create(1, 2, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Create(1, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true))),
 
-                new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.CreateEmpty(), NumberSetElement<double>.Create(2, 2, true, true), NumberSet<double>.CreateEmpty()),
-                new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.CreateEmpty(), NumberSetElement<double>.Create(1, 2, true, true), NumberSet<double>.CreateEmpty()),
-                new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.CreateEmpty(), NumberSetElement<double>.CreateEmpty(), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Empty, NumberSetElement<double>.Create(2, 2, true, true), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Empty, NumberSetElement<double>.Create(1, 2, true, true), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Empty, NumberSetElement<double>.Empty, NumberSet<double>.CreateEmpty()),
 
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(3, 4, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(3, 3, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSetElement<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, false), NumberSetElement<double>.Create(3, 4, true, true), NumberSet<double>.CreateEmpty()),
@@ -202,9 +202,9 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Create(2, 2, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true)), true),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Create(2, 2, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 3, true, true)), true),
 
-                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true)), true),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true)), true),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.CreateEmpty(), true),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true)), true),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true)), true),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Empty, NumberSet<double>.CreateEmpty(), true),
 
                 new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(3, 4, true, true)), true),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Create(2, 3, true, false), NumberSet<double>.Create(NumberSetElement<double>.Create(3, 4, true, true)), false),
@@ -248,10 +248,10 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 3, true, true), NumberSetElement<double>.Create(7, 8, false, false)), true),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 4, true, true), NumberSetElement<double>.Create(7, 8, false, false)), true),
 
-                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(2, 2, true, true)), true),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(1, 2, true, true)), true),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Create(7, 8, false, false)), true),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true), NumberSetElement<double>.Create(7, 8, false, false)), true),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(2, 2, true, true)), true),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(1, 2, true, true)), true),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Create(7, 8, false, false)), true),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true), NumberSetElement<double>.Create(7, 8, false, false)), true),
 
                 new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(3.5, 4, true, true)), false),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, bool>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(1, 1.5, true, true)), false),
@@ -293,7 +293,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2.2, 2.8, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(2.2, 2.8, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2.2, 3, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(2.2, 3, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2.8, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2.8, true, true))),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.CreateEmpty()), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Empty), NumberSet<double>.CreateEmpty()),
 
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 2, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 2, true, true), NumberSet<double>.CreateEmpty(), NumberSet<double>.CreateEmpty()),
@@ -308,9 +308,9 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 2, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 2, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 3, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true))),
 
-                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true)), NumberSet<double>.CreateEmpty()),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true)), NumberSet<double>.CreateEmpty()),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.CreateEmpty()), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true)), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true)), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Empty), NumberSet<double>.CreateEmpty()),
 
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(3, 4, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(3, 3, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, false), NumberSet<double>.Create(NumberSetElement<double>.Create(3, 4, true, true)), NumberSet<double>.CreateEmpty()),
@@ -354,10 +354,10 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 3, true, true), NumberSetElement<double>.Create(7, 8, false, false)), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true))),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 4, false, false), NumberSetElement<double>.Create(7, 8, false, false)), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true))),
 
-                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(2, 2, true, true)), NumberSet<double>.CreateEmpty()),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(1, 2, true, true)), NumberSet<double>.CreateEmpty()),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Create(7, 8, false, false)), NumberSet<double>.CreateEmpty()),
-                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true), NumberSetElement<double>.Create(7, 8, false, false)), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(2, 2, true, true)), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(1, 2, true, true)), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true), NumberSetElement<double>.Create(7, 8, false, false)), NumberSet<double>.CreateEmpty()),
+                new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true), NumberSetElement<double>.Create(7, 8, false, false)), NumberSet<double>.CreateEmpty()),
 
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(3.5, 4, true, true)), NumberSet<double>.CreateEmpty()),
                 new Tuple<NumberSetElement<double>, NumberSet<double>, NumberSet<double>>(NumberSetElement<double>.Create(2, 3, true, true), NumberSet<double>.Create(NumberSetElement<double>.Create(0, 0.5, false, false), NumberSetElement<double>.Create(1, 1.5, true, true)), NumberSet<double>.CreateEmpty()),

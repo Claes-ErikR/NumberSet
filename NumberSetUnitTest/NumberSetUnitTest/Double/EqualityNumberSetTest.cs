@@ -34,7 +34,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         public void TestEqualsEmptyNumberSet()
         {
             var element1 = NumberSet<double>.CreateEmpty();
-            var element2 = NumberSetElement<double>.CreateEmpty();
+            var element2 = NumberSetElement<double>.Empty;
             Assert.IsTrue(element1.Equals(element2));
         }
 
@@ -59,7 +59,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 NumberSetElement<double>.Create(1.9, 3, true, true),
                 NumberSetElement<double>.Create(2, 3.1, true, true),
                 NumberSetElement<double>.Create(2, 2.9, true, true),
-                NumberSetElement<double>.CreateEmpty()
+                NumberSetElement<double>.Empty
             };
             var elementList2 = new List<NumberSet<double>>()
             {
@@ -161,7 +161,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 NumberSet<double>.Create(new List<NumberSetElement<double>>() { NumberSetElement<double>.Create(1.9, 3, true, true) }),
                 NumberSet<double>.Create(new List<NumberSetElement<double>>() { NumberSetElement<double>.Create(2, 3.1, true, true) }),
                 NumberSet<double>.Create(new List<NumberSetElement<double>>() { NumberSetElement<double>.Create(2, 2.9, true, true) }),
-                NumberSet<double>.Create(new List<NumberSetElement<double>>() { NumberSetElement<double>.CreateEmpty() })
+                NumberSet<double>.Create(new List<NumberSetElement<double>>() { NumberSetElement<double>.Empty })
             };
             for (int i = 0; i < numberSetList.Count - 1; i++)
             {
@@ -193,7 +193,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         public void TestEqualityEmptyOperator()
         {
             var element1 = NumberSet<double>.CreateEmpty();
-            var element2 = NumberSetElement<double>.CreateEmpty();
+            var element2 = NumberSetElement<double>.Empty;
             Assert.IsTrue(element1 == element2);
             Assert.IsFalse(element1 != element2);
         }
@@ -211,7 +211,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 NumberSet<double>.Create(NumberSetElement<double>.Create(1.9, 3, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3.1, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2.9, true, true)),
-                NumberSet<double>.Create(NumberSetElement<double>.CreateEmpty())
+                NumberSet<double>.Create(NumberSetElement<double>.Empty)
             };
             var elementList2 = new List<NumberSetElement<double>>()
             {
@@ -223,7 +223,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 NumberSetElement<double>.Create(1.9, 3, true, true),
                 NumberSetElement<double>.Create(2, 3.1, true, true),
                 NumberSetElement<double>.Create(2, 2.9, true, true),
-                NumberSetElement<double>.CreateEmpty()
+                NumberSetElement<double>.Empty
             };
             for (int i = 0; i < elementList1.Count - 1; i++)
             {
@@ -283,7 +283,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 NumberSet<double>.Create(NumberSetElement<double>.Create(1.9, 3, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3.1, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2.9, true, true)),
-                NumberSet<double>.Create(NumberSetElement<double>.CreateEmpty())
+                NumberSet<double>.Create(NumberSetElement<double>.Empty)
             };
             var elementList2 = new List<NumberSet<double>>()
             {
@@ -295,7 +295,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 NumberSet<double>.Create(NumberSetElement<double>.Create(1.9, 3, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3.1, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2.9, true, true)),
-                NumberSet<double>.Create(NumberSetElement<double>.CreateEmpty())
+                NumberSet<double>.Create(NumberSetElement<double>.Empty)
             };
             for (int i = 0; i < elementList1.Count - 1; i++)
             {
