@@ -41,6 +41,7 @@ namespace NumberSet
 
         /// <summary>
         /// Constructs an empty numberset
+        /// Data are set from NumberSetElement<T>.Empty
         /// </summary>
         private NumberSet()
         {
@@ -95,12 +96,12 @@ namespace NumberSet
         /// <returns></returns>
         private static NumberSet<T> CreateNumberSet(IEnumerable<INumberSetElement<T>> elements) 
         {
-            if(elements == null) return CreateEmpty();
+            if(elements == null) return Empty;
             List<INumberSetElement<T>> workListElements = new List<INumberSetElement<T>>();
             foreach (var element in elements)
                 Add(workListElements, element);
 
-            if (workListElements.Count == 0) return CreateEmpty();
+            if (workListElements.Count == 0) return Empty;
 
             var isClosed = true;
             var isOpen = true;
@@ -116,12 +117,16 @@ namespace NumberSet
         }
 
         /// <summary>
-        /// Creates an empty NumberSet
+        /// Returns the empty set
         /// </summary>
-        /// <returns></returns>
-        public static NumberSet<T> CreateEmpty()
+        public static NumberSet<T> Empty { get; }
+
+        /// <summary>
+        /// Creates an empty set for the Empty static property
+        /// </summary>
+        static NumberSet()
         {
-            return new NumberSet<T>();
+            Empty = new NumberSet<T>();
         }
 
         // Create support methods
@@ -553,7 +558,7 @@ namespace NumberSet
         /// <exception cref="ArgumentException"></exception>
         public static NumberSet<T> Parse(string s, IFormatProvider? provider)
         {
-            if (s == "Empty") return NumberSet<T>.CreateEmpty();
+            if (s == "Empty") return NumberSet<T>.Empty;
 
             var trimmedString = s.Trim();
             string[] parts = trimmedString.Split(';');

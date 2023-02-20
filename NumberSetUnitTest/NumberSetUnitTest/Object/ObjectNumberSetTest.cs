@@ -19,14 +19,14 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
         [TestMethod]
         public void TestClassEmptyTest()
         {
-            var numberSet = NumberSet<TestClass>.CreateEmpty();
+            var numberSet = NumberSet<TestClass>.Empty;
             Assert.IsTrue(numberSet.IsEmpty);
         }
 
         [TestMethod]
         public void TestClassEmptyEqualityTest()
         {
-            var numberSetElement1 = NumberSet<TestClass>.CreateEmpty();
+            var numberSetElement1 = NumberSet<TestClass>.Empty;
             var numberSetElement2 = NumberSetElement<TestClass>.Empty;
             Assert.IsTrue(numberSetElement1 == numberSetElement2);
             Assert.IsFalse(numberSetElement1 != numberSetElement2);
@@ -37,7 +37,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
         [TestMethod]
         public void TestClassEmptyNotEmptyEqualityTest()
         {
-            var numberSetElement1 = NumberSet<TestClass>.CreateEmpty();
+            var numberSetElement1 = NumberSet<TestClass>.Empty;
             var numberSetElement2 = NumberSetElement<TestClass>.Create(new TestClass(2), new TestClass(3), true, true);
             Assert.IsFalse(numberSetElement1 == numberSetElement2);
             Assert.IsTrue(numberSetElement1 != numberSetElement2);
@@ -46,8 +46,8 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
         [TestMethod]
         public void TestClassEmptyEqualityNumberSetTest()
         {
-            var numberSetElement1 = NumberSet<TestClass>.CreateEmpty();
-            var numberSetElement2 = NumberSet<TestClass>.CreateEmpty();
+            var numberSetElement1 = NumberSet<TestClass>.Empty;
+            var numberSetElement2 = NumberSet<TestClass>.Empty;
             Assert.IsTrue(numberSetElement1 == numberSetElement2);
             Assert.IsFalse(numberSetElement1 != numberSetElement2);
         }
@@ -55,7 +55,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
         [TestMethod]
         public void TestClassEmptyNotEmptyEqualityNumberSetTest()
         {
-            var numberSetElement1 = NumberSet<TestClass>.CreateEmpty();
+            var numberSetElement1 = NumberSet<TestClass>.Empty;
             var numberSetElement2 = NumberSet<TestClass>.Create(NumberSetElement<TestClass>.Create(new TestClass(2), new TestClass(3), true, true));
             Assert.IsFalse(numberSetElement1 == numberSetElement2);
             Assert.IsTrue(numberSetElement1 != numberSetElement2);
@@ -65,7 +65,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
         public void TestClassNotEmptyEmptyEqualityNumberSetTest()
         {
             var numberSetElement1 = NumberSet<TestClass>.Create(NumberSetElement<TestClass>.Create(new TestClass(2), new TestClass(3), true, true));
-            var numberSetElement2 = NumberSet<TestClass>.CreateEmpty();
+            var numberSetElement2 = NumberSet<TestClass>.Empty;
             Assert.IsTrue(numberSetElement1 != numberSetElement2);
             Assert.IsFalse(numberSetElement1 == numberSetElement2);
         }

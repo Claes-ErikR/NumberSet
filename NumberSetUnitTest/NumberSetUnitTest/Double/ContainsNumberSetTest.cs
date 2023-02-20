@@ -254,9 +254,9 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 new Tuple<NumberSet<double>, NumberSet<double>, bool>(NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true)), false),
                 new Tuple<NumberSet<double>, NumberSet<double>, bool>(NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 3, true, true)), false),
 
-                new Tuple<NumberSet<double>, NumberSet<double>, bool>(NumberSet<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true)), false),
-                new Tuple<NumberSet<double>, NumberSet<double>, bool>(NumberSet<double>.CreateEmpty(), NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true)), false),
-                new Tuple<NumberSet<double>, NumberSet<double>, bool>(NumberSet<double>.CreateEmpty(), NumberSet<double>.CreateEmpty(), true),
+                new Tuple<NumberSet<double>, NumberSet<double>, bool>(NumberSet<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(2, 2, true, true)), false),
+                new Tuple<NumberSet<double>, NumberSet<double>, bool>(NumberSet<double>.Empty, NumberSet<double>.Create(NumberSetElement<double>.Create(1, 2, true, true)), false),
+                new Tuple<NumberSet<double>, NumberSet<double>, bool>(NumberSet<double>.Empty, NumberSet<double>.Empty, true),
 
                 new Tuple<NumberSet<double>, NumberSet<double>, bool>(NumberSet<double>.Create(NumberSetElement<double>.Create(2, 5, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, false, false), NumberSetElement<double>.Create(4, 5, false, false)), true),
                 new Tuple<NumberSet<double>, NumberSet<double>, bool>(NumberSet<double>.Create(NumberSetElement<double>.Create(2, 5, true, true)), NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, false, true), NumberSetElement<double>.Create(4, 5, false, true)), true),

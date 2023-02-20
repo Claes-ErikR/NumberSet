@@ -220,7 +220,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         public void TestWithEmptyDifferenceNumberSet(double lowerBound, double upperBound, bool includeLowerBound, bool includeUpperBound)
         {
             var element = NumberSetElement<double>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
-            var result1 = element.Difference(NumberSet<double>.CreateEmpty());
+            var result1 = element.Difference(NumberSet<double>.Empty);
             Assert.AreEqual(result1.Count, 1);
             Assert.AreEqual(result1[0].LowerBound, lowerBound);
             Assert.AreEqual(result1[0].UpperBound, upperBound);
@@ -234,7 +234,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestEmptyWithEmptyDifferenceNumberSet()
         {
-            var result = NumberSetElement<double>.Empty.Difference(NumberSet<double>.CreateEmpty());
+            var result = NumberSetElement<double>.Empty.Difference(NumberSet<double>.Empty);
             Assert.AreEqual(result.Count, 1);
             Assert.IsTrue(result.IsEmpty);
         }

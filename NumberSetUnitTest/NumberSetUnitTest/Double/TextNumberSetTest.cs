@@ -19,7 +19,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestEmptyToString()
         {
-            var item = NumberSet<double>.CreateEmpty();
+            var item = NumberSet<double>.Empty;
             Assert.AreEqual(item.ToString(), "Empty");
         }
 

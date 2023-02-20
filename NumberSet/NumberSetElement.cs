@@ -249,7 +249,7 @@ namespace NumberSet
             if(intersection.IsEmpty)
                 return NumberSet<T>.Create(this);
             else if (intersection.Equals(this))
-                return NumberSet<T>.CreateEmpty();
+                return NumberSet<T>.Empty;
             else
             {
                 if(LowerBound == intersection.LowerBound && IncludeLowerBound == intersection.IncludeLowerBound)

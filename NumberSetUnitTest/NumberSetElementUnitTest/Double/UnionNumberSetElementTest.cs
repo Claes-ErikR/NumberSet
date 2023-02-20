@@ -179,7 +179,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         public void TestWithEmptyUnionNumberSet(double lowerBound, double upperBound, bool includeLowerBound, bool includeUpperBound)
         {
             var element = NumberSetElement<double>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
-            var result1 = element.Union(NumberSet<double>.CreateEmpty());
+            var result1 = element.Union(NumberSet<double>.Empty);
             Assert.AreEqual(result1.Count, 1);
             Assert.AreEqual(result1[0].LowerBound, lowerBound);
             Assert.AreEqual(result1[0].UpperBound, upperBound);

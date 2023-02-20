@@ -64,7 +64,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestCreateEmptySet()
         {
-            var numberSet = NumberSet<double>.CreateEmpty();
+            var numberSet = NumberSet<double>.Empty;
             Assert.AreEqual(numberSet.LowerBound, default(double));
             Assert.AreEqual(numberSet.UpperBound, default(double));
             Assert.IsTrue(numberSet.IsEmpty);

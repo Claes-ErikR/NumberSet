@@ -117,7 +117,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestEmptyWithEmptyDifference()
         {
-            var result = NumberSet<double>.CreateEmpty().Difference(NumberSetElement<double>.Empty);
+            var result = NumberSet<double>.Empty.Difference(NumberSetElement<double>.Empty);
             Assert.AreEqual(result.Count, 1);
             Assert.IsTrue(result.IsEmpty);
         }
@@ -273,7 +273,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         public void TestWithEmptyDifferenceNumberSet(double lowerBound, double upperBound, bool includeLowerBound, bool includeUpperBound)
         {
             var element = NumberSet<double>.Create(NumberSetElement<double>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound));
-            var result1 = element.Difference(NumberSet<double>.CreateEmpty());
+            var result1 = element.Difference(NumberSet<double>.Empty);
             Assert.AreEqual(result1.Count, 1);
             Assert.IsTrue(result1.Equals(element));
             var result2 = NumberSetElement<double>.Empty.Difference(element);
@@ -284,7 +284,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestEmptyWithEmptyDifferenceNumberSet()
         {
-            var result = NumberSet<double>.CreateEmpty().Difference(NumberSet<double>.CreateEmpty());
+            var result = NumberSet<double>.Empty.Difference(NumberSet<double>.Empty);
             Assert.AreEqual(result.Count, 1);
             Assert.IsTrue(result.IsEmpty);
         }

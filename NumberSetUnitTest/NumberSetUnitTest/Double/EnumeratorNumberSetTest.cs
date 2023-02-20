@@ -8,7 +8,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestEmptyElementEnumerator()
         {
-            var item = NumberSet<double>.CreateEmpty();
+            var item = NumberSet<double>.Empty;
 
             int count = 0;
             foreach (var element in item)
