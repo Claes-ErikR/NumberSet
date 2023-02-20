@@ -13,6 +13,7 @@ namespace NumberSet
     /// Infinities are treated as the smallest/largest possible number and can be excluded or included in the set
     /// NaN is not allowed as bounds and results in an empty set being created, a NaN point is regarded as not belonging to any set
     /// An implicit cast to NumberSet exists
+    /// An instance can be deconstructed into LowerBound and UpperBound or into LowerBound, UpperBound, IncludeLowerBound and IncludeUpperBound
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSetElement<T>, NumberSet<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
@@ -507,6 +508,34 @@ namespace NumberSet
         {
             if (element == null) return null;
             return NumberSet<T>.Create(element);
+        }
+
+        // Deconstruct
+
+        /// <summary>
+        /// Deconstructs the instance into its bounds
+        /// </summary>
+        /// <param name="lowerbound"></param>
+        /// <param name="upperbound"></param>
+        public void Deconstruct(out T lowerbound, out T upperbound)
+        {
+            lowerbound = LowerBound;
+            upperbound = UpperBound;
+        }
+
+        /// <summary>
+        /// Deconstructs the instance into its bounds and if the bounds are included
+        /// </summary>
+        /// <param name="lowerbound"></param>
+        /// <param name="upperbound"></param>
+        /// <param name="includelowerbound"></param>
+        /// <param name="includeupperbound"></param>
+        public void Deconstruct(out T lowerbound, out T upperbound, out bool includelowerbound, out bool includeupperbound)
+        {
+            lowerbound = LowerBound;
+            upperbound = UpperBound;
+            includelowerbound = IncludeLowerBound;
+            includeupperbound = IncludeUpperBound;
         }
 
         // Support methods
