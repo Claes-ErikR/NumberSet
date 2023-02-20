@@ -12,6 +12,7 @@ namespace NumberSet
     /// A NumberSetElement can only be created through static Create/CreateEmpty methods
     /// Infinities are treated as the smallest/largest possible number and can be excluded or included in the set
     /// NaN is not allowed as bounds and results in an empty set being created, a NaN point is regarded as not belonging to any set
+    /// An implicit cast to NumberSet exists
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSetElement<T>, NumberSet<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
@@ -494,6 +495,18 @@ namespace NumberSet
                 result = null;
                 return false; 
             }
+        }
+
+        // Cast
+
+        /// <summary>
+        /// Provides an implicit cast from NumberSetElement to NumberSet
+        /// </summary>
+        /// <param name="element"></param>
+        public static implicit operator NumberSet<T>(NumberSetElement<T> element)
+        {
+            if (element == null) return null;
+            return NumberSet<T>.Create(element);
         }
 
         // Support methods
