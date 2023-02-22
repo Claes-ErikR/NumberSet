@@ -32,6 +32,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         [DataRow(3, 4, true, true, 2, 3, true, true)]
         [DataRow(4, 6, true, true, 3, 5, true, true)]
+        [DataRow(4, 6, false, true, 3, 5, true, false)]
         public void TestOverlapOrTouchFromLeftSideDifference(double lowerBound1, double upperBound1, bool includeLowerBound1, bool includeUpperBound1, double lowerBound2, double upperBound2, bool includeLowerBound2, bool includeUpperBound2)
         {
             var element1 = NumberSetElement<double>.Create(lowerBound1, upperBound1, includeLowerBound1, includeUpperBound1);

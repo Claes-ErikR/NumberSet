@@ -424,6 +424,16 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         }
 
         [TestMethod]
+        public void TestCreateSetSetCovering()
+        {
+            var element1 = NumberSetElement<double>.Create(2, 3, true, false);
+            var element2 = NumberSetElement<double>.Create(1, 5, true, false);
+            var numberSet = NumberSet<double>.Create(new List<NumberSetElement<double>>() { element1, element2 });
+            Assert.AreEqual(numberSet.LowerBound, 1);
+            Assert.AreEqual(numberSet.UpperBound, 5);
+        }
+
+        [TestMethod]
         public void TestCreateSetCoveringSetExceptPossiblyEdges()
         {
             for (var i = 0; i < 2; i++)
@@ -567,6 +577,54 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 Assert.IsTrue(numberSet[0].Equals(element1));
                 Assert.IsTrue(numberSet[1].Equals(NumberSetElement<double>.Create(4, 10, true, true)));
                 Assert.IsTrue(numberSet[2].Equals(NumberSetElement<double>.Create(11, 13, true, true)));
+            }
+        }
+
+        [TestMethod]
+        public void TestCreateDifferingOrder()
+        {
+            var elementList = new List<NumberSetElement<double>>()
+            {
+                NumberSetElement<double>.Create(2, 5, true, true),
+                NumberSetElement<double>.Create(3, 8, true, false),
+                NumberSetElement<double>.Create(4, 7, false, true),
+                NumberSetElement<double>.Create(9,12, false, false),
+                NumberSetElement<double>.Create(7, 9, true, true),
+            };
+            for (int i = 0; i < elementList.Count - 1; i++)
+            {
+                for (int j = 0; j < elementList.Count; j++)
+                {
+                    if (j != i)
+                    {
+                        for (int k = 0; k < elementList.Count; k++)
+                        {
+                            if (k != j && k != i)
+                            {
+                                for (int l = 0; l < elementList.Count; l++)
+                                {
+                                    if (l != j && l != i && l != k)
+                                    {
+                                        for (int m = 0; m < elementList.Count; m++)
+                                        {
+                                            if (m != j && m != i && m != k && m != l)
+                                            {
+                                                var numberSet = NumberSet<double>.Create(new List<NumberSetElement<double>>() { elementList[i], elementList[j], elementList[k], elementList[l], elementList[m] });
+                                                Assert.AreEqual(numberSet.LowerBound, 2);
+                                                Assert.AreEqual(numberSet.UpperBound, 12);
+                                                Assert.IsFalse(numberSet.IsEmpty);
+                                                Assert.IsFalse(numberSet.IsClosed);
+                                                Assert.IsFalse(numberSet.IsOpen);
+                                                Assert.AreEqual(numberSet.Measure, 10);
+                                                Assert.AreEqual(numberSet.Count, 1);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

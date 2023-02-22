@@ -46,6 +46,22 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         }
 
         [TestMethod]
+        public void TestEqualsStringNull()
+        {
+            var element1 = NumberSetElement<double>.Empty;
+            string element2 = null;
+            Assert.IsFalse(element1.Equals(element2));
+        }
+
+        [TestMethod]
+        public void TestEqualsString()
+        {
+            var element1 = NumberSetElement<double>.Empty;
+            string element2 = "TestString";
+            Assert.IsFalse(element1.Equals(element2));
+        }
+
+        [TestMethod]
         public void TestInEquals()
         {
             var elementList = new List<NumberSetElement<double>>()

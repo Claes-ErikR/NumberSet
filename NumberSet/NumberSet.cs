@@ -144,7 +144,6 @@ namespace NumberSet
             if (element != null && !element.IsEmpty)
             {
                 var newElement = element;
-                var intersectList = new List<INumberSetElement<T>>();
                 int index = 0;
                 while(index < workListElements.Count)
                 {
@@ -152,11 +151,8 @@ namespace NumberSet
                     if(!connectedUnion.IsEmpty)
                     {
                         newElement = connectedUnion;
-                        intersectList.Add(workListElements[index]);
                         workListElements.RemoveAt(index);
                     }
-                    else if (newElement.Contains(workListElements[index]))
-                        workListElements.RemoveAt(index);
                     else
                         index++;
                 }
