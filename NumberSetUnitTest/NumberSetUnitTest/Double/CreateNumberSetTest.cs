@@ -62,6 +62,19 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         }
 
         [TestMethod]
+        public void TestCreateNoParametersSet()
+        {
+            var numberSet = NumberSet<double>.Create();
+            Assert.AreEqual(numberSet.LowerBound, default(double));
+            Assert.AreEqual(numberSet.UpperBound, default(double));
+            Assert.IsTrue(numberSet.IsEmpty);
+            Assert.IsFalse(numberSet.IsClosed);
+            Assert.IsTrue(numberSet.IsOpen);
+            Assert.AreEqual(numberSet.Measure, 0);
+            Assert.AreEqual(numberSet.Count, 1);
+        }
+
+        [TestMethod]
         public void TestCreateEmptySet()
         {
             var numberSet = NumberSet<double>.Empty;
