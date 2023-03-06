@@ -44,7 +44,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Object
         [TestMethod]
         public void TestClassEmptyEqualityNumberSetTest()
         {
-            var numberSetElement1 = NumberSetElement<TestClass>.Empty;
+            var numberSetElement1 = (NumberSetElement<TestClass>)NumberSetElement<TestClass>.Empty;
             var numberSetElement2 = NumberSet<TestClass>.Empty;
             Assert.IsTrue(numberSetElement1 == numberSetElement2);
             Assert.IsFalse(numberSetElement1 != numberSetElement2);

@@ -73,7 +73,7 @@ namespace NumberSet
         /// <param name="includelowerbound"></param>
         /// <param name="includeupperbound"></param>
         /// <returns></returns>
-        public static NumberSetElement<T> Create(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound)
+        public static INumberSetElement<T> Create(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound)
         {
             if (lowerbound == null || upperbound == null)
                 return Empty;
@@ -90,7 +90,7 @@ namespace NumberSet
         /// <summary>
         /// Returns the empty set
         /// </summary>
-        public static NumberSetElement<T> Empty { get; }
+        public static INumberSetElement<T> Empty { get; }
 
         /// <summary>
         /// Creates an empty set for the Empty static property
@@ -180,7 +180,7 @@ namespace NumberSet
         /// <returns></returns>
         public INumberSet<T> Intersection(INumberSet<T> other)
         {
-            var elements = new List<NumberSetElement<T>>();
+            var elements = new List<INumberSetElement<T>>();
             for (var i = 0; i < other.Count; i++)
             {
                 var intersection = CreateIntersection(this, other[i]);
@@ -451,7 +451,7 @@ namespace NumberSet
         /// <exception cref="ArgumentException"></exception>
         public static NumberSetElement<T> Parse(string s, IFormatProvider? provider)
         {
-            if(s == "Empty") return NumberSetElement<T>.Empty;
+            if(s == "Empty") return (NumberSetElement<T>)NumberSetElement<T>.Empty;
 
             var trimmedString = s.Trim();
             var includeLowerBound = false;
@@ -479,7 +479,7 @@ namespace NumberSet
             if (!T.TryParse(upperBoundString, null, out upperBound))
                 throw new ArgumentException("Unable to read lower bound of set");
 
-            return NumberSetElement<T>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
+            return (NumberSetElement<T>)NumberSetElement<T>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
         }
 
         /// <summary>
@@ -570,7 +570,7 @@ namespace NumberSet
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        internal static NumberSetElement<T> CreateIntersection(INumberSetElement<T> left, INumberSetElement<T> right)
+        internal static INumberSetElement<T> CreateIntersection(INumberSetElement<T> left, INumberSetElement<T> right)
         {
 
             if (left.LowerBound > right.UpperBound || left.UpperBound < right.LowerBound) return Empty;
@@ -604,7 +604,7 @@ namespace NumberSet
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        internal static NumberSetElement<T> CreateConnectedUnion(INumberSetElement<T> left, INumberSetElement<T> right)
+        internal static INumberSetElement<T> CreateConnectedUnion(INumberSetElement<T> left, INumberSetElement<T> right)
         {
 
             if (left.LowerBound > right.UpperBound || left.UpperBound < right.LowerBound) return Empty;

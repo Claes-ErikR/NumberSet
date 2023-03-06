@@ -16,7 +16,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestHashCodeNotEqual()
         {
-            var elementList = new List<NumberSetElement<double>>()
+            var elementList = new List<INumberSetElement<double>>()
             {
                 NumberSetElement<double>.Create(2, 3, true, true),
                 NumberSetElement<double>.Create(2, 3, true, false),

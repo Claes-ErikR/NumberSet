@@ -64,7 +64,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestInEquals()
         {
-            var elementList = new List<NumberSetElement<double>>()
+            var elementList = new List<INumberSetElement<double>>()
             {
                 NumberSetElement<double>.Create(2, 3, true, true),
                 NumberSetElement<double>.Create(2, 3, true, false),
@@ -128,7 +128,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestInEqualsNumberSet()
         {
-            var elementList1 = new List<NumberSetElement<double>>()
+            var elementList1 = new List<INumberSetElement<double>>()
             {
                 NumberSetElement<double>.Create(2, 3, true, true),
                 NumberSetElement<double>.Create(2, 3, true, false),
@@ -178,8 +178,8 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 for (int k = 0; k < 2; k++)
                 {
                     var includeUpperBound = k == 1;
-                    var element1 = NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound);
-                    var element2 = NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound);
+                    var element1 = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound);
+                    var element2 = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound);
                     Assert.IsTrue(element1 == element2);
                     Assert.IsFalse(element1 != element2);
                 }
@@ -198,7 +198,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestInEqualityOperator()
         {
-            var elementList = new List<NumberSetElement<double>>()
+            var elementList = new List<INumberSetElement<double>>()
             {
                 NumberSetElement<double>.Create(2, 3, true, true),
                 NumberSetElement<double>.Create(2, 3, true, false),
@@ -229,7 +229,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 for (int k = 0; k < 2; k++)
                 {
                     var includeUpperBound = k == 1;
-                    var element1 = NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound);
+                    var element1 = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound);
                     var element2 = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound));
                     Assert.IsTrue(element1 == element2);
                     Assert.IsFalse(element1 != element2);
@@ -240,7 +240,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestEqualityEmptyNumberSetOperator()
         {
-            var element1 = NumberSetElement<double>.Empty;
+            var element1 = (NumberSetElement<double>)NumberSetElement<double>.Empty;
             var element2 = NumberSet<double>.Empty;
             Assert.IsTrue(element1 == element2);
             Assert.IsFalse(element1 != element2);
@@ -249,7 +249,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestInEqualityNumberSetOperator()
         {
-            var elementList1 = new List<NumberSetElement<double>>()
+            var elementList1 = new List<INumberSetElement<double>>()
             {
                 NumberSetElement<double>.Create(2, 3, true, true),
                 NumberSetElement<double>.Create(2, 3, true, false),

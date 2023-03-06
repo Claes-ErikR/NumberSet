@@ -8,7 +8,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestDeconstructClosedSet()
         {
-            var element = NumberSetElement<double>.Create(2, 3, true, true);
+            var element = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, true, true);
             var (lowerbound, upperbound, includelowerbound, includeupperbound) = element;
             Assert.AreEqual(lowerbound, 2);
             Assert.AreEqual(upperbound, 3);
@@ -19,7 +19,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestDeconstructOpenSet()
         {
-            var element = NumberSetElement<double>.Create(2, 3, false, false);
+            var element = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, false, false);
             var (lowerbound, upperbound, includelowerbound, includeupperbound) = element;
             Assert.AreEqual(lowerbound, 2);
             Assert.AreEqual(upperbound, 3);
@@ -30,7 +30,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestDeconstructLeftOpenRightClosedSet()
         {
-            var element = NumberSetElement<double>.Create(2, 3, false, true);
+            var element = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, false, true);
             var (lowerbound, upperbound, includelowerbound, includeupperbound) = element;
             Assert.AreEqual(lowerbound, 2);
             Assert.AreEqual(upperbound, 3);
@@ -41,7 +41,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestDeconstructLeftClosedRightOpenSet()
         {
-            var element = NumberSetElement<double>.Create(2, 3, true, false);
+            var element = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, true, false);
             var (lowerbound, upperbound, includelowerbound, includeupperbound) = element;
             Assert.AreEqual(lowerbound, 2);
             Assert.AreEqual(upperbound, 3);
@@ -52,7 +52,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestSmallDeconstructClosedSet()
         {
-            var element = NumberSetElement<double>.Create(2, 3, true, true);
+            var element = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, true, true);
             var (lowerbound, upperbound) = element;
             Assert.AreEqual(lowerbound, 2);
             Assert.AreEqual(upperbound, 3);
@@ -61,7 +61,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestSmallDeconstructOpenSet()
         {
-            var element = NumberSetElement<double>.Create(2, 3, false, false);
+            var element = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, false, false);
             var (lowerbound, upperbound) = element;
             Assert.AreEqual(lowerbound, 2);
             Assert.AreEqual(upperbound, 3);
@@ -70,7 +70,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestSmallDeconstructLeftOpenRightClosedSet()
         {
-            var element = NumberSetElement<double>.Create(2, 3, false, true);
+            var element = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, false, true);
             var (lowerbound, upperbound) = element;
             Assert.AreEqual(lowerbound, 2);
             Assert.AreEqual(upperbound, 3);
@@ -79,7 +79,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestSmallDeconstructLeftClosedRightOpenSet()
         {
-            var element = NumberSetElement<double>.Create(2, 3, true, false);
+            var element = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, true, false);
             var (lowerbound, upperbound) = element;
             Assert.AreEqual(lowerbound, 2);
             Assert.AreEqual(upperbound, 3);
@@ -88,7 +88,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestDeconstructEmptySet()
         {
-            var element = NumberSetElement<double>.Empty;
+            var element = (NumberSetElement<double>)NumberSetElement<double>.Empty;
             var (lowerbound, upperbound, includelowerbound, includeupperbound) = element;
             Assert.AreEqual(lowerbound, default(double));
             Assert.AreEqual(upperbound, default(double));
@@ -99,7 +99,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestSmallDeconstructEmptySet()
         {
-            var element = NumberSetElement<double>.Empty;
+            var element = (NumberSetElement<double>)NumberSetElement<double>.Empty;
             var (lowerbound, upperbound) = element;
             Assert.AreEqual(lowerbound, default(double));
             Assert.AreEqual(upperbound, default(double));

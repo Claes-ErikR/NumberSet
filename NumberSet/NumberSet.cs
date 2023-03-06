@@ -261,7 +261,7 @@ namespace NumberSet
         /// <returns></returns>
         public INumberSet<T> Intersection(INumberSet<T> other)
         {
-            var elements = new List<NumberSetElement<T>>();
+            var elements = new List<INumberSetElement<T>>();
             for (var i = 0; i < Count; i++)
             {
                 for (var j = 0; j < other.Count; j++)
@@ -280,7 +280,7 @@ namespace NumberSet
         /// <returns></returns>
         public INumberSet<T> Intersection(INumberSetElement<T> other)
         {
-            var elements = new List<NumberSetElement<T>>();
+            var elements = new List<INumberSetElement<T>>();
             for (var i = 0; i < Count; i++)
             {
                 var intersection = NumberSetElement<T>.CreateIntersection(this[i], other);
