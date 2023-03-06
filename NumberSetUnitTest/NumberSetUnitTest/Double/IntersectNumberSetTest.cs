@@ -1,4 +1,4 @@
-﻿using NumberSet;
+﻿using Utte.NumberSet;
 
 namespace NumberSetUnitTest.NumberSetUnitTest.Double
 {

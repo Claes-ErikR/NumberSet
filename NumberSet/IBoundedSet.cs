@@ -1,5 +1,4 @@
-﻿using NumberSet;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace Utte.NumberSet
 {

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Diagnostics.CodeAnalysis;
 
-namespace NumberSet
+namespace Utte.NumberSet
 {
 
     /// <summary>

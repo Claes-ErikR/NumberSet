@@ -1,4 +1,4 @@
-﻿using NumberSet;
+﻿using Utte.NumberSet;
 using System.Data;
 
 namespace NumberSetUnitTest.General.Infinity

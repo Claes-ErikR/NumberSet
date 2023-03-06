@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
-using Utte.NumberSet;
 
-namespace NumberSet
+namespace Utte.NumberSet
 {
 
     /// <summary>

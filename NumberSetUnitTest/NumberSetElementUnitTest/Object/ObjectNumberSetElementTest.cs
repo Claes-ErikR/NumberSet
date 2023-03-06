@@ -1,4 +1,4 @@
-﻿using NumberSet;
+﻿using Utte.NumberSet;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 

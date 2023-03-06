@@ -2,7 +2,7 @@
 using System.Numerics;
 using System.Text;
 
-namespace NumberSet
+namespace Utte.NumberSet
 {
 
     /// <summary>

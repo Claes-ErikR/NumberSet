@@ -1,4 +1,4 @@
-﻿using NumberSet;
+﻿using Utte.NumberSet;
 
 namespace NumberSetUnitTest.General.NaN
 {
