@@ -3,6 +3,7 @@ using Utte.NumberSet;
 
 namespace NumberSet
 {
+
     /// <summary>
     /// Interface for constructing sets of numberlike objects of type T. It is built of a collection of INumberSetElement and is immutable.
     /// Every INumberSetElement in the collection should be disjunct and sorted in order.
