@@ -32,8 +32,6 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
             Assert.IsFalse(numberSetElement1 != numberSetElement2);
         }
 
-
-
         [TestMethod]
         public void TestClassEmptyNotEmptyEqualityTest()
         {
