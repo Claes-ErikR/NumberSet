@@ -66,7 +66,7 @@ namespace NumberSet
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public static NumberSet<T> Create(params INumberSetElement<T>[] elements)
+        public static INumberSet<T> Create(params INumberSetElement<T>[] elements)
         {
             return CreateNumberSet(elements);
         }
@@ -80,7 +80,7 @@ namespace NumberSet
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public static NumberSet<T> Create(IEnumerable<INumberSetElement<T>> elements)
+        public static INumberSet<T> Create(IEnumerable<INumberSetElement<T>> elements)
         {
             return CreateNumberSet(elements);
         }
@@ -94,7 +94,7 @@ namespace NumberSet
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        private static NumberSet<T> CreateNumberSet(IEnumerable<INumberSetElement<T>> elements) 
+        private static INumberSet<T> CreateNumberSet(IEnumerable<INumberSetElement<T>> elements) 
         {
             if(elements == null) return Empty;
             List<INumberSetElement<T>> workListElements = new List<INumberSetElement<T>>();
@@ -119,7 +119,7 @@ namespace NumberSet
         /// <summary>
         /// Returns the empty set
         /// </summary>
-        public static NumberSet<T> Empty { get; }
+        public static INumberSet<T> Empty { get; }
 
         /// <summary>
         /// Creates an empty set for the Empty static property
@@ -554,7 +554,7 @@ namespace NumberSet
         /// <exception cref="ArgumentException"></exception>
         public static NumberSet<T> Parse(string s, IFormatProvider? provider)
         {
-            if (s == "Empty") return NumberSet<T>.Empty;
+            if (s == "Empty") return (NumberSet<T>)NumberSet<T>.Empty;
 
             var trimmedString = s.Trim();
             string[] parts = trimmedString.Split(';');
@@ -573,7 +573,7 @@ namespace NumberSet
                 }
             }
 
-            return NumberSet<T>.Create(elements);
+            return (NumberSet<T>)NumberSet<T>.Create(elements);
         }
 
         /// <summary>

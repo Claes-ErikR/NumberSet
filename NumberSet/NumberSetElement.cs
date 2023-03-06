@@ -513,7 +513,7 @@ namespace NumberSet
         public static implicit operator NumberSet<T>(NumberSetElement<T> element)
         {
             if (element == null) return null;
-            return NumberSet<T>.Create(element);
+            return (NumberSet<T>)NumberSet<T>.Create(element);
         }
 
         // Deconstruct

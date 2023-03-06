@@ -32,7 +32,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestHashCodeNotEqual()
         {
-            var elementList = new List<NumberSet<double>>()
+            var elementList = new List<INumberSet<double>>()
             {
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, false)),

@@ -8,7 +8,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestCastClosedSet()
         {
-            var numberSet = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true));
+            var numberSet = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true));
             var element = (NumberSetElement<double>)numberSet;
             Assert.AreEqual(element.LowerBound, 2);
             Assert.AreEqual(element.UpperBound, 3);
@@ -23,7 +23,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestCastOpenSet()
         {
-            var numberSet = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, false, false));
+            var numberSet = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, false, false));
             var element = (NumberSetElement<double>)numberSet;
             Assert.AreEqual(element.LowerBound, 2);
             Assert.AreEqual(element.UpperBound, 3);
@@ -38,7 +38,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestCastLeftOpenRightClosedSet()
         {
-            var numberSet = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, false, true));
+            var numberSet = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, false, true));
             var element = (NumberSetElement<double>)numberSet;
             Assert.AreEqual(element.LowerBound, 2);
             Assert.AreEqual(element.UpperBound, 3);
@@ -53,7 +53,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestCastLeftClosedRightOpenSet()
         {
-            var numberSet = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, false));
+            var numberSet = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, false));
             var element = (NumberSetElement<double>)numberSet;
             Assert.AreEqual(element.LowerBound, 2);
             Assert.AreEqual(element.UpperBound, 3);
@@ -68,7 +68,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestCastEmptySet()
         {
-            var numberSet = NumberSet<double>.Empty;
+            var numberSet = (NumberSet<double>)NumberSet<double>.Empty;
             var element = (NumberSetElement<double>)numberSet;
             Assert.AreEqual(element.LowerBound, default(double));
             Assert.AreEqual(element.UpperBound, default(double));
@@ -92,7 +92,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestCastLoseInformation()
         {
-            var numberSet = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(4, 5, true, true));
+            var numberSet = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(4, 5, true, true));
             var element = (NumberSetElement<double>)numberSet;
             Assert.AreEqual(element.LowerBound, 2);
             Assert.AreEqual(element.UpperBound, 3);

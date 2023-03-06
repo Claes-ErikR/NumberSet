@@ -140,7 +140,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 NumberSetElement<double>.Create(2, 2.9, true, true),
                 NumberSetElement<double>.Empty
             };
-            var elementList2 = new List<NumberSet<double>>()
+            var elementList2 = new List<INumberSet<double>>()
             {
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, false)),
@@ -230,7 +230,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 {
                     var includeUpperBound = k == 1;
                     var element1 = (NumberSetElement<double>)NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound);
-                    var element2 = NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound));
+                    var element2 = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound));
                     Assert.IsTrue(element1 == element2);
                     Assert.IsFalse(element1 != element2);
                 }
@@ -241,7 +241,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         public void TestEqualityEmptyNumberSetOperator()
         {
             var element1 = (NumberSetElement<double>)NumberSetElement<double>.Empty;
-            var element2 = NumberSet<double>.Empty;
+            var element2 = (NumberSet<double>)NumberSet<double>.Empty;
             Assert.IsTrue(element1 == element2);
             Assert.IsFalse(element1 != element2);
         }
@@ -261,7 +261,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 NumberSetElement<double>.Create(2, 2.9, true, true),
                 NumberSetElement<double>.Empty
             };
-            var elementList2 = new List<NumberSet<double>>()
+            var elementList2 = new List<INumberSet<double>>()
             {
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true)),
                 NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, false)),

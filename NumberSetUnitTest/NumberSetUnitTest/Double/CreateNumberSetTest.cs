@@ -400,7 +400,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
             var element2 = NumberSetElement<double>.Create(4, 6, true, true);
             var element3 = NumberSetElement<double>.Create(7, 8.5, false, true);
             var element4 = NumberSetElement<double>.Create(9, 10, true, true);
-            var numberSetList = new List<NumberSet<double>>()
+            var numberSetList = new List<INumberSet<double>>()
             {
                 NumberSet<double>.Create(new List<INumberSetElement<double>>() { element4, element1, element2, element3 }),
                 NumberSet<double>.Create(new List<INumberSetElement<double>>() { element2, element3, element4, element1 }),
@@ -567,7 +567,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
             var element5 = NumberSetElement<double>.Create(7, 10, true, true);
             var element6 = NumberSetElement<double>.Create(11, 13, true, false);
             var element7 = NumberSetElement<double>.Create(12, 13, true, true);
-            var numberSetList = new List<NumberSet<double>>()
+            var numberSetList = new List<INumberSet<double>>()
             {
                 NumberSet<double>.Create(new List<INumberSetElement<double>>() { element4, element5, element1, element7, element6, element2, element3 }),
                 NumberSet<double>.Create(new List<INumberSetElement<double>>() { element2, element7, element3, element4, element1, element6, element5 }),
