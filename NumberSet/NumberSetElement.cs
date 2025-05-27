@@ -471,12 +471,12 @@ namespace Utte.NumberSet
             var indexOfSeparator = numbersPart.IndexOf(',');
             var lowerBoundString = numbersPart.Substring(0, indexOfSeparator).Trim();
             T lowerBound;
-            if (!T.TryParse(lowerBoundString, null, out lowerBound))
+            if (!T.TryParse(lowerBoundString, provider, out lowerBound))
                 throw new ArgumentException("Unable to read lower bound of set");
 
             var upperBoundString = numbersPart.Substring(indexOfSeparator + 1, numbersPart.Length - (indexOfSeparator + 1)).Trim();
             T upperBound;
-            if (!T.TryParse(upperBoundString, null, out upperBound))
+            if (!T.TryParse(upperBoundString, provider, out upperBound))
                 throw new ArgumentException("Unable to read lower bound of set");
 
             return (NumberSetElement<T>)NumberSetElement<T>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);

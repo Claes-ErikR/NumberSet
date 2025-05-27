@@ -562,7 +562,7 @@ namespace Utte.NumberSet
             var elements = new List<INumberSetElement<T>>();
             foreach (var part in parts)
             {
-                if (NumberSetElement<T>.TryParse(part, null, out NumberSetElement<T> element))
+                if (NumberSetElement<T>.TryParse(part, provider, out NumberSetElement<T> element))
                 {
                     if (!element.IsEmpty)
                         elements.Add(element);
