@@ -1,4 +1,5 @@
-﻿using Utte.NumberSet;
+﻿using System.Globalization;
+using Utte.NumberSet;
 
 namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
 {
@@ -55,12 +56,26 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 new Tuple<INumberSetElement<double>, string>(NumberSetElement<double>.Empty, "(2, 2]"),
 
             };
-            for (int i = 0; i < elementList.Count; i++)
+
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
             {
-                if (NumberSetElement<double>.TryParse(elementList[i].Item2, null, out NumberSetElement<double> result))
-                    Assert.IsTrue(elementList[i].Item1.Equals(result));
-                else
-                    Assert.Fail();
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
+                for (int i = 0; i < elementList.Count; i++)
+                {
+                    if (NumberSetElement<double>.TryParse(elementList[i].Item2, null, out NumberSetElement<double> cultureNullResult))
+                        Assert.IsTrue(elementList[i].Item1.Equals(cultureNullResult));
+                    else
+                        Assert.Fail();
+                    if (NumberSetElement<double>.TryParse(elementList[i].Item2, out NumberSetElement<double> result))
+                        Assert.IsTrue(elementList[i].Item1.Equals(result));
+                    else
+                        Assert.Fail();
+                }
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
             }
         }
 
@@ -87,10 +102,21 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 "((2, 2]",
                 "[2, 2))",
             };
-            for (int i = 0; i < elementList.Count; i++)
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
             {
-                if (NumberSetElement<double>.TryParse(elementList[i], null, out NumberSetElement<double> result))
-                    Assert.Fail();
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
+                for (int i = 0; i < elementList.Count; i++)
+                {
+                    if (NumberSetElement<double>.TryParse(elementList[i], null, out NumberSetElement<double> cultureNullResult))
+                        Assert.Fail();
+                    if (NumberSetElement<double>.TryParse(elementList[i], out NumberSetElement<double> result))
+                        Assert.Fail();
+                }
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
             }
         }
     }

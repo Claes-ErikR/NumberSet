@@ -483,6 +483,18 @@ namespace Utte.NumberSet
         }
 
         /// <summary>
+        /// Extracts a NumberSetElement from a string. The string is expected to be on the form (x, y) where x is lower bound and y is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while [ or ] means lower/upper bound is included.
+        /// Current culture is used for the parsing
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static NumberSetElement<T> Parse(string s)
+        {
+            return Parse(s, null);
+        }
+
+        /// <summary>
         /// Tries to extract a NumberSetElement from a string. The string is expected to be on the form (x, y) where x is lower bound and y is upper bound.
         /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while [ or ] means lower/upper bound is included
         /// </summary>
@@ -501,6 +513,28 @@ namespace Utte.NumberSet
             {
                 result = null;
                 return false; 
+            }
+        }
+
+        /// <summary>
+        /// Tries to extract a NumberSetElement from a string. The string is expected to be on the form (x, y) where x is lower bound and y is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while [ or ] means lower/upper bound is included.
+        /// Current culture is used for the parsing
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool TryParse([NotNullWhen(true)] string? s, [MaybeNullWhen(false)] out NumberSetElement<T> result)
+        {
+            try
+            {
+                result = NumberSetElement<T>.Parse(s);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
             }
         }
 
