@@ -76,7 +76,11 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
                 for (int i = 0; i < elementList.Count; i++)
                 {
-                    if (NumberSet<double>.TryParse(elementList[i].Item2, null, out NumberSet<double> result))
+                    if (NumberSet<double>.TryParse(elementList[i].Item2, out NumberSet<double>? cultureNullResult))
+                        Assert.IsTrue(NumberSet<double>.Create(new List<INumberSetElement<double>>() { elementList[i].Item1 }).Equals(cultureNullResult));
+                    else
+                        Assert.Fail();
+                    if (NumberSet<double>.TryParse(elementList[i].Item2, null, out NumberSet<double>? result))
                         Assert.IsTrue(NumberSet<double>.Create(new List<INumberSetElement<double>>() { elementList[i].Item1 }).Equals(result));
                     else
                         Assert.Fail();
@@ -111,7 +115,11 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
                 for (int i = 0; i < elementList.Count; i++)
                 {
-                    if (NumberSet<double>.TryParse(elementList[i].Item2, null, out NumberSet<double> result))
+                    if (NumberSet<double>.TryParse(elementList[i].Item2, out NumberSet<double>? cultureNullResult))
+                        Assert.IsTrue(elementList[i].Item1.Equals(cultureNullResult));
+                    else
+                        Assert.Fail();
+                    if (NumberSet<double>.TryParse(elementList[i].Item2, null, out NumberSet<double>? result))
                         Assert.IsTrue(elementList[i].Item1.Equals(result));
                     else
                         Assert.Fail();
@@ -126,7 +134,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestFailTryParse()
         {
-            var elementList = new List<string>()
+            var elementList = new List<string?>()
             {
                 "2, 2",
                 "2, 2]",
@@ -150,6 +158,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 "[2, 3];3, 4; [4, 5]",
                 "[2, 3]b; [4, 5]",
                 "[2, 3];b [4, 5]",
+                null,
             };
             var currentCulture = CultureInfo.CurrentCulture;
             try
@@ -157,7 +166,9 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
                 for (int i = 0; i < elementList.Count; i++)
                 {
-                    if (NumberSet<double>.TryParse(elementList[i], null, out NumberSet<double> result))
+                    if (NumberSet<double>.TryParse(elementList[i], out NumberSet<double>? cultureNullResult))
+                        Assert.Fail();
+                    if (NumberSet<double>.TryParse(elementList[i], null, out NumberSet<double>? result))
                         Assert.Fail();
                 }
             }

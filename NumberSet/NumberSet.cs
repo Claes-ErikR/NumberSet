@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Text;
 
@@ -577,6 +578,19 @@ namespace Utte.NumberSet
         }
 
         /// <summary>
+        /// Extracts a NumberSet from a string. The string is expected to be on the form (x, y); [z, w] ... where x/z is lower bound and y/w is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while [ or ] means lower/upper bound is included.
+        /// Each element in the instance produces one pair of numbers. Current culture is used for the parsing
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static NumberSet<T> Parse(string s)
+        {
+            return Parse(s, null);
+        }
+
+        /// <summary>
         /// Tries to extract a NumberSet from a string. The string is expected to be on the form (x, y); [z, w] ... where x/z is lower bound and y/w is upper bound.
         /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while [ or ] means lower/upper bound is included.
         /// Each element in the instance produces one pair of numbers
@@ -585,11 +599,43 @@ namespace Utte.NumberSet
         /// <param name="provider"></param>
         /// <param name="result"></param>
         /// <returns></returns>
-        public static bool TryParse(string? s, IFormatProvider? provider, out NumberSet<T> result)
+        public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out NumberSet<T> result)
         {
             try
             {
+                if (s == null)
+                {
+                    result = null;
+                    return false;
+                }
                 result = NumberSet<T>.Parse(s, provider);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Tries to extract a NumberSet from a string. The string is expected to be on the form (x, y); [z, w] ... where x/z is lower bound and y/w is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while [ or ] means lower/upper bound is included.
+        /// Each element in the instance produces one pair of numbers. Current culture is used for the parsing
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool TryParse([NotNullWhen(true)] string? s, [MaybeNullWhen(false)] out NumberSet<T> result)
+        {
+            try
+            {
+                if (s == null)
+                {
+                    result = null;
+                    return false;
+                }
+                result = NumberSet<T>.Parse(s);
                 return true;
             }
             catch

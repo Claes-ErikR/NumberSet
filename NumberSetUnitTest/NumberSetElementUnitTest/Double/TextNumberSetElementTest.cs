@@ -82,7 +82,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestFailTryParse()
         {
-            var elementList = new List<string>()
+            var elementList = new List<string?>()
             {
                 "2, 2",
                 "2, 2]",
@@ -101,6 +101,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 "[2, 2]]",
                 "((2, 2]",
                 "[2, 2))",
+                null,
             };
             var currentCulture = CultureInfo.CurrentCulture;
             try
@@ -108,9 +109,9 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
                 for (int i = 0; i < elementList.Count; i++)
                 {
-                    if (NumberSetElement<double>.TryParse(elementList[i], null, out NumberSetElement<double> cultureNullResult))
+                    if (NumberSetElement<double>.TryParse(elementList[i], null, out NumberSetElement<double>? cultureNullResult))
                         Assert.Fail();
-                    if (NumberSetElement<double>.TryParse(elementList[i], out NumberSetElement<double> result))
+                    if (NumberSetElement<double>.TryParse(elementList[i], out NumberSetElement<double>? result))
                         Assert.Fail();
                 }
             }

@@ -506,6 +506,11 @@ namespace Utte.NumberSet
         {
             try
             {
+                if (s == null)
+                {
+                    result = null;
+                    return false;
+                }
                 result = NumberSetElement<T>.Parse(s, provider);
                 return true;
             }
@@ -528,6 +533,11 @@ namespace Utte.NumberSet
         {
             try
             {
+                if (s == null)
+                {
+                    result = null;
+                    return false;
+                }
                 result = NumberSetElement<T>.Parse(s);
                 return true;
             }
