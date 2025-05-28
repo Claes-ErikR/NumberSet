@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using Utte.NumberSet.Extensions;
+using System.Numerics;
 using System.Text;
 using System.Diagnostics.CodeAnalysis;
 
@@ -468,14 +469,17 @@ namespace Utte.NumberSet
                 throw new ArgumentException("Set must end with ] or )");
 
             var numbersPart = trimmedString.Substring(1, trimmedString.Length - 2);
-            var indexOfSeparator = numbersPart.IndexOf(',');
+            
+            var separator = provider.GetNumberSetElementSeparator();
+
+            var indexOfSeparator = numbersPart.IndexOf(separator);
             var lowerBoundString = numbersPart.Substring(0, indexOfSeparator).Trim();
-            T lowerBound;
+            T? lowerBound;
             if (!T.TryParse(lowerBoundString, provider, out lowerBound))
                 throw new ArgumentException("Unable to read lower bound of set");
 
             var upperBoundString = numbersPart.Substring(indexOfSeparator + 1, numbersPart.Length - (indexOfSeparator + 1)).Trim();
-            T upperBound;
+            T? upperBound;
             if (!T.TryParse(upperBoundString, provider, out upperBound))
                 throw new ArgumentException("Unable to read lower bound of set");
 
