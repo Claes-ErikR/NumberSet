@@ -8,18 +8,21 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
     public class TextNumberSetTest
     {
         [TestMethod]
-        [DataRow(true, true, "[2, 3]")]
-        [DataRow(true, false, "[2, 3)")]
-        [DataRow(false, true, "(2, 3]")]
-        [DataRow(false, false, "(2, 3)")]
-        public void TestToString(bool includeLowerBound, bool includeUpperBound, string expectedResult)
+        [DataRow(2, 3, true, true, "[2, 3]")]
+        [DataRow(2, 3, true, false, "[2, 3)")]
+        [DataRow(2, 3, false, true, "(2, 3]")]
+        [DataRow(2, 3, false, false, "(2, 3)")]
+        [DataRow(0.1, 1, true, true, "[0.1, 1]")]
+        [DataRow(0, 1.1, true, true, "[0, 1.1]")]
+        [DataRow(0.1, 1.1, true, true, "[0.1, 1.1]")]
+        public void TestToString(double lowerBound, double upperBound, bool includeLowerBound, bool includeUpperBound, string expectedResult)
         {
             var currentCulture = CultureInfo.CurrentCulture;
             try
             {
                 CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
 
-                var item = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound));
+                var item = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound));
                 Assert.AreEqual(item.ToString(), expectedResult);
                 Assert.AreEqual(item.ToString(null, CultureInfo.InvariantCulture), expectedResult);
             }
@@ -75,6 +78,107 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 var item = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, false, true), NumberSetElement<double>.Create(4, 5, true, false), NumberSetElement<double>.Create(5, 6, false, false));
                 Assert.AreEqual(item.ToString(), "(2, 3]; [4, 5); (5, 6)");
                 Assert.AreEqual(item.ToString(null, CultureInfo.InvariantCulture), "(2, 3]; [4, 5); (5, 6)");
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
+        [TestMethod]
+        [DataRow(2, 3, true, true, "[2; 3]")]
+        [DataRow(2, 3, true, false, "[2; 3)")]
+        [DataRow(2, 3, false, true, "(2; 3]")]
+        [DataRow(2, 3, false, false, "(2; 3)")]
+        [DataRow(0.1, 1, true, true, "[0,1; 1]")]
+        [DataRow(0, 1.1, true, true, "[0; 1,1]")]
+        [DataRow(0.1, 1.1, true, true, "[0,1; 1,1]")]
+        public void TestToStringDecimalSeparatorComma(double lowerBound, double upperBound, bool includeLowerBound, bool includeUpperBound, string expectedResult)
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                var culture = CultureInfoTestHelper.GetNumberCommaSeparatedCulture(); // Use ',' as decimal separator
+                CultureInfo.CurrentCulture = culture;
+
+                var item = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound));
+                Assert.AreEqual(item.ToString(), expectedResult);
+                Assert.AreEqual(item.ToString(null, culture), expectedResult);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
+        [TestMethod]
+        public void TestEmptyToStringDecimalSeparatorComma()
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                var culture = CultureInfoTestHelper.GetNumberCommaSeparatedCulture(); // Use ',' as decimal separator
+                CultureInfo.CurrentCulture = culture;
+
+                var item = (NumberSet<double>)NumberSet<double>.Empty;
+                Assert.AreEqual(item.ToString(), "Empty");
+                Assert.AreEqual(item.ToString(null, culture), "Empty");
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
+        [TestMethod]
+        public void Test2ElementToStringDecimalSeparatorComma()
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                var culture = CultureInfoTestHelper.GetNumberCommaSeparatedCulture(); // Use ',' as decimal separator
+                CultureInfo.CurrentCulture = culture;
+                var item = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2.2, 3, false, true), NumberSetElement<double>.Create(4, 5, true, false));
+                Assert.AreEqual(item.ToString(), "(2,2; 3]; [4; 5)");
+                Assert.AreEqual(item.ToString(null, culture), "(2,2; 3]; [4; 5)");
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
+        [TestMethod]
+        public void Test3ElementToStringDecimalSeparatorComma()
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                var culture = CultureInfoTestHelper.GetNumberCommaSeparatedCulture(); // Use ',' as decimal separator
+                CultureInfo.CurrentCulture = culture;
+
+                var item = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, false, true), NumberSetElement<double>.Create(4, 5, true, false), NumberSetElement<double>.Create(5.1, 6.1, false, false));
+                Assert.AreEqual(item.ToString(), "(2; 3]; [4; 5); (5,1; 6,1)");
+                Assert.AreEqual(item.ToString(null, culture), "(2; 3]; [4; 5); (5,1; 6,1)");
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
+        [TestMethod]
+        public void TestToStringCurrentCultureDiffFromUsedCulture()
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
+                var culture = CultureInfoTestHelper.GetNumberCommaSeparatedCulture(); // Use ',' as decimal separator
+                
+                var item = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(5.4, 8.2, true, true), NumberSetElement<double>.Create(10.1, 11.1, true, true));
+                Assert.AreEqual("[5.4, 8.2]; [10.1, 11.1]", item.ToString());
+                Assert.AreEqual("[5,4; 8,2]; [10,1; 11,1]", item.ToString(null, culture));
             }
             finally
             {

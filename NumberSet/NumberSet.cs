@@ -549,7 +549,7 @@ namespace Utte.NumberSet
         public string ToString(string? format, IFormatProvider? provider)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(_elements[0].ToString());
+            sb.Append(((NumberSetElement<T>)_elements[0]).ToString(format, provider));
             for (int i = 1; i < _elements.Count; i++)
             {
                 sb.Append("; ");

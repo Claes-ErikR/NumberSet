@@ -64,6 +64,25 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         }
 
         [TestMethod]
+        public void TestToStringCurrentCultureDiffFromUsedCulture()
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
+                var culture = CultureInfoTestHelper.GetNumberCommaSeparatedCulture(); // Use ',' as decimal separator
+
+                var item = (NumberSetElement<double>)NumberSetElement<double>.Create(5.4, 8.2, true, true);
+                Assert.AreEqual("[5.4, 8.2]", item.ToString());
+                Assert.AreEqual("[5,4; 8,2]", item.ToString(null, culture));
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
+        [TestMethod]
         public void TestTryParse()
         {
             var elementList = new List<Tuple<INumberSetElement<double>, string>>()
