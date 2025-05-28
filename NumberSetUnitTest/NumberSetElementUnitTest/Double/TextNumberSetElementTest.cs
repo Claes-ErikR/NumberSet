@@ -32,6 +32,31 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         }
 
         [TestMethod]
+        [DataRow(2, 3, true, true, "[2; 3]")]
+        [DataRow(2, 3, true, false, "[2; 3)")]
+        [DataRow(2, 3, false, true, "(2; 3]")]
+        [DataRow(2, 3, false, false, "(2; 3)")]
+        [DataRow(0.1, 1, true, true, "[0,1; 1]")]
+        [DataRow(0, 1.1, true, true, "[0; 1,1]")]
+        [DataRow(0.1, 1.1, true, true, "[0,1; 1,1]")]
+        public void TestToStringDecimalSeparatorComma(double lowerBound, double upperBound, bool includeLowerBound, bool includeUpperBound, string expectedResult)
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                var culture = CultureInfoTestHelper.GetNumberCommaSeparatedCulture(); // Use ',' as decimal separator
+                CultureInfo.CurrentCulture = culture;
+                var item = (NumberSetElement<double>)NumberSetElement<double>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
+                Assert.AreEqual(item.ToString(), expectedResult);
+                Assert.AreEqual(item.ToString(null, culture), expectedResult);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
+        [TestMethod]
         public void TestEmptyToString()
         {
             var item = NumberSetElement<double>.Empty;

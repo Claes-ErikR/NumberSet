@@ -434,13 +434,23 @@ namespace Utte.NumberSet
             return ToString(null, null);
         }
 
+        /// <summary>
+        /// Creates a string representation of the instance on the form (x, y). x is lower bound and y is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while
+        /// [ or ] means lower/upper bound is included. For cultures with comma separator in numbers, a ; is used instead
+        /// of , i.e. (x; y) instead of (x, y)
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="provider"></param>
+        /// <returns></returns>
         public string ToString(string? format, IFormatProvider? provider)
         {
             if (IsEmpty) return "Empty";
             var builder = new StringBuilder();
             builder.Append(IncludeLowerBound ? "[" : "(");
             builder.Append(LowerBound.ToString(format, provider));
-            builder.Append(", ");
+            builder.Append(provider.GetNumberSetElementSeparator());
+            builder.Append(' ');
             builder.Append(UpperBound.ToString(format, provider));
             builder.Append(IncludeUpperBound ? "]" : ")");
 
