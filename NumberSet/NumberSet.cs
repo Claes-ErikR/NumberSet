@@ -534,20 +534,29 @@ namespace Utte.NumberSet
         /// <returns></returns>
         public override string ToString()
         {
+            return ToString(null, null);
+        }
+
+        /// <summary>
+        /// Creates a string representation of the instance on the form (x, y); [z, w] ... x/z is lower bound and y/w is upper bound.
+        /// Parenthesis are used to indicate if bounds are included. ( or ) means lower/upper bound is not included while
+        /// [ or ] means lower/upper bound is included. Each element in the instance is represented by one pair of numbers. For cultures
+        /// with comma separator in numbers, a ; is used in each element instead of , i.e. (x; y) instead of (x, y)
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        public string ToString(string? format, IFormatProvider? provider)
+        {
             StringBuilder sb = new StringBuilder();
             sb.Append(_elements[0].ToString());
             for (int i = 1; i < _elements.Count; i++)
             {
                 sb.Append("; ");
-                sb.Append(_elements[i].ToString());
+                sb.Append(((NumberSetElement<T>)_elements[i]).ToString(format, provider));
             }
 
             return sb.ToString();
-        }
-
-        public string ToString(string? format, IFormatProvider? provider)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
