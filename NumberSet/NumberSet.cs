@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Text;
+using Utte.NumberSet.Extensions;
 
 namespace Utte.NumberSet
 {
@@ -561,16 +562,35 @@ namespace Utte.NumberSet
             string[] parts = trimmedString.Split(';');
 
             var elements = new List<INumberSetElement<T>>();
-            foreach (var part in parts)
+            if (provider.GetNumberSetElementSeparator() != ';')
             {
-                if (NumberSetElement<T>.TryParse(part, provider, out NumberSetElement<T> element))
+                foreach (var part in parts)
                 {
-                    if (!element.IsEmpty)
-                        elements.Add(element);
+                    if (NumberSetElement<T>.TryParse(part, provider, out NumberSetElement<T>? element))
+                    {
+                        if (!element.IsEmpty)
+                            elements.Add(element);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Could not parse element " + part);
+                    }
                 }
-                else
+            }
+            else
+            {
+                for(int i = 0; i <  parts.Length; i += 2)
                 {
-                    throw new ArgumentException("Could not parse element " + part);
+                    var part = parts[i] + ";" + parts[i + 1];
+                    if (NumberSetElement<T>.TryParse(part, provider, out NumberSetElement<T>? element))
+                    {
+                        if (!element.IsEmpty)
+                            elements.Add(element);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Could not parse element " + part);
+                    }
                 }
             }
 
