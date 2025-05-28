@@ -8,14 +8,27 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
     public class TextNumberSetElementTest
     {
         [TestMethod]
-        [DataRow(true, true, "[2, 3]")]
-        [DataRow(true, false, "[2, 3)")]
-        [DataRow(false, true, "(2, 3]")]
-        [DataRow(false, false, "(2, 3)")]
-        public void TestToString(bool includeLowerBound, bool includeUpperBound, string expectedResult)
+        [DataRow(2, 3, true, true, "[2, 3]")]
+        [DataRow(2, 3, true, false, "[2, 3)")]
+        [DataRow(2, 3, false, true, "(2, 3]")]
+        [DataRow(2, 3, false, false, "(2, 3)")]
+        [DataRow(0.1, 1, true, true, "[0.1, 1]")]
+        [DataRow(0, 1.1, true, true, "[0, 1.1]")]
+        [DataRow(0.1, 1.1, true, true, "[0.1, 1.1]")]
+        public void TestToString(double lowerBound, double upperBound, bool includeLowerBound, bool includeUpperBound, string expectedResult)
         {
-            var item = NumberSetElement<double>.Create(2, 3, includeLowerBound, includeUpperBound);
-            Assert.AreEqual(item.ToString(), expectedResult);
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
+                var item = (NumberSetElement<double>)NumberSetElement<double>.Create(lowerBound, upperBound, includeLowerBound, includeUpperBound);
+                Assert.AreEqual(item.ToString(), expectedResult);
+                Assert.AreEqual(item.ToString(null, CultureInfo.InvariantCulture), expectedResult);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
         }
 
         [TestMethod]

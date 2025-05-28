@@ -17,7 +17,7 @@ namespace Utte.NumberSet
     /// An instance can be deconstructed into LowerBound and UpperBound or into LowerBound, UpperBound, IncludeLowerBound and IncludeUpperBound
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSetElement<T>, NumberSet<T>, bool> where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>
+    public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSetElement<T>, NumberSet<T>, bool>, IFormattable where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>, IFormattable
     {
 
         // Constructors
@@ -431,14 +431,19 @@ namespace Utte.NumberSet
         /// <returns></returns>
         public override string ToString()
         {
+            return ToString(null, null);
+        }
+
+        public string ToString(string? format, IFormatProvider? provider)
+        {
             if (IsEmpty) return "Empty";
             var builder = new StringBuilder();
             builder.Append(IncludeLowerBound ? "[" : "(");
-            builder.Append(LowerBound.ToString());
+            builder.Append(LowerBound.ToString(format, provider));
             builder.Append(", ");
-            builder.Append(UpperBound.ToString());
+            builder.Append(UpperBound.ToString(format, provider));
             builder.Append(IncludeUpperBound ? "]" : ")");
-            
+
             return builder.ToString();
         }
 

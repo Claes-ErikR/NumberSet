@@ -69,9 +69,8 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
         }
     }
 
-    public class TestClass : IAdditionOperators<TestClass, TestClass, TestClass>, ISubtractionOperators<TestClass, TestClass, TestClass>, IComparisonOperators<TestClass, TestClass, bool>, IParsable<TestClass>
+    public class TestClass : IAdditionOperators<TestClass, TestClass, TestClass>, ISubtractionOperators<TestClass, TestClass, TestClass>, IComparisonOperators<TestClass, TestClass, bool>, IParsable<TestClass>, IFormattable
     {
-
         private double _value;
 
         public TestClass(double value)
@@ -96,6 +95,11 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
                 result = null;
                 return false;
             }
+        }
+
+        public string ToString(string? format, IFormatProvider? formatProvider)
+        {
+            throw new NotImplementedException();
         }
 
         public static TestClass operator +(TestClass left, TestClass right)
@@ -138,5 +142,4 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
             return left._value >= right._value;
         }
     }
-
 }
