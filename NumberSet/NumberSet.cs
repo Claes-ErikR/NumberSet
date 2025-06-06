@@ -711,5 +711,17 @@ namespace Utte.NumberSet
             if (numberSet == null) return null;
             return (NumberSetElement<T>)numberSet[0];
         }
+
+        /// <summary>
+        /// Provides an implicit cast from string to NumberSet
+        /// </summary>
+        /// <param name="numberSetString"></param>
+        public static implicit operator NumberSet<T>(string? numberSetString)
+        {
+            if (numberSetString == null)
+                return (NumberSet<T>)Empty;
+            else
+                return Parse(numberSetString);
+        }
     }
 }
