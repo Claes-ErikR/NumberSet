@@ -579,6 +579,18 @@ namespace Utte.NumberSet
             return (NumberSet<T>)NumberSet<T>.Create(element);
         }
 
+        /// <summary>
+        /// Provides an implicit cast from string to NumberSet
+        /// </summary>
+        /// <param name="element"></param>
+        public static implicit operator NumberSetElement<T>(string? element)
+        {
+            if (element == null)
+                return (NumberSetElement<T>)Empty;
+            else
+                return Parse(element);
+        }
+
         // Deconstruct
 
         /// <summary>

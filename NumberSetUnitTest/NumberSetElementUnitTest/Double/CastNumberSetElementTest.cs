@@ -1,4 +1,5 @@
-﻿using Utte.NumberSet;
+﻿using System.Globalization;
+using Utte.NumberSet;
 
 namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
 {
@@ -86,6 +87,63 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
             NumberSetElement<double> element = null;
             NumberSet<double> numberSet = element;
             Assert.IsNull(numberSet);
+        }
+
+        // ************** Cast string **************
+
+        [TestMethod]
+        [DataRow("[2, 3]", 2, 3, true, true)]
+        [DataRow("[2, 3)", 2, 3, true, false)]
+        [DataRow("(2, 3]", 2, 3, false, true)]
+        [DataRow("(2, 3)", 2, 3, false, false)]
+        [DataRow("[0.1, 1]", 0.1, 1, true, true)]
+        [DataRow("[0, 1.1]", 0, 1.1, true, true)]
+        [DataRow("[0.1, 1.1]", 0.1, 1.1, true, true)]
+        [DataRow("[2.2, 2.2]", 2.2, 2.2, true, true)]
+        public void TestCastString(string stringRepresentation, double expectedLowerBound, double expectedUpperBound, bool expectedIncludeLowerBound, bool expectedIncludeUpperBound)
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
+                NumberSetElement<double> numberSetElement = stringRepresentation;
+                Assert.AreEqual(expectedLowerBound, numberSetElement.LowerBound);
+                Assert.AreEqual(expectedUpperBound, numberSetElement.UpperBound);
+                Assert.AreEqual(expectedIncludeLowerBound, numberSetElement.IncludeLowerBound);
+                Assert.AreEqual(expectedIncludeUpperBound, numberSetElement.IncludeUpperBound);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
+        [TestMethod]
+        public void TestCastNullString()
+        {
+            string? element = null;
+            NumberSetElement<double> numberSetElement = element;
+            Assert.IsTrue(numberSetElement.IsEmpty);
+        }
+
+        [TestMethod]
+        [DataRow("[2, 2)")]
+        [DataRow("(2, 2]")]
+        [DataRow("(2, 2)")]
+        [DataRow("[2, 1]")]
+        public void TestCastStringToEmpty(string stringRepresentation)
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
+                NumberSetElement<double> numberSetElement = stringRepresentation;
+                Assert.IsTrue(numberSetElement.IsEmpty);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
         }
     }
 }
