@@ -161,5 +161,57 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 CultureInfo.CurrentCulture = currentCulture;
             }
         }
+
+        [TestMethod]
+        public void TestCastStringTwoElements()
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
+                NumberSet<double> numberSet = "[1.2, 4.0]; (4.5, 7]";
+                Assert.AreEqual(2, numberSet.Count);
+                Assert.AreEqual(1.2, numberSet[0].LowerBound);
+                Assert.AreEqual(4, numberSet[0].UpperBound);
+                Assert.AreEqual(true, numberSet[0].IncludeLowerBound);
+                Assert.AreEqual(true, numberSet[0].IncludeUpperBound);
+                Assert.AreEqual(4.5, numberSet[1].LowerBound);
+                Assert.AreEqual(7, numberSet[1].UpperBound);
+                Assert.AreEqual(false, numberSet[1].IncludeLowerBound);
+                Assert.AreEqual(true, numberSet[1].IncludeUpperBound);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
+        [TestMethod]
+        public void TestCastStringThreeElements()
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
+                NumberSet<double> numberSet = "[1.2, 4.0]; (4.5, 7]; (8, 9)";
+                Assert.AreEqual(3, numberSet.Count);
+                Assert.AreEqual(1.2, numberSet[0].LowerBound);
+                Assert.AreEqual(4, numberSet[0].UpperBound);
+                Assert.AreEqual(true, numberSet[0].IncludeLowerBound);
+                Assert.AreEqual(true, numberSet[0].IncludeUpperBound);
+                Assert.AreEqual(4.5, numberSet[1].LowerBound);
+                Assert.AreEqual(7, numberSet[1].UpperBound);
+                Assert.AreEqual(false, numberSet[1].IncludeLowerBound);
+                Assert.AreEqual(true, numberSet[1].IncludeUpperBound);
+                Assert.AreEqual(8, numberSet[2].LowerBound);
+                Assert.AreEqual(9, numberSet[2].UpperBound);
+                Assert.AreEqual(false, numberSet[2].IncludeLowerBound);
+                Assert.AreEqual(false, numberSet[2].IncludeUpperBound);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
     }
 }
