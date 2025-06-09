@@ -90,7 +90,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestCreateFromNullList()
         {
-            var numberSet = NumberSet<double>.Create(null);
+            var numberSet = NumberSet<double>.Create(null!);
             Assert.AreEqual(numberSet.LowerBound, default(double));
             Assert.AreEqual(numberSet.UpperBound, default(double));
             Assert.IsTrue(numberSet.IsEmpty);

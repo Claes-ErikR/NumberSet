@@ -41,7 +41,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         public void TestEqualsNull()
         {
             var element1 = NumberSetElement<double>.Empty;
-            NumberSetElement<double> element2 = null;
+            NumberSetElement<double>? element2 = null;
             Assert.IsFalse(element1.Equals(element2));
         }
 
@@ -49,7 +49,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         public void TestEqualsStringNull()
         {
             var element1 = NumberSetElement<double>.Empty;
-            string element2 = null;
+            string? element2 = null;
             Assert.IsFalse(element1.Equals(element2));
         }
 
@@ -121,7 +121,7 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         public void TestEqualsNullNumberSet()
         {
             var element1 = NumberSetElement<double>.Empty;
-            NumberSet<double> element2 = null;
+            NumberSet<double>? element2 = null;
             Assert.IsFalse(element1.Equals(element2));
         }
 

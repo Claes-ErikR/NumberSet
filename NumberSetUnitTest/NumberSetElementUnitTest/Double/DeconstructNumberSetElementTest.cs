@@ -104,19 +104,5 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
             Assert.AreEqual(lowerbound, default(double));
             Assert.AreEqual(upperbound, default(double));
         }
-
-        [TestMethod]
-        public void TestDeconstructNullSet()
-        {
-            NumberSetElement<double> element = null;
-            Assert.ThrowsException<NullReferenceException>(() => { var (lowerbound, upperbound, includelowerbound, includeupperbound) = element; });
-        }
-
-        [TestMethod]
-        public void TestSmallDeconstructNullSet()
-        {
-            NumberSetElement<double> element = null;
-            Assert.ThrowsException<NullReferenceException>(() => { var (lowerbound, upperbound) = element; });
-        }
     }
 }

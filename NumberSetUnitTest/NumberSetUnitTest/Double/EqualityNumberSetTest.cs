@@ -42,7 +42,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         public void TestEqualsNullNumberSet()
         {
             var element1 = NumberSet<double>.Empty;
-            NumberSetElement<double> element2 = null;
+            NumberSetElement<double>? element2 = null;
             Assert.IsFalse(element1.Equals(element2));
         }
 
