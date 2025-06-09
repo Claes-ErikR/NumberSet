@@ -16,7 +16,7 @@ namespace Utte.NumberSet
     /// An explicit cast to NumberSetElement exists using the first element in NumberSet as the new NumberSetElement
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class NumberSet<T> : INumberSet<T>, IParsable<NumberSet<T>>, IEqualityOperators<NumberSet<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSet<T>, NumberSet<T>, bool>, IFormattable where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>, IFormattable
+    public sealed class NumberSet<T> : INumberSet<T>, IParsable<NumberSet<T>>, IEqualityOperators<NumberSet<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSet<T>, NumberSet<T>, bool>, IFormattable where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>, IFormattable
     {
         private readonly List<INumberSetElement<T>> _elements;
 

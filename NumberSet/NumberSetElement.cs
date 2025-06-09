@@ -17,7 +17,7 @@ namespace Utte.NumberSet
     /// An instance can be deconstructed into LowerBound and UpperBound or into LowerBound, UpperBound, IncludeLowerBound and IncludeUpperBound
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSetElement<T>, NumberSet<T>, bool>, IFormattable where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>, IFormattable
+    public sealed class NumberSetElement<T> : INumberSetElement<T>, IParsable<NumberSetElement<T>>, IEqualityOperators<NumberSetElement<T>, NumberSetElement<T>, bool>, IEqualityOperators<NumberSetElement<T>, NumberSet<T>, bool>, IFormattable where T : IAdditionOperators<T, T, T>, ISubtractionOperators<T, T, T>, IComparisonOperators<T, T, bool>, IParsable<T>, IFormattable
     {
 
         // Constructors
