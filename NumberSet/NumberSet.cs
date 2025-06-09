@@ -723,5 +723,14 @@ namespace Utte.NumberSet
             else
                 return Parse(numberSetString);
         }
+
+        /// <summary>
+        /// Provides an implicit cast from T to NumberSet
+        /// </summary>
+        /// <param name="element"></param>
+        public static implicit operator NumberSet<T>(T number)
+        {
+            return (NumberSet<T>)NumberSet<T>.Create(NumberSetElement<T>.Create(number, number, true, true));
+        }
     }
 }

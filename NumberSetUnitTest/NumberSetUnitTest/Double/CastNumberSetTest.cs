@@ -213,5 +213,18 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 CultureInfo.CurrentCulture = currentCulture;
             }
         }
+
+        // ************** Cast double **************
+
+        [TestMethod]
+        [DataRow(2.45)]
+        [DataRow(3)]
+        public void TestCastDouble(double number)
+        {
+            NumberSet<double> numberSet = number;
+            Assert.AreEqual(1, numberSet.Count);
+            Assert.AreEqual(number, numberSet.LowerBound);
+            Assert.AreEqual(number, numberSet.UpperBound);
+        }
     }
 }
