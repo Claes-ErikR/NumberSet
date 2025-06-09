@@ -159,7 +159,6 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 "[2, 2]]",
                 "((2, 2]",
                 "[2, 2))",
-                null,
             };
             var currentCulture = CultureInfo.CurrentCulture;
             try
@@ -172,6 +171,24 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                     if (NumberSetElement<double>.TryParse(elementList[i], out NumberSetElement<double>? result))
                         Assert.Fail();
                 }
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
+        [TestMethod]
+        public void TestTryNull()
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture; // Use '.' as decimal separator
+                if (NumberSetElement<double>.TryParse(null, null, out NumberSetElement<double>? cultureNullResult))
+                    Assert.IsTrue(cultureNullResult.IsEmpty);
+                if (NumberSetElement<double>.TryParse(null, out NumberSetElement<double>? result))
+                    Assert.IsTrue(result.IsEmpty);
             }
             finally
             {
@@ -259,7 +276,6 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 "[2; 2]]",
                 "((2; 2]",
                 "[2; 2))",
-                null,
             };
             var currentCulture = CultureInfo.CurrentCulture;
             try
@@ -280,5 +296,26 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 CultureInfo.CurrentCulture = currentCulture;
             }
         }
+
+        [TestMethod]
+        public void TestTryParseNumberDecimalSeparatorCommaNull()
+        {
+            var currentCulture = CultureInfo.CurrentCulture;
+            try
+            {
+                var culture = CultureInfoTestHelper.GetNumberCommaSeparatedCulture(); // Use ',' as decimal separator
+                CultureInfo.CurrentCulture = culture;
+
+                if (NumberSetElement<double>.TryParse(null, culture, out NumberSetElement<double>? cultureNullResult))
+                    Assert.IsTrue(cultureNullResult.IsEmpty);
+                if (NumberSetElement<double>.TryParse(null, out NumberSetElement<double>? result))
+                    Assert.IsTrue(result.IsEmpty);
+            }
+            finally
+            {
+                CultureInfo.CurrentCulture = currentCulture;
+            }
+        }
+
     }
 }

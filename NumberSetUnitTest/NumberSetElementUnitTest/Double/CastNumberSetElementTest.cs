@@ -84,9 +84,9 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
         [TestMethod]
         public void TestCastNullSet()
         {
-            NumberSetElement<double> element = null;
+            NumberSetElement<double>? element = null;
             NumberSet<double> numberSet = element;
-            Assert.IsNull(numberSet);
+            Assert.IsTrue(numberSet.IsEmpty);
         }
 
         // ************** Cast string **************

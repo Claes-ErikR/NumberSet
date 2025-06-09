@@ -84,17 +84,18 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         [TestMethod]
         public void TestCastNullSet()
         {
-            NumberSet<double> numberSet = null;
+            NumberSet<double>? numberSet = null;
             var element = (NumberSetElement<double>)numberSet;
             
-            Assert.IsNull(element);
+            Assert.IsTrue(element.IsEmpty);
         }
 
         [TestMethod]
         public void TestCastLoseInformation()
         {
             var numberSet = (NumberSet<double>)NumberSet<double>.Create(NumberSetElement<double>.Create(2, 3, true, true), NumberSetElement<double>.Create(4, 5, true, true));
-            var element = (NumberSetElement<double>)numberSet;
+            var element = (NumberSetElement<double>?)numberSet;
+            Assert.IsNotNull(element);
             Assert.AreEqual(element.LowerBound, 2);
             Assert.AreEqual(element.UpperBound, 3);
             Assert.IsTrue(element.IncludeLowerBound);

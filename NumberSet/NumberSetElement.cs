@@ -526,11 +526,9 @@ namespace Utte.NumberSet
             try
             {
                 if (s == null)
-                {
-                    result = null;
-                    return false;
-                }
-                result = NumberSetElement<T>.Parse(s, provider);
+                    result = (NumberSetElement<T>)Empty;
+                else
+                    result = NumberSetElement<T>.Parse(s, provider);
                 return true;
             }
             catch 
@@ -553,11 +551,10 @@ namespace Utte.NumberSet
             try
             {
                 if (s == null)
-                {
-                    result = null;
-                    return false;
-                }
-                result = NumberSetElement<T>.Parse(s);
+                    result = (NumberSetElement<T>)Empty;
+                else
+                    result = NumberSetElement<T>.Parse(s);
+
                 return true;
             }
             catch
@@ -573,9 +570,9 @@ namespace Utte.NumberSet
         /// Provides an implicit cast from NumberSetElement to NumberSet
         /// </summary>
         /// <param name="element"></param>
-        public static implicit operator NumberSet<T>(NumberSetElement<T> element)
+        public static implicit operator NumberSet<T>(NumberSetElement<T>? element)
         {
-            if (element == null) return null;
+            if (element == null) return (NumberSet<T>)NumberSet<T>.Empty;
             return (NumberSet<T>)NumberSet<T>.Create(element);
         }
 

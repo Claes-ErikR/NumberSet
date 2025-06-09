@@ -432,7 +432,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj == null)
                 return false;
@@ -638,11 +638,9 @@ namespace Utte.NumberSet
             try
             {
                 if (s == null)
-                {
-                    result = null;
-                    return false;
-                }
-                result = NumberSet<T>.Parse(s, provider);
+                    result = (NumberSet<T>)Empty;
+                else
+                    result = NumberSet<T>.Parse(s, provider);
                 return true;
             }
             catch
@@ -665,11 +663,9 @@ namespace Utte.NumberSet
             try
             {
                 if (s == null)
-                {
-                    result = null;
-                    return false;
-                }
-                result = NumberSet<T>.Parse(s);
+                    result = (NumberSet<T>)Empty;
+                else
+                    result = NumberSet<T>.Parse(s);
                 return true;
             }
             catch
@@ -706,9 +702,9 @@ namespace Utte.NumberSet
         /// Provides an explicit cast from NumberSet to NumberSet Element
         /// </summary>
         /// <param name="numberSet"></param>
-        public static explicit operator NumberSetElement<T>(NumberSet<T> numberSet)
+        public static explicit operator NumberSetElement<T>(NumberSet<T>? numberSet)
         {
-            if (numberSet == null) return null;
+            if (numberSet == null) return (NumberSetElement<T>)NumberSetElement<T>.Empty;
             return (NumberSetElement<T>)numberSet[0];
         }
 
