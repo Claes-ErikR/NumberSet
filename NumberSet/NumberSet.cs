@@ -68,7 +68,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public static INumberSet<T> Create(params INumberSetElement<T>?[] elements)
+        public static NumberSet<T> Create(params INumberSetElement<T>?[] elements)
         {
             return CreateNumberSet(elements);
         }
@@ -82,7 +82,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public static INumberSet<T> Create(IEnumerable<INumberSetElement<T>?> elements)
+        public static NumberSet<T> Create(IEnumerable<INumberSetElement<T>?> elements)
         {
             return CreateNumberSet(elements);
         }
@@ -96,7 +96,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        private static INumberSet<T> CreateNumberSet(IEnumerable<INumberSetElement<T>?> elements) 
+        private static NumberSet<T> CreateNumberSet(IEnumerable<INumberSetElement<T>?> elements) 
         {
             if(elements == null) return Empty;
             List<INumberSetElement<T>> workListElements = new List<INumberSetElement<T>>();
@@ -121,7 +121,7 @@ namespace Utte.NumberSet
         /// <summary>
         /// Returns the empty set
         /// </summary>
-        public static INumberSet<T> Empty { get; }
+        public static NumberSet<T> Empty { get; }
 
         /// <summary>
         /// Creates an empty set for the Empty static property

@@ -74,7 +74,7 @@ namespace Utte.NumberSet
         /// <param name="includelowerbound"></param>
         /// <param name="includeupperbound"></param>
         /// <returns></returns>
-        public static INumberSetElement<T> Create(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound)
+        public static NumberSetElement<T> Create(T lowerbound, T upperbound, bool includelowerbound, bool includeupperbound)
         {
             if (lowerbound == null || upperbound == null)
                 return Empty;
@@ -91,7 +91,7 @@ namespace Utte.NumberSet
         /// <summary>
         /// Returns the empty set
         /// </summary>
-        public static INumberSetElement<T> Empty { get; }
+        public static NumberSetElement<T> Empty { get; }
 
         /// <summary>
         /// Creates an empty set for the Empty static property
