@@ -49,13 +49,13 @@ namespace Utte.NumberSet
         /// </summary>
         private NumberSetElement()
         {
-            LowerBound = default(T);
-            UpperBound = default(T);
+            LowerBound = default!;
+            UpperBound = default!;
             IncludeLowerBound = false;
             IncludeUpperBound = false;
             IsClosed = false;
             IsOpen = true;
-            Measure = default(T);
+            Measure = default!;
             IsEmpty = true;
         }
 
@@ -332,7 +332,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj == null)
                 return false;

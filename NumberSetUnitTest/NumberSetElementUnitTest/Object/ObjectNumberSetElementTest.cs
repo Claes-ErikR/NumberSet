@@ -71,21 +71,21 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Object
         [TestMethod]
         public void TestClassCreateWithNullTest()
         {
-            var numberSetElement = NumberSetElement<TestClass>.Create(null, null, true, true);
+            var numberSetElement = NumberSetElement<TestClass>.Create(null!, null!, true, true);
             Assert.IsTrue(numberSetElement.IsEmpty);
         }
 
         [TestMethod]
         public void TestClassCreateWithNullLowerBoundTest()
         {
-            var numberSetElement = NumberSetElement<TestClass>.Create(null, new TestClass(3), true, true);
+            var numberSetElement = NumberSetElement<TestClass>.Create(null!, new TestClass(3), true, true);
             Assert.IsTrue(numberSetElement.IsEmpty);
         }
 
         [TestMethod]
         public void TestClassCreateWithNullUpperBoundTest()
         {
-            var numberSetElement = NumberSetElement<TestClass>.Create(new TestClass(2), null, true, true);
+            var numberSetElement = NumberSetElement<TestClass>.Create(new TestClass(2), null!, true, true);
             Assert.IsTrue(numberSetElement.IsEmpty);
         }
     }
@@ -136,11 +136,13 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Object
 
         public static bool operator ==(TestClass? left, TestClass? right)
         {
+            if(Equals(left, null) || Equals(right, null)) return false;
             return left._value == right._value;
         }
 
         public static bool operator !=(TestClass? left, TestClass? right)
         {
+            if (Equals(left, null) || Equals(right, null)) return false;
             return left._value != right._value;
         }
 
@@ -162,6 +164,26 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Object
         public static bool operator >=(TestClass left, TestClass right)
         {
             return left._value >= right._value;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            return this._value.Equals(((TestClass)obj)._value);
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
         }
     }
 }
