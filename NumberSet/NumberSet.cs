@@ -107,7 +107,7 @@ namespace Utte.NumberSet
 
             var isClosed = true;
             var isOpen = true;
-            T measure = default;
+            T measure = Empty.Measure;
             foreach (var element in workListElements)
             {
                 isClosed = isClosed && element.IsClosed;
