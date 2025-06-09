@@ -419,10 +419,10 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
                 Assert.IsFalse(numberSet.IsOpen);
                 Assert.AreEqual(numberSet.Measure, 5.5);
                 Assert.AreEqual(numberSet.Count, 4);
-                Assert.IsTrue(numberSet[0] == element1);
-                Assert.IsTrue(numberSet[1] == element2);
-                Assert.IsTrue(numberSet[2] == element3);
-                Assert.IsTrue(numberSet[3] == element4);
+                Assert.IsTrue((NumberSetElement<double>)numberSet[0] == element1);
+                Assert.IsTrue((NumberSetElement<double>)numberSet[1] == element2);
+                Assert.IsTrue((NumberSetElement<double>)numberSet[2] == element3);
+                Assert.IsTrue((NumberSetElement<double>)numberSet[3] == element4);
             }
         }
 
