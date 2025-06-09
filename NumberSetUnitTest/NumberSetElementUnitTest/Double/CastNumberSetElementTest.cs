@@ -145,5 +145,19 @@ namespace NumberSetUnitTest.NumberSetElementUnitTest.Double
                 CultureInfo.CurrentCulture = currentCulture;
             }
         }
+
+        // ************** Cast double **************
+
+        [TestMethod]
+        [DataRow(2.45)]
+        [DataRow(3)]
+        public void TestCastDouble(double number)
+        {
+            NumberSetElement<double> numberSetElement = number;
+            Assert.AreEqual(number, numberSetElement.LowerBound);
+            Assert.AreEqual(number, numberSetElement.UpperBound);
+            Assert.IsTrue(numberSetElement.IncludeLowerBound);
+            Assert.IsTrue(numberSetElement.IncludeUpperBound);
+        }
     }
 }
