@@ -142,7 +142,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         public void TestEqualityNull()
         {
             var numberSet1 = NumberSet<double>.Empty;
-            NumberSet<double> numberSet2 = null;
+            NumberSet<double>? numberSet2 = null;
             Assert.IsFalse(numberSet1.Equals(numberSet2));
         }
 
@@ -150,7 +150,7 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Double
         public void TestEqualsStringNull()
         {
             var element1 = NumberSet<double>.Empty;
-            string element2 = null;
+            string? element2 = null;
             Assert.IsFalse(element1.Equals(element2));
         }
 

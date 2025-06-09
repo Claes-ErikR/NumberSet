@@ -68,7 +68,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public static INumberSet<T> Create(params INumberSetElement<T>[] elements)
+        public static INumberSet<T> Create(params INumberSetElement<T>?[] elements)
         {
             return CreateNumberSet(elements);
         }
@@ -82,7 +82,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        public static INumberSet<T> Create(IEnumerable<INumberSetElement<T>> elements)
+        public static INumberSet<T> Create(IEnumerable<INumberSetElement<T>?> elements)
         {
             return CreateNumberSet(elements);
         }
@@ -96,7 +96,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="elements"></param>
         /// <returns></returns>
-        private static INumberSet<T> CreateNumberSet(IEnumerable<INumberSetElement<T>> elements) 
+        private static INumberSet<T> CreateNumberSet(IEnumerable<INumberSetElement<T>?> elements) 
         {
             if(elements == null) return Empty;
             List<INumberSetElement<T>> workListElements = new List<INumberSetElement<T>>();
@@ -141,7 +141,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="workListElements"></param>
         /// <param name="element"></param>
-        private static void Add(List<INumberSetElement<T>> workListElements, INumberSetElement<T> element)
+        private static void Add(List<INumberSetElement<T>> workListElements, INumberSetElement<T>? element)
         {
             if (element != null && !element.IsEmpty)
             {

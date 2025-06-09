@@ -114,11 +114,13 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
 
         public static bool operator ==(TestClass? left, TestClass? right)
         {
+            if (Equals(left, null) || Equals(right, null)) return false;
             return left._value == right._value;
         }
 
         public static bool operator !=(TestClass? left, TestClass? right)
         {
+            if (Equals(left, null) || Equals(right, null)) return false;
             return left._value != right._value;
         }
 
@@ -140,6 +142,26 @@ namespace NumberSetUnitTest.NumberSetUnitTest.Object
         public static bool operator >=(TestClass left, TestClass right)
         {
             return left._value >= right._value;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
         }
     }
 }
