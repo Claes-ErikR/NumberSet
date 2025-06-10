@@ -1,7 +1,8 @@
-﻿using Utte.NumberSet.Extensions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Numerics;
 using System.Text;
-using System.Diagnostics.CodeAnalysis;
+using Utte.NumberSet.Extensions;
 
 namespace Utte.NumberSet
 {
@@ -418,7 +419,7 @@ namespace Utte.NumberSet
         /// <returns></returns>
         public override int GetHashCode()
         {
-            return ToString().GetHashCode();
+            return ToString(null, CultureInfo.InvariantCulture).GetHashCode();
         }
 
         // Text
