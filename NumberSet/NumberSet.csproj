@@ -5,9 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>utte.numberset</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Claes-Erik Rydberg</Authors>
-    <Company>Techtive</Company>
+    <Company></Company>
     <Product>NumberSet</Product>
     <Description>Generic sets for numbers or numberlike objects and Union, Interection and Difference for them. The sets track if they contain their endpoints and thus wether they are Open, Closed or neither.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
