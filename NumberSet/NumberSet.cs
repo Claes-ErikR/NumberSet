@@ -238,7 +238,7 @@ namespace Utte.NumberSet
         {
             if (other is INumberSet<T>) return Union((INumberSet<T>)other);
             if (other is INumberSetElement<T>) return Union((INumberSetElement<T>)other);
-            throw new ArgumentException("Only INumberSet<T> or INumberSetElement<T> types allowed");
+            throw new ArgumentException(string.Format("Only types implementing {0}<{2}> or {1}<{2}> allowed", nameof(INumberSet<T>), nameof(INumberSetElement<T>), nameof(T)));
         }
 
         /// <summary>
