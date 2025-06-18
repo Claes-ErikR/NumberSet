@@ -50,18 +50,11 @@ namespace Utte.NumberSet
         INumberSet<T> Union(IBoundedSet<T> other);
 
         /// <summary>
-        /// Returns an INumberSet containing all points in both of the IBoundedSet and INumberSet sets
+        /// Returns an INumberSet containing all points in both of the IBoundedSets
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        INumberSet<T> Intersection(INumberSet<T> other);
-
-        /// <summary>
-        /// Returns an INumberSet containing all points in both of the IBoundedSet and INumberSetElement sets
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        INumberSet<T> Intersection(INumberSetElement<T> other);
+        INumberSet<T> Intersection(IBoundedSet<T> other);
 
         /// <summary>
         /// Checks if the IBoundedSet shares any part with an INumberSet

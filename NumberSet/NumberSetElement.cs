@@ -180,7 +180,6 @@ namespace Utte.NumberSet
         /// <param name="other"></param>
         /// <returns></returns>
         private INumberSet<T> Union(INumberSetElement<T> other)
-
         {
             return NumberSet<T>.Create(this, other);
         }
@@ -188,11 +187,23 @@ namespace Utte.NumberSet
         // Intersect
 
         /// <summary>
+        /// Returns an INumberSet containing all points in both of the instance and IBoundedSet sets
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public INumberSet<T> Intersection(IBoundedSet<T> other)
+        {
+            if (other is INumberSet<T>) return Intersection((INumberSet<T>)other);
+            if (other is INumberSetElement<T>) return Intersection((INumberSetElement<T>)other);
+            throw new ArgumentException(string.Format("Only types implementing {0}<{2}> or {1}<{2}> allowed", nameof(INumberSet<T>), nameof(INumberSetElement<T>), nameof(T)));
+        }
+
+        /// <summary>
         /// Returns an INumberSet containing all points in both of the instance and INumberSet sets
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public INumberSet<T> Intersection(INumberSet<T> other)
+        private INumberSet<T> Intersection(INumberSet<T> other)
         {
             var elements = new List<INumberSetElement<T>>();
             for (var i = 0; i < other.Count; i++)
@@ -208,7 +219,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public INumberSet<T> Intersection(INumberSetElement<T> other)
+        private INumberSet<T> Intersection(INumberSetElement<T> other)
         {
             return NumberSet<T>.Create(CreateIntersection(this, other));
         }
