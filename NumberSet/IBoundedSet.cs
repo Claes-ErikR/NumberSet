@@ -43,18 +43,11 @@ namespace Utte.NumberSet
         T Measure { get; }
 
         /// <summary>
-        /// Returns an INumberSet containing all points in at least one of the IBoundedSet and INumberSet sets
+        /// Returns an INumberSet containing all points in at least one of the IBoundedSets
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        INumberSet<T> Union(INumberSet<T> other);
-
-        /// <summary>
-        /// Returns an INumberSet containing all points in at least one of the IBoundedSet and INumberSetElement sets
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        INumberSet<T> Union(INumberSetElement<T> other);
+        INumberSet<T> Union(IBoundedSet<T> other);
 
         /// <summary>
         /// Returns an INumberSet containing all points in both of the IBoundedSet and INumberSet sets

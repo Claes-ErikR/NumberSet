@@ -149,11 +149,23 @@ namespace Utte.NumberSet
         // Union
 
         /// <summary>
+        /// Returns an INumberSet containing all points in at least one of the instance and IBoundedSet sets
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public INumberSet<T> Union(IBoundedSet<T> other)
+        {
+            if (other is INumberSet<T>) return Union((INumberSet<T>)other);
+            if (other is INumberSetElement<T>) return Union((INumberSetElement<T>)other);
+            throw new ArgumentException("Only INumberSet<T> or INumberSetElement<T> types allowed");
+        }
+
+        /// <summary>
         /// Returns an INumberSet containing all points in at least one of the instance and INumberSet sets
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public INumberSet<T> Union(INumberSet<T> other)
+        private INumberSet<T> Union(INumberSet<T> other)
         {
             var list = new List<INumberSetElement<T>>();
             list.Add(this);
@@ -167,7 +179,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public INumberSet<T> Union(INumberSetElement<T> other)
+        private INumberSet<T> Union(INumberSetElement<T> other)
 
         {
             return NumberSet<T>.Create(this, other);
