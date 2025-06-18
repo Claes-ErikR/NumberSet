@@ -64,18 +64,11 @@ namespace Utte.NumberSet
         bool Intersects(IBoundedSet<T> other);
 
         /// <summary>
-        /// Returns an INumberSet containing all points in the IBoundedSet that is not in the INumberSet set
+        /// Returns an INumberSet containing all points in the IBoundedSet that is not in the IBoundedSet
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        INumberSet<T> Difference(INumberSet<T> other);
-
-        /// <summary>
-        /// Returns an INumberSet containing all points in the IBoundedSet that is not in the INumberSetElement set
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        INumberSet<T> Difference(INumberSetElement<T> other);
+        INumberSet<T> Difference(IBoundedSet<T> other);
 
         /// <summary>
         /// Checks if the point other is within the IBoundedSet

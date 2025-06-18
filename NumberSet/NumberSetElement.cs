@@ -265,11 +265,23 @@ namespace Utte.NumberSet
         // Difference
 
         /// <summary>
+        /// Returns an INumberSet containing all points in the instance that is not in the IBoundedSet set
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public INumberSet<T> Difference(IBoundedSet<T> other)
+        {
+            if (other is INumberSet<T>) return Difference((INumberSet<T>)other);
+            if (other is INumberSetElement<T>) return Difference((INumberSetElement<T>)other);
+            throw new ArgumentException(string.Format("Only types implementing {0}<{2}> or {1}<{2}> allowed", nameof(INumberSet<T>), nameof(INumberSetElement<T>), nameof(T)));
+        }
+
+        /// <summary>
         /// Returns an INumberSet containing all points in the instance that is not in the INumberSet set
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public INumberSet<T> Difference(INumberSet<T> other)
+        private INumberSet<T> Difference(INumberSet<T> other)
         {
             if (IsEmpty || other.IsEmpty) return NumberSet<T>.Create(this);
             var difference = RemoveIntersections(this, other);
@@ -281,7 +293,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public INumberSet<T> Difference(INumberSetElement<T> other)
+        private INumberSet<T> Difference(INumberSetElement<T> other)
         {
             if (IsEmpty || other.IsEmpty) return NumberSet<T>.Create(this);
             var intersection = CreateIntersection(this, other);
