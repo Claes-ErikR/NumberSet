@@ -315,11 +315,23 @@ namespace Utte.NumberSet
         }
 
         /// <summary>
+        /// Checks if the IBoundedSet shares any part with an IBoundedSet
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Intersects(IBoundedSet<T> other)
+        {
+            if (other is INumberSet<T>) return Intersects((INumberSet<T>)other);
+            if (other is INumberSetElement<T>) return Intersects((INumberSetElement<T>)other);
+            throw new ArgumentException(string.Format("Only types implementing {0}<{2}> or {1}<{2}> allowed", nameof(INumberSet<T>), nameof(INumberSetElement<T>), nameof(T)));
+        }
+
+        /// <summary>
         /// Checks if the instance shares any part with an INumberSet
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Intersects(INumberSet<T> other)
+        private bool Intersects(INumberSet<T> other)
         {
             if (IsEmpty || other.IsEmpty) return true;
             for (int i = 0; i < Count; i++)
@@ -335,7 +347,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Intersects(INumberSetElement<T> other)
+        private bool Intersects(INumberSetElement<T> other)
         {
             if (IsEmpty || other.IsEmpty) return true;
             for (int i = 0; i < Count; i++)

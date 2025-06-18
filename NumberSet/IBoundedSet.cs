@@ -57,18 +57,11 @@ namespace Utte.NumberSet
         INumberSet<T> Intersection(IBoundedSet<T> other);
 
         /// <summary>
-        /// Checks if the IBoundedSet shares any part with an INumberSet
+        /// Checks if the IBoundedSet shares any part with an IBoundedSet
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        bool Intersects(INumberSet<T> other);
-
-        /// <summary>
-        /// Checks if the IBoundedSet shares any part with an INumberSetElement
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        bool Intersects(INumberSetElement<T> other);
+        bool Intersects(IBoundedSet<T> other);
 
         /// <summary>
         /// Returns an INumberSet containing all points in the IBoundedSet that is not in the INumberSet set

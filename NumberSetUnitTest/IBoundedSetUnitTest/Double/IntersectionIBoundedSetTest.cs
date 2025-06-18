@@ -2,8 +2,6 @@
 
 namespace NumberSetUnitTest.IBoundedSetUnitTest.Double;
 
-
-
 [TestClass]
 public class IntersectionIBoundedSetTest
 {
