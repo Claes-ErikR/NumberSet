@@ -427,11 +427,23 @@ namespace Utte.NumberSet
         }
 
         /// <summary>
+        /// Checks if the whole IBoundedSet is within the IBoundedSet
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Contains(IBoundedSet<T> other)
+        {
+            if (other is INumberSet<T>) return Contains((INumberSet<T>)other);
+            if (other is INumberSetElement<T>) return Contains((INumberSetElement<T>)other);
+            throw new ArgumentException(string.Format("Only types implementing {0}<{2}> or {1}<{2}> allowed", nameof(INumberSet<T>), nameof(INumberSetElement<T>), nameof(T)));
+        }
+
+        /// <summary>
         /// Checks if the whole INumberSet is within the instance
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Contains(INumberSet<T> other)
+        private bool Contains(INumberSet<T> other)
         {
             if (IsEmpty) return other.IsEmpty;
             if (other.IsEmpty) return true;
@@ -461,7 +473,7 @@ namespace Utte.NumberSet
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Contains(INumberSetElement<T> other)
+        private bool Contains(INumberSetElement<T> other)
         {
             if (IsEmpty) return other.IsEmpty;
             if (other.IsEmpty) return true;

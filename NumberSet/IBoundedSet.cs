@@ -78,17 +78,10 @@ namespace Utte.NumberSet
         bool Contains(T other);
 
         /// <summary>
-        /// Checks if the whole INumberSet is within the IBoundedSet
+        /// Checks if the whole IBoundedSet is within the IBoundedSet
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        bool Contains(INumberSet<T> other);
-
-        /// <summary>
-        /// Checks if the whole INumberSetElement is within the IBoundedSet
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        bool Contains(INumberSetElement<T> other);
+        bool Contains(IBoundedSet<T> other);
     }
 }
