@@ -17,6 +17,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>Set, number set, numeric set, sets, number sets, numeric sets</PackageTags>
     <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
